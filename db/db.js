@@ -24,6 +24,8 @@ class Database {
 				process.exit(1);
 			}
 		})
+
+		return this.db;
 	}
 
 	static getInstance(){

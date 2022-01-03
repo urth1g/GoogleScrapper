@@ -44,7 +44,7 @@ app.get('/crawl_accessories', async (req, res) => {
 
 	for(let i = 0; i < arr.length; i++){
 
-		await timer(5000);
+		await timer(3000);
 
 		searchGoogle(arr[i].name + " " + arr[i].MPN).then(res => {
 			let __url = res[0]
@@ -125,30 +125,32 @@ app.get('/crawl_printers', async (req, res) => {
 
 	//arr = arr.filter(x => x.name === 'HP - DDR3 - module - 1 GB - DIMM 90-pin - unbuffered');
 
-	arr = arr.filter(x => x.Matnr === 13343582);
+	//arr = arr.filter(x => x.ShortName === 'STI MICR ST9830D - printer - B/W - laser');
 
 	for(let i = 0; i < arr.length; i++){
 
 		await timer(5000);
 
-		searchGoogle(arr[i].ShortName.split(" - ")[0] + " " + arr[i].mpn).then(res => {
-			let __url = res[0]
-
-			findTheBestPrice(res[0]).then( res => {
+		await searchGoogle(arr[i].ShortName.split(" - ")[0], arr[i].mpn).then(async (url) => {
+			await findTheBestPrice(url).then( res => {
 				let regex = /((?=\$)((?!=\"|\{|\}|\<|\]|delivery|[oO][fF][fF]|more).)+?(?=\<))|(Report a listing)/g;
 
 				let matches = res.data.match(regex);
 
 				let totalPriceNew = [];
 
+				if(!matches) {
+					let content = `Nothing was found for ${arr[i].ShortName}.\n`;
+					fs.writeFile('./writeToTxt.txt', content, { flag: 'a+' }, err => {})
+					return;
+				}
+				
 				for(let i = 0; i < matches.length; i++){
 					if(matches[i] === 'Report a listing' ) break;
 
 					let price = parseFloat(matches[i].substr(1).replace(/\,/g, ""));
 					if(i % 2 === 1) totalPriceNew.push(price)
 				}
-
-				console.log(matches);
 
 				totalPriceNew = totalPriceNew.map(x => {
 
@@ -161,15 +163,18 @@ app.get('/crawl_printers', async (req, res) => {
 
 				totalPriceNew.sort((a,b) => a - b);
 
+				if(totalPriceNew[0] < 750) return;
+				
 				let newPrice = changePrice(totalPriceNew[0]);
-
+				newPrice = Math.round(parseFloat(newPrice * 100)) / 100
 				Database.getInstance().query("UPDATE products SET price = ? WHERE Matnr = ?", [newPrice, arr[i].Matnr], (err, result) => {
 					if(err) console.log(err)
 
 					console.log(result)
 				})
 
-			let content = `Set price of ${arr[i].ShortName} to (${totalPriceNew[0]} - ${newPrice}) - ${__url} \n`;
+			let content = `Set price of ${arr[i].ShortName} to (${totalPriceNew[0]} - ${newPrice}) - ${url} \n
+List of prices ${JSON.stringify(totalPriceNew)}\n`;
 			fs.writeFile('./writeToTxt.txt', content, { flag: 'a+' }, err => {})
 
 			})

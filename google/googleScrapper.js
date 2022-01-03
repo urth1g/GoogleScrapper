@@ -227,6 +227,9 @@ async function searchGoogle(productName, partNumber){
 			let matches = regex3.exec(res.data);
 
 			let object = []
+
+			if(!matches) return;
+			
 			do {
 			  let name = matches[1];
 			  let url = matches[2];
@@ -250,7 +253,6 @@ async function searchGoogle(productName, partNumber){
 
 			grading.sort((a,b) => a.distance - b.distance);
 
-			console.log(grading)
 			if(grading.length === 0) reject('Nothing found.')
 
 			await resolve(grading[0].url)

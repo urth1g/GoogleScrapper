@@ -229,8 +229,10 @@ async function searchGoogle(productName, partNumber){
 			let object = []
 
 			if(!matches) return;
-			
+
 			do {
+			  if(!matches) return;
+
 			  let name = matches[1];
 			  let url = matches[2];
 

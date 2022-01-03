@@ -5,7 +5,7 @@ class Database {
 		this.db = null;
 	}
 
-	static createInstance(){
+	static async createInstance(){
 		this.db = mysql.createPool({
 		  host     : process.env.DB_HOST,
 		  user     : process.env.DB_USER,
@@ -16,7 +16,14 @@ class Database {
 		  waitForConnections: true,
 		  connectionLimit: 10,
 		  queueLimit: 0
-		});
+		})
+
+		await this.db.getConnection(err => {
+			if(err){
+				process.exit(1);
+			}
+		})
+		console.log('test')
 
 		return this.db
 	}

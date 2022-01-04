@@ -165,11 +165,14 @@ app.get('/crawl_printers', async (req, res) => {
 
 				let newPrice = changePrice(totalPriceNew[0]);
 				newPrice = Math.round(parseFloat(newPrice * 100)) / 100
+
+				if(Number.isNaN(newPrice)) return;
+
 				Database.getInstance().query("UPDATE products SET price = ? WHERE Matnr = ?", [newPrice, arr[i].Matnr], (err, result) => {
 					if(err) console.log(err)
 				})
 
-			let content = `Set price of ${arr[i].ShortName} to (${totalPriceNew[0]} - ${newPrice}) - ${url} \n
+			let content = `Set price of ${arr[i].ShortName} to (${totalPriceNew[0]} - ${newPrice}) - ${url}
 List of prices ${JSON.stringify(totalPriceNew)}\n`;
 			fs.writeFile('./writeToTxt.txt', content, { flag: 'a+' }, err => {})
 

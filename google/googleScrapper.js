@@ -216,31 +216,65 @@ async function searchGoogle(productName, partNumber){
 	let hl = "en";
 	let gl = "us";
 	let tbm = "shop";
-	let term = productName;
+	let term = partNumber;
 
 	return new Promise( async (resolve, reject) => {
 		axios.get(`https://shopping.google.com/search?q=${term}&hl=${hl}&gl=${gl}&tbm=${tbm}`).then( async res => {
 			let regex = /((?<=href=\")((?!=\<|\{|\,|http[s]?).)*?\boffers\b.+?(?="))/g
 			let regex2 = /data\-what\=\"1\".+?\h3.+?\>(.+?(?=\<))/g
-			let regex3 = /(?<=title\=\")(.+?)(?=\").+?(\/shopping\/product.+?)(?=\")/mg
+			let regex3 = /title\=\"((?:(?!title).)*?)(\/shopping\/product.+?)(?=\")/g
+      let regex4 = /^(.+?)(?=\")/g;
+      let regex5 = /Best\smatch.+?\/offers.+?\"/g
+      let regex6 = /((?:(?!\").)*?\/offers.+?(?=\"))/g
+      let regex7 = /server\"\>.+?\>(?:(?!img))(.*?)\</g
 
 			let matches = regex3.exec(res.data);
 
 			let object = []
 
-			if(!matches) return;
+      let string = res.data.match(regex5);
+
+      if(string){
+        string = string[0]
+        let url = string.match(regex6)[0]
+        let _name = regex7.exec(string);
+
+        do {
+          if(!_name) return;
+
+          let name = _name[1];
+
+          if(name === '') continue;
+
+          object.push({name, url})
+        } while((_name = regex7.exec(string)) !== null);
+      }
+
+			if(!matches && object.length === 0) reject('No matches found for ' + productName)
 
 			do {
-			  if(!matches) return;
+			  if(!matches && object.length === 0) reject('No matches found for ' + productName)
 
 			  let name = matches[1];
 			  let url = matches[2];
 
 			  object.push({name, url})
-
 			} while((matches = regex3.exec(res.data)) !== null);
 
+      object = object.map(x => {
+        let name = x.name.match(regex4)
+        if(name) name = name[0]
 
+        if(!name){
+          return { name: x.name, url: x.url }
+        }else{
+          let obj = { name: name, url: x.url }
+          return obj;
+        }
+      })
+
+
+      console.log(object)
 			object = object.filter(x => {
 				return !x.name.toLowerCase().includes('drum') && 
 				!x.name.toLowerCase().includes('toner') && 
@@ -248,16 +282,26 @@ async function searchGoogle(productName, partNumber){
 				!x.name.toLowerCase().includes('bundle') && 
 				!x.name.toLowerCase().includes('pack') &&
 				!x.name.toLowerCase().includes('yield') &&
-				!x.name.toLowerCase().includes("high")
+				!x.name.toLowerCase().includes("high") &&
+        !x.name.toLowerCase().includes('roller') && 
+        !x.name.toLowerCase().includes('bottle') && 
+        !x.name.toLowerCase().includes('kit') && 
+        !x.name.toLowerCase().includes('casing') &&
+        !x.name.toLowerCase().includes('rfb') &&
+        !x.name.toLowerCase().includes('refurbished')
 			})
 
-			let grading = await interateThroughSubsets(object, term, productName);
+
+      console.log(object)
+      console.log(term)
+			let grading = await interateThroughSubsets(object, partNumber, productName);
 
 			grading.sort((a,b) => a.distance - b.distance);
 
+      console.log(grading)
 			if(grading.length === 0) reject('Nothing found.')
 
-			await resolve(grading[0].url)
+			await resolve(grading[0].url, grading)
 			
 		}).catch( err => {
 			reject(err)
@@ -269,7 +313,12 @@ async function findTheBestPrice(link){
 
 	let baseURL = 'https://shopping.google.com'
 	return new Promise( async (resolve, reject) => {
-		axios.get(baseURL + link + '&tbs=new:1').then( async res => {
+    let url = baseURL + link + '&sfr=compass&ei=DWTdYeK_G7qHytMPm7yLsAU&tbs=new%3A1';
+    let arr = url.split("epd");
+    arr[0] += ",scoring:tp,epd:"
+    url = arr.join("")
+    console.log(url)
+		axios.get(url).then( async res => {
 			await resolve(res)
 		}).catch(err => {
 			reject(err)
@@ -277,4 +326,34 @@ async function findTheBestPrice(link){
 	})
 }
 
-module.exports = { searchGoogle, findTheBestPrice };
+// function insertCompetitors(){
+// let shopsToFilter = [];
+
+// for(let i = 0; i < totalPriceNew.length; i++){
+// let current = totalPriceNew[i];
+
+// if(current.shop === 'A Matter of Fax') break;
+
+// shopsToFilter.push(current.shop);
+// }
+
+// let arr = [Matnr, Name, JSON.stringify(shopsToFilter), JSON.stringify(totalPriceNew), shopsToFilter.length];
+// Database.getInstance().query("INSERT INTO products_filter_list (Matnr, Name, ShopsToFilter, Shops, ShopsToFilterNumber) VALUES (?)", [arr], (err, result) => {
+// if(err) console.log(err)
+
+// console.log(result)
+// })
+// }
+
+function findAverage(prices){
+  let avg = 0;
+
+  console.log('Looking for avg')
+  prices.forEach(x => avg += x.price);
+
+  let num = avg / prices.length;
+
+  return +num.toFixed(2)
+}
+
+module.exports = { searchGoogle, findTheBestPrice, findAverage };

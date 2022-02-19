@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+require('dotenv').config({path: '../.env'})
 
 class Database {
 	constructor(){
@@ -29,6 +30,7 @@ class Database {
 	}
 
 	static getInstance(){
+		console.log(process.env.DB_HOST)
 		if(!this.db){
 			this.db = Database.createInstance()
 		}

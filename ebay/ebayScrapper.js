@@ -51,24 +51,28 @@ async function searchEbay(productName, partNumber, matnr){
 		console.log(term)
 		let res;
 		try{
+			let rand = randomIntFromInterval(12,35);
 			let url = `https://www.ebay.com/sch/i.html?_from=R40&_nkw=${term}`;
 			console.log(url)
 			res = await axios.get(url, {
 				headers:{
-				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_${randomIntFromInterval(12,49)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
+				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(12,35)}_${rand}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
 				}
 			});
-		}catch(e){
-			console.log(e)
-			reject(e)
+		}catch(error){
+			console.log(error.response)
+			reject(error)
 		}
 
+		console.log('beforeLoading')
 		const $ = cheerio.load(res.data);
 
+		console.log('loading')
 
 		let spans = $(".s-item__info").filter(function(){
 			let text = $(this).find(".s-item__title").text();
 			let price = $(this).find(".s-item__price").text().substr(1);
+
 			let priceNum = null;
 
 			try{
@@ -77,7 +81,7 @@ async function searchEbay(productName, partNumber, matnr){
 			catch(e){
 				console.log(e)
 			}
-//Epson WorkForce Pro WF-C5790 Wireless Color Inkjet All-in-One Printer		
+				
 			return !text.toLowerCase().includes('drum') && 
 			!text.toLowerCase().includes('toner') && 
 			!text.toLowerCase().includes('cartridge') && 
@@ -122,7 +126,7 @@ async function searchEbay(productName, partNumber, matnr){
 			!(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('25b')) &&
 			!text.toLowerCase().includes('assembly') &&
 			!text.toLowerCase().includes('role') &&
-			//TODO: !text.toLowerCase().includes('for') &&
+			!/\bfor\b/g.test(text.toLowerCase()) &&
 			!text.toLowerCase().includes('finisher') &&
 			!text.toLowerCase().includes('drawers') &&
 			!text.toLowerCase().includes('belt') &&
@@ -138,22 +142,18 @@ async function searchEbay(productName, partNumber, matnr){
 
 		let _spans = [];
 
-		if(spans.length === 0) resolve([]);
-
 		spans.each(function(){
 			let text = $(this).find(".s-item__title").text();
 			let condition = $(this).find(".s-item__subtitle span").text();
 			let price = $(this).find(".s-item__price").text().substr(1);
+			let link = $(this).find(".s-item__link").attr("href");
 
 			if(condition.toLowerCase().includes("new") || condition.toLowerCase().includes("open")){
-				_spans.push({text, price: parseFloat(tsfc(price)) });
+				_spans.push({text, price: parseFloat(tsfc(price)), link });
 			}
 
 		})
 
-
-		console.log(_spans)
-		return;
 		await _spans.forEach(async function(x, i){
 
 			let text = x.text;
@@ -165,11 +165,11 @@ async function searchEbay(productName, partNumber, matnr){
 			subset.forEach(x => {
 
 
-				if(x.includes('#')){
+				if(x.includes('#') && x === partNumber){
 					 x = x.split('#')[0]
 				}
 
-				if(x.includes('-')){
+				if(x.includes('-') && x === partNumber){
 					 x = x.split('-')[0]
 				}
 
@@ -185,28 +185,27 @@ async function searchEbay(productName, partNumber, matnr){
 			if(exactMatch){
 				objects.push({
 					text: x.text,
-					price: x.price
+					price: x.price,
+					link: x.link
 				})
 			}
 		})
 
 
-		console.log(objects);
-
 		let _prices = objects.map(x => x.price);
 
-		Database.getInstance().query("INSERT INTO inventory (Matnr, Ebay) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
+		Database.getInstance().query("INSERT INTO inventory (Matnr, Ebay) VALUES (?,?)", [matnr, JSON.stringify(objects)], (err, result) => {
 			if(err) {
 				if(err.errno === 1062){
-					Database.getInstance().query("UPDATE inventory SET Ebay = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr], (err, result) => {
+					Database.getInstance().query("UPDATE inventory SET Ebay = ? WHERE Matnr = ?", [JSON.stringify(objects), matnr], (err, result) => {
 						if(err) console.log(err);
 
-						resolve(result)
+						resolve(objects)
 					})
 				}
 			}
 
-			resolve(result)
+			resolve(objects)
 		})
 	})
 }

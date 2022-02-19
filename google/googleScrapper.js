@@ -1,6 +1,10 @@
 const axios = require('axios');
 const Database = require('../db/db');
 const { getAccessories } = require('../database_getters/accessories');
+const __subsets = require('../helpers/subsets');
+const tsfc = require('../helpers/transformStringForComparison');
+const fs = require('fs');
+
 
 function DamerauLevenshtein(prices, damerau) {
   //'prices' customisation of the edit costs by passing an object with optional 'insert', 'remove', 'substitute', and
@@ -158,50 +162,24 @@ return _arr;
 
 }*/
 
-function generateSubsets(arr){
 
-  return new Promise((resolve, reject) => {
-	  let _arr = [];
-
-	  for(let i = 0; i < arr.length; i++){
-	    for(let j = i+1; j < arr.length + 1; j++){
-	      let str = arr.slice(i,j).join("")
-	      _arr.push(str)
-	    }
-	  }
-
-	  resolve(_arr)
-  })
-}
-
-
-function interateThroughSubsets(object, term, productName){
+function interateThroughSubsets(object, term, productName, model){
 	return new Promise ((resolve, reject) =>{
 		let grading = [];
 
 		object.forEach(async (x,i) => {
-			let name = x.name.toLowerCase().replace(/\,|\s|\-/g, "")
-			let _term = term.toLowerCase().replace(/\,|\s|\-/g, "")
-
-			let subsets = await generateSubsets(name.split(""));
+			let subsets = await __subsets.v2(x.name);
 
 			let distance = Number.MAX_SAFE_INTEGER;
 
 			subsets.forEach(x => {
-				let _distance = d1(x, productName.toLowerCase().replace(/\,|\s|\-/g, ""));
+				let _distance = d1(tsfc(x), tsfc(model));
 				let __distance;
-
-				if(productName.includes("STI")){
-					let _productName = productName.toLowerCase().replace(/sti/ig, 'Source Technologies').replace(/\,|\s|\-/g, "");
-					__distance = d1(x, _productName);
-
-					_distance = Math.min(__distance, _distance);
-				}
 
 				if(_distance < distance) distance = _distance;
 			})
 
-			grading.push({name: x.name, url: x.url, distance, term})
+      if(distance === 0) grading.push({name: x.name, url: x.url, distance, term, price: tsfc(x.price), shop: x.shop})
 
 			if(i === object.length - 1){
 				resolve(grading)
@@ -211,24 +189,114 @@ function interateThroughSubsets(object, term, productName){
 }
 let d1 = DamerauLevenshtein();
 
+
+function filterResults(object){
+      return object.filter(x => {
+        let text = x.name;
+        return !text.toLowerCase().includes('drum') && 
+        !text.toLowerCase().includes('toner') && 
+        !text.toLowerCase().includes('cartridge') && 
+        !text.toLowerCase().includes('bundle') && 
+        !text.toLowerCase().includes('pack') &&
+        !text.toLowerCase().includes('yield') &&
+        !text.toLowerCase().includes("high") &&
+        !text.toLowerCase().includes('roller') && 
+        !text.toLowerCase().includes('bottle') && 
+        !text.toLowerCase().includes('kit') && 
+        !text.toLowerCase().includes('casing') &&
+        !text.toLowerCase().includes('rfb') &&
+        !text.toLowerCase().includes('manual') &&
+        !text.toLowerCase().includes('refurbished') && 
+        !text.toLowerCase().includes('charger') && 
+        !text.toLowerCase().includes('cover') && 
+        !text.toLowerCase().includes('ram') &&
+        !text.toLowerCase().includes('unit') &&
+        !text.toLowerCase().includes('cassette') && 
+        !text.toLowerCase().includes('cd') &&
+        !text.toLowerCase().includes('sewing') && 
+        !text.toLowerCase().includes('tray') && 
+        !text.toLowerCase().includes('cable') && 
+        !text.toLowerCase().includes('fuser') &&
+        !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('58d')) &&
+        !text.toLowerCase().includes('refill') &&
+        !text.toLowerCase().includes('powder') &&
+        !text.toLowerCase().includes('chip') &&
+        !text.toLowerCase().includes('replacement') &&
+        !text.toLowerCase().includes('developer') &&
+        !text.toLowerCase().includes('compatible') &&
+        !text.toLowerCase().includes('cabinet') &&
+        !(text.toLowerCase().includes('ink') && !text.toLowerCase().includes('jet')) &&
+        !text.toLowerCase().includes('cartouche') && 
+        !text.toLowerCase().includes('printhead') &&
+        !text.toLowerCase().includes('motor') &&
+        !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('76c')) &&
+        !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('58d')) &&
+        !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('41x')) &&
+        !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('32c')) &&
+        !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('57x')) &&
+        !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('78c')) &&
+        !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('return')) &&
+        !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('25b')) &&
+        !text.toLowerCase().includes('assembly') &&
+        !text.toLowerCase().includes('role') &&
+        !/\bfor\b/g.test(text.toLowerCase()) &&
+        !text.toLowerCase().includes('finisher') &&
+        !text.toLowerCase().includes('drawers') &&
+        !text.toLowerCase().includes('belt') &&
+        !text.toLowerCase().includes('215a') &&
+        !text.toLowerCase().includes('cyan') &&
+        !text.toLowerCase().includes('setup') &&
+        !text.toLowerCase().includes('board') &&
+        !text.toLowerCase().includes('genuine') &&
+        !text.toLowerCase().includes('scanner glass') && 
+        !text.toLowerCase().includes('sensor')
+      })
+}
 async function searchGoogle(productName, partNumber){
 
 	let hl = "en";
 	let gl = "us";
 	let tbm = "shop";
-	let term = partNumber;
+  let arr = productName.split(" ");
+  let model = arr[arr.length - 1];
+  let brand = arr[0];
+
+  arr.map(x => {
+    if(x.includes('HL-')) model = x;
+  })
+
+  let term = brand + " " + model;
+
+  if(model === 'All-in-One' || 
+    model === 'All-In-One' ||
+    model === 'PostScript' || 
+    model === 'MFP' || 
+    model === 'direct' || 
+    model.toLowerCase() === 'printer' ||
+    model.toLowerCase() === 'pack' ||
+    model.toLowerCase().includes('tank') ){
+    term = partNumber;
+    model = partNumber; 
+  }
+
+  console.log(term)
+  console.log(model)
 
 	return new Promise( async (resolve, reject) => {
 		axios.get(`https://shopping.google.com/search?q=${term}&hl=${hl}&gl=${gl}&tbm=${tbm}`).then( async res => {
 			let regex = /((?<=href=\")((?!=\<|\{|\,|http[s]?).)*?\boffers\b.+?(?="))/g
 			let regex2 = /data\-what\=\"1\".+?\h3.+?\>(.+?(?=\<))/g
-			let regex3 = /title\=\"((?:(?!title).)*?)(\/shopping\/product.+?)(?=\")/g
+			//let regex3 = /title\=\"((?:(?!title|td).)*?)(\/shopping\/product.*?(?=\/offers).+?)(?=\")/g
+      let regex3 = /title\=\"((?:(?!title|td).)*?)<a href="(\/shopping\/product.*?(?=\/offers).+?)(?=\")/g
       let regex4 = /^(.+?)(?=\")/g;
       let regex5 = /Best\smatch.+?\/offers.+?\"/g
       let regex6 = /((?:(?!\").)*?\/offers.+?(?=\"))/g
       let regex7 = /server\"\>.+?\>(?:(?!img))(.*?)\</g
+      let regex8 = /title\=\"((?:(?!title).)*?)".+?\$(.+?)<.+?<div.+?>.+?\>(.+?)</g
 
 			let matches = regex3.exec(res.data);
+
+      //fs.writeFile('./debugHTML.txt', res.data, { flag: 'a+' }, err => {})
 
 			let object = []
 
@@ -250,16 +318,29 @@ async function searchGoogle(productName, partNumber){
         } while((_name = regex7.exec(string)) !== null);
       }
 
-			if(!matches && object.length === 0) reject('No matches found for ' + productName)
+      let _matches;
+      let skipPage4;
+			if(!matches && object.length === 0) {
+        _matches = regex8.exec(res.data);
+        skipPage4 = true;
+        do {
+          let name = _matches[1];
+          let price = _matches[2];
+          let shop = _matches[3];
+          object.push({name, price, shop})
+        } while((_matches = regex8.exec(res.data)) !== null);
 
-			do {
-			  if(!matches && object.length === 0) reject('No matches found for ' + productName)
+      }else{
 
-			  let name = matches[1];
-			  let url = matches[2];
+        do {
+          let name = matches[1];
+          let url = matches[2];
 
-			  object.push({name, url})
-			} while((matches = regex3.exec(res.data)) !== null);
+          object.push({name, url})
+        } while((matches = regex3.exec(res.data)) !== null);
+
+      }
+
 
       object = object.map(x => {
         let name = x.name.match(regex4)
@@ -273,35 +354,39 @@ async function searchGoogle(productName, partNumber){
         }
       })
 
+			object = filterResults(object)
 
-      console.log(object)
-			object = object.filter(x => {
-				return !x.name.toLowerCase().includes('drum') && 
-				!x.name.toLowerCase().includes('toner') && 
-				!x.name.toLowerCase().includes('cartridge') && 
-				!x.name.toLowerCase().includes('bundle') && 
-				!x.name.toLowerCase().includes('pack') &&
-				!x.name.toLowerCase().includes('yield') &&
-				!x.name.toLowerCase().includes("high") &&
-        !x.name.toLowerCase().includes('roller') && 
-        !x.name.toLowerCase().includes('bottle') && 
-        !x.name.toLowerCase().includes('kit') && 
-        !x.name.toLowerCase().includes('casing') &&
-        !x.name.toLowerCase().includes('rfb') &&
-        !x.name.toLowerCase().includes('refurbished')
-			})
-
-
-      console.log(object)
-      console.log(term)
-			let grading = await interateThroughSubsets(object, partNumber, productName);
+			let grading = await interateThroughSubsets(object, term, productName, model);
 
 			grading.sort((a,b) => a.distance - b.distance);
 
-      console.log(grading)
-			if(grading.length === 0) reject('Nothing found.')
 
-			await resolve(grading[0].url, grading)
+			if(grading.length === 0) {
+        object = [];
+        skipPage4 = true;
+        _matches = regex8.exec(res.data);
+        skipPage4 = true;
+
+        do {
+          let name =  _matches[1];
+          let price = _matches[2];
+          let shop = _matches[3];
+          object.push({name, price, shop})
+        } while((_matches = regex8.exec(res.data)) !== null);
+        object = filterResults(object)
+        grading = await interateThroughSubsets(object, term, productName, model);
+
+        grading.sort((a,b) => a.distance - b.distance);
+      }
+
+      console.log(grading)
+
+      if(grading.length === 0) resolve('Nothing found.')
+      if(skipPage4){
+        await resolve(grading[0], skipPage4)
+      }else{
+        await resolve(grading[0].url)
+      }
 			
 		}).catch( err => {
 			reject(err)
@@ -317,7 +402,6 @@ async function findTheBestPrice(link){
     let arr = url.split("epd");
     arr[0] += ",scoring:tp,epd:"
     url = arr.join("")
-    console.log(url)
 		axios.get(url).then( async res => {
 			await resolve(res)
 		}).catch(err => {
@@ -348,7 +432,6 @@ async function findTheBestPrice(link){
 function findAverage(prices){
   let avg = 0;
 
-  console.log('Looking for avg')
   prices.forEach(x => avg += x.price);
 
   let num = avg / prices.length;

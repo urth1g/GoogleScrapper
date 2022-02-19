@@ -4,6 +4,7 @@ const tsfc = require('../helpers/transformStringForComparison');
 const axios = require('axios');
 const Database = require('../db/db');
 const cheerio = require('cheerio');
+const fs = require('fs')
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
@@ -14,21 +15,45 @@ function randomIntFromInterval(min, max) { // min and max included
 
 async function searchAmazon(productName, partNumber, matnr){
 
+	if(partNumber.includes('#')){
+		partNumber = partNumber.split("#")[0]
+	}
+
+	if(partNumber.includes('-')){
+		partNumber = partNumber.split("-")[0]
+	}
+
 	return new Promise( async (resolve, reject) => {
 		let arr = productName.split(" ");
 		let model = arr[arr.length - 1];
 		let brand = arr[0];
 
 		arr.map(x => {
-			if(x.includes('HL-')) brand = x;
+			if(x.includes('HL-')) model = x;
 		})
+
 		let term = brand + " " + model;
 
+		if(model === 'All-in-One' || 
+			model === 'All-In-One' ||
+			model === 'PostScript' || 
+			model === 'MFP' || 
+			model === 'direct' || 
+			model.toLowerCase() === 'printer' ||
+			model.toLowerCase() === 'pack' ||
+			model.toLowerCase().includes('tank') ){
+			term = partNumber;
+			model = partNumber;	
+		}
+
+		console.log(model)
+		console.log(productName)
+		console.log(term)
 		let res;
 		try{
 			res = await axios.get('https://www.amazon.com/s?k=' + term, {
 				headers:{
-				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_${randomIntFromInterval(12,49)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
+				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(23,65)}_${randomIntFromInterval(25,65)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
 				}
 			});
 		}catch(e){
@@ -93,9 +118,13 @@ async function searchAmazon(productName, partNumber, matnr){
 			}
 		})
 
-		console.log(objects)
 		let _prices = await findTheBestPriceAmazon(objects);
-		_prices = _prices.filter(x => !Number.isNaN(x))
+
+		console.log(_prices);
+
+		_prices = _prices.filter(x => !Number.isNaN(x.price))
+
+		console.log(_prices);
 
 		Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
 			if(err) {
@@ -103,12 +132,12 @@ async function searchAmazon(productName, partNumber, matnr){
 					Database.getInstance().query("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr], (err, result) => {
 						if(err) console.log(err);
 
-						resolve(result)
+						resolve(_prices)
 					})
 				}
 			}
 
-			resolve(result)
+			resolve(_prices)
 		})
 	})
 }
@@ -119,16 +148,13 @@ async function findTheBestPriceAmazon(objects){
 		if(objects.length === 0) resolve([]);
 
 		objects.forEach(async (x, i) => {
-				console.log(x)
-				console.log(i)
-				console.log(objects.length - 1);
 				await timer(2000 * i);
 				let { url, text } = x;
 
 				try{
 					let res = await axios.get(url, {
 						headers:{
-						    'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36',
+						    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(25,55)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`,
 							'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
 							'Accept-Encoding': 'gzip',
 							'Accept-Language': 'en-US,en;q=0.9,es;q=0.8',
@@ -138,9 +164,14 @@ async function findTheBestPriceAmazon(objects){
 
 					let $ = cheerio.load(res.data);
 
-					let p = $("[data-action='show-all-offers-display'] .a-color-price").text().substr(1);
+					//fs.writeFile('./debugHTML.txt', res.data, { flag: 'a+' }, err => {})
+
+					let p = $(".priceToPay").text().substr(1);
+					if(!p) p = $("[data-action='show-all-offers-display'] .a-color-price").text().substr(1);
+					if(!p) p = $(".a-price span").text().substr(1);
+
 					p = tsfc(p)
-					_prices.push(parseFloat(p));
+					_prices.push({price: parseFloat(p), url, text});
 
 					if(i === objects.length - 1) resolve(_prices)
 				}catch(e){

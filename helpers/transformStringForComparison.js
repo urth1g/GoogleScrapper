@@ -1,5 +1,6 @@
 function tsfc(s){
-	if(!s) return ''
+	if(s === 0) return '';
+	if(!s) return '';
 	return s.toLowerCase().replace(/\,|\s|\-|\(|\)/g, "")
 }
 

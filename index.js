@@ -27,7 +27,7 @@ function randomIntFromInterval(min, max) { // min and max included
 }
 
 app.use(cors({
-	origin: 'http://localhost:3000'
+	origin: '*'
 }))
 
 app.use(

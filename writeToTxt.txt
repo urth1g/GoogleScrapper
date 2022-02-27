@@ -7778,3 +7778,387 @@ Ebay: []
 Techdata: []
 
 
+Set price of Lexmark MX812de to (5900.14) - /shopping/product/r/US/68860525552901592/offers?prds=oid:8247316400368979404,eto:8247316400368979404_0,epd:8247316400368979404,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+MX812de&amp;sa=X&amp;ved=2ahUKEwiBmJOqsaD2AhWD-7MKHW1VDB4Q3JAGegQIAhAQ
+
+List of prices [{"price":5208.88,"shop":"A Matter of Fax"},{"price":5689.83,"shop":"Aztek Computers"},{"price":5907.14,"shop":"National"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of HP 780dns to (6006.44) - /shopping/product/r/US/15760935761006832981/offers?prds=oid:11174974072417730826,eto:11174974072417730826_0,epd:11174974072417730826,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+780dns&amp;sa=X&amp;ved=2ahUKEwiS-tWrsaD2AhVD_7MKHU_VBPsQ3JAGegUIAhCGAQ
+
+List of prices [{"price":6014.44,"shop":"PC &amp; More"},{"price":6514.89,"shop":"Dihuni"},{"price":6701.84,"shop":"Aztek Computers"}]
+
+
+Amazon: []
+
+Ebay: []
+
+Techdata: []
+
+
+Set price of Lexmark CX921DE to (6046.71) - /shopping/product/r/US/16984088600212392510/offers?prds=oid:13099919894449101889,eto:13099919894449101889_0,epd:13099919894449101889,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX921DE&amp;sa=X&amp;ved=2ahUKEwjDzICusaD2AhVimLMKHTn4BBIQ_44IegQIAhAa
+
+List of prices [{"price":5264.97,"shop":"Eco home office"},{"price":5542.22,"shop":"A Matter of Fax"},{"price":5628.99,"shop":"eBay - aimdistribution"},{"price":6051.71,"shop":"ShopBLT.com"},{"price":6095.43,"shop":"Aztek Computers"},{"price":6364.02,"shop":"Office Depot"},{"price":6472.81,"shop":"Neobits.com"},{"price":6680.49,"shop":"NextWarehouse.com"},{"price":6903.71,"shop":"Consutronix"},{"price":6904.99,"shop":"GoVets.com"},{"price":6922.96,"shop":"NeutronUSA"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of HP M725z+ to (6380.67) - /shopping/product/r/US/10256166107827361224/offers?prds=oid:18138913588900236240,eto:18138913588900236240_0,epd:18138913588900236240,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+M725z+&amp;sa=X&amp;ved=2ahUKEwj90rmysaD2AhVmDYgJHTBVBO0Q3JAGegQIAhBi
+
+List of prices [{"price":5851.11,"shop":"A Matter of Fax"},{"price":6301.2,"shop":"BlueDogSupplies.com"},{"price":6385.67,"shop":"B&amp;H Photo Video Audio"},{"price":6385.67,"shop":"Adorama"},{"price":6385.67,"shop":"ARC Document Solutions"},{"price":6915.29,"shop":"Aztek Computers"},{"price":7610.83,"shop":"GoVets.com"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark CX825dte to (5311.69) - /shopping/product/r/US/1310775018158975870/offers?prds=oid:9592484280574146845,eto:9592484280574146845_0,epd:9592484280574146845,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX825dte&amp;sa=X&amp;ved=2ahUKEwj7z5y1saD2AhU0BogJHf4lB00Q3JAGegQIAhAQ
+
+List of prices [{"price":4849.88,"shop":"A Matter of Fax"},{"price":5301.41,"shop":"Aztek Computers"},{"price":5317.69,"shop":"ShopBLT.com"},{"price":5782.37,"shop":"Dihuni"},{"price":5786.34,"shop":"Neobits.com"},{"price":5975.61,"shop":"NextWarehouse.com"},{"price":6189.05,"shop":"NeutronUSA"},{"price":6220.8,"shop":"Consutronix"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of HP M681z to (6083) - /shopping/product/r/US/13338144267065545199/offers?prds=oid:13451382668648883877,eto:13451382668648883877_0,epd:13451382668648883877,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+M681z&amp;sa=X&amp;ved=2ahUKEwia95e3saD2AhWvCIgJHWNeCzcQ3JAGegQIAhAR
+
+List of prices [{"price":5125.55,"shop":"A Matter of Fax"},{"price":5425,"shop":"Printer-Central"},{"price":6089,"shop":"NextWarehouse.com"},{"price":6089,"shop":"NeutronUSA"},{"price":6500.76,"shop":"Q.R.Systems"},{"price":6591.34,"shop":"Office Depot"},{"price":6638.56,"shop":"CompSource"},{"price":6711.33,"shop":"Newegg Business"},{"price":6721.23,"shop":"Newegg.com"},{"price":6727.79,"shop":"Colamco"},{"price":6733.2,"shop":"PCNation"},{"price":6915.01,"shop":"Hummingbird Networks"},{"price":6915.01,"shop":"Hummingbird Networks"},{"price":7416.47,"shop":"GoVets.com"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of HP 779dns to (6619.26) - /shopping/product/r/US/17482282575091236974/offers?prds=oid:8801411138734362612,eto:8801411138734362612_0,epd:8801411138734362612,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+779dns&amp;sa=X&amp;ved=2ahUKEwjTqcK5saD2AhVlC4gJHUP3Af4Q3JAGegQIAhAR
+
+List of prices [{"price":6151.11,"shop":"A Matter of Fax"},{"price":6508.95,"shop":"Bluedogink"},{"price":6627.26,"shop":"BlueDogSupplies.com"},{"price":7600.69,"shop":"OfficeCurb"},{"price":8002.11,"shop":"GoVets.com"},{"price":8002.2,"shop":"ADA Business Supplies"},{"price":9469.71,"shop":"Competitive Choice Shop"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark CX825dtfe to (6663.41) - /shopping/product/r/US/1349201929912974673/offers?prds=oid:9589428623637509451,eto:9589428623637509451_0,epd:9589428623637509451,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX825dtfe&amp;sa=X&amp;ved=2ahUKEwjGn_G7saD2AhWsDIgJHd4ACxoQ3JAGegQIAhBJ
+
+List of prices [{"price":4999.88,"shop":"A Matter of Fax"},{"price":6155.2,"shop":"ShopBLT.com"},{"price":6668.41,"shop":"Neobits.com"},{"price":6890.17,"shop":"NextWarehouse.com"},{"price":6957.31,"shop":"Aztek Computers"},{"price":7108.6,"shop":"Consutronix"},{"price":7138.68,"shop":"NeutronUSA"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of HP M776z to (6894) - /shopping/product/r/US/3298624197980727581/offers?prds=oid:3613135836788955816,eto:3613135836788955816_0,epd:3613135836788955816,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+M776z&amp;sa=X&amp;ved=2ahUKEwiuqeW9saD2AhVimLMKHTn4BBIQ_44IegQIAhAi
+
+List of prices [{"price":6126.66,"shop":"A Matter of Fax"},{"price":6840.8,"shop":"JourneyEd"},{"price":6899,"shop":"NextWarehouse.com"},{"price":7243.95,"shop":"Bluedogink"},{"price":7398.63,"shop":"Myriad Greeyn"},{"price":7468.17,"shop":"B&amp;H Photo-Video-Audio"},{"price":7520.13,"shop":"myElite Products"},{"price":7537.5,"shop":"CompSource"},{"price":7783.08,"shop":"Harper Office US"},{"price":7796.51,"shop":"OfficeSupply.com"},{"price":8011.76,"shop":"TheBulkClean.com"},{"price":8011.81,"shop":"BlueDogSupplies.com"},{"price":8036.34,"shop":"NeutronUSA"},{"price":8143.6,"shop":"Round Eye Supply"},{"price":8280.25,"shop":"OfficeCurb"},{"price":8632.23,"shop":"eBay - myofficeinnovations"},{"price":8948.93,"shop":"ADA Business Supplies"},{"price":9046.49,"shop":"CDW"},{"price":9913.96,"shop":"Nifty Concept"},{"price":10313.46,"shop":"Tactical Office "}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark MX826ade to (6979.35) - /shopping/product/r/US/17299374752528082838/offers?prds=oid:13109742835965747172,eto:13109742835965747172_0,epd:13109742835965747172,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+MX826ade&amp;sa=X&amp;ved=2ahUKEwjltZfAsaD2AhWwDIgJHcjNAB0Q3JAGegQIAhAR
+
+List of prices [{"price":5094.44,"shop":"A Matter of Fax"},{"price":5833.4,"shop":"ShopBLT.com"},{"price":6989.35,"shop":"NextWarehouse.com"},{"price":7244.05,"shop":"NeutronUSA"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of HP M682z to (7125.74) - /shopping/product/r/US/14977064599530219421/offers?prds=oid:10195707807646898536,eto:10195707807646898536_0,epd:10195707807646898536,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+M682z&amp;sa=X&amp;ved=2ahUKEwibhOjCsaD2AhXBr7MKHS7cBeIQ_44IegQIAhAw
+
+List of prices [{"price":7039.88,"shop":"A Matter of Fax"},{"price":7101.11,"shop":"BlueDogSupplies.com"},{"price":7130.74,"shop":"Myriad Greeyn"},{"price":7301.57,"shop":"OfficeCrave.com"},{"price":7331.23,"shop":"JourneyEd"},{"price":7443.45,"shop":"Bluedogink"},{"price":7673.84,"shop":"B&amp;H Photo Video Audio"},{"price":7673.84,"shop":"Adorama"},{"price":7673.84,"shop":"Newegg.com"},{"price":7686.47,"shop":"Round Eye Supply"},{"price":7701.06,"shop":"CompSource"},{"price":8418.65,"shop":"OfficeCurb"},{"price":8631.24,"shop":"GoVets.com"},{"price":8680.74,"shop":"ADA Business Supplies"},{"price":9173.34,"shop":"OnTimeSupplies.com"},{"price":9510.43,"shop":"CDW"},{"price":10211.92,"shop":"Nifty Concept"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Canon T36 to (7184.38) - /shopping/product/r/US/17241928950165954012/offers?prds=oid:2706704202110449335,eto:2706704202110449335_0,epd:2706704202110449335,prmr:1&amp;hl=en&amp;gl=us&amp;q=Canon+T36&amp;sa=X&amp;ved=2ahUKEwj3vfnEsaD2AhUIDYgJHWAnAe0Q3JAGegQIAhAQ
+
+List of prices [{"price":9195.84,"shop":"Freedom Paper"}]
+
+
+Amazon: []
+
+Ebay: [{"text":"Canon TM-305 36\" Large-Format Printer w/ T36 Scanner + Stand 3056C006AA","price":7665,"link":"https://www.ebay.com/itm/303421492934?hash=item46a5548ec6:g:rfMAAOSwrzBeBrCU"},{"text":"Canon imagePROGRAF TM-305 MFP T36   ","price":9400,"link":"https://www.ebay.com/itm/321393670316?hash=item4ad48e38ac:g:bFYAAOSwq2xcPg8P"},{"text":"Canon TX-3000 MFP T36 36\" CAD Printer (MPN: 2443C006AD)","price":11970,"link":"https://www.ebay.com/itm/303421492999?epid=25051089218&hash=item46a5548f07:g:Wp0AAOSw10FeKdN7"},{"text":"Canon TM-300MFP T36 Printer-Scanner 3058C010AA","price":6825,"link":"https://www.ebay.com/itm/293396701786?epid=5036371339&hash=item444fce625a:g:gYcAAOSwXj1ehWzl"},{"text":"Canon TX-4000 MFP T36 44\" CAD Printer (MPN: 2444C006AA)","price":13125,"link":"https://www.ebay.com/itm/293396701070?epid=0&hash=item444fce5f8e:g:IPIAAOSwWk1eBrCc"}]
+
+Techdata: []
+
+
+Set price of Canon T36 to (7184.38) - /shopping/product/r/US/17241928950165954012/offers?prds=oid:2706704202110449335,eto:2706704202110449335_0,epd:2706704202110449335,prmr:1&amp;hl=en&amp;gl=us&amp;q=Canon+T36&amp;sa=X&amp;ved=2ahUKEwik0sLHsaD2AhUYDIgJHZ2bCgoQ3JAGegQIAhAQ
+
+List of prices [{"price":9195.84,"shop":"Freedom Paper"}]
+
+
+Amazon: []
+
+Ebay: [{"text":"Canon TM-305 36\" Large-Format Printer w/ T36 Scanner + Stand 3056C006AA","price":7665,"link":"https://www.ebay.com/itm/303421492934?hash=item46a5548ec6:g:rfMAAOSwrzBeBrCU"},{"text":"Canon imagePROGRAF TM-305 MFP T36   ","price":9400,"link":"https://www.ebay.com/itm/321393670316?hash=item4ad48e38ac:g:bFYAAOSwq2xcPg8P"},{"text":"Canon TX-3000 MFP T36 36\" CAD Printer (MPN: 2443C006AD)","price":11970,"link":"https://www.ebay.com/itm/303421492999?epid=25051089218&hash=item46a5548f07:g:Wp0AAOSw10FeKdN7"},{"text":"Canon TM-300MFP T36 Printer-Scanner 3058C010AA","price":6825,"link":"https://www.ebay.com/itm/293396701786?epid=5036371339&hash=item444fce625a:g:gYcAAOSwXj1ehWzl"},{"text":"Canon TX-4000 MFP T36 44\" CAD Printer (MPN: 2444C006AA)","price":13125,"link":"https://www.ebay.com/itm/293396701070?epid=0&hash=item444fce5f8e:g:IPIAAOSwWk1eBrCc"}]
+
+Techdata: []
+
+
+Set price of HP M725z to (5972.75) - /shopping/product/r/US/2714796837563479129/offers?prds=oid:777369468362972473,eto:777369468362972473_0,epd:777369468362972473,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+M725z&amp;sa=X&amp;ved=2ahUKEwjugN7JsaD2AhVyDIgJHWW7D-UQ3JAGegQIAhAR
+
+List of prices [{"price":5551.11,"shop":"A Matter of Fax"},{"price":5599,"shop":"NextWarehouse.com"},{"price":5980.75,"shop":"BlueDogSupplies.com"},{"price":6060.92,"shop":"ARC Document Solutions"},{"price":6060.92,"shop":"B&amp;H Photo Video Audio"},{"price":6060.92,"shop":"Adorama"},{"price":6087.95,"shop":"Walmart"},{"price":6184.1,"shop":"NeutronUSA"},{"price":6190.81,"shop":"Newegg.com"},{"price":6226.54,"shop":"Colamco"},{"price":6237.2,"shop":"PCNation"},{"price":6384.58,"shop":"Hummingbird Networks"},{"price":6563.89,"shop":"Aztek Computers"},{"price":7197.8,"shop":"GoVets.com"},{"price":8361.99,"shop":"CDW"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of HP M806x+ to (7462.45) - /shopping/product/r/US/15288387822354633812/offers?prds=oid:4788819718143313062,eto:4788819718143313062_0,epd:4788819718143313062,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+M806x+&amp;sa=X&amp;ved=2ahUKEwi9t7LMsaD2AhVmDYgJHTBVBO0Q3JAGegQIAhAQ
+
+List of prices [{"price":5235.55,"shop":"A Matter of Fax"},{"price":6885.12,"shop":"Aztek Computers"},{"price":7471.45,"shop":"GoVets.com"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of HP M776zs to (6256.44) - /shopping/product/r/US/1234022052030549643/offers?prds=oid:11901002199120203663,eto:11901002199120203663_0,epd:11901002199120203663,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+M776zs&amp;sa=X&amp;ved=2ahUKEwiX_LzOsaD2AhUYDIgJHZ2bCgoQ3JAGegQIAhAu
+
+List of prices [{"price":6264.44,"shop":"PC &amp; More"},{"price":6832.78,"shop":"Aztek Computers"},{"price":7532.52,"shop":"JourneyEd"},{"price":7698.91,"shop":"NextWarehouse.com"},{"price":8225.92,"shop":"B&amp;H Photo Video Audio"},{"price":9696.54,"shop":"GoVets.com"},{"price":9916.05,"shop":"CDW"}]
+
+
+Amazon: []
+
+Ebay: []
+
+Techdata: []
+
+
+Set price of HP M880z to (8050.45) - /shopping/product/r/US/11654043496226970598/offers?prds=oid:17577619402984103725,eto:17577619402984103725_0,epd:17577619402984103725,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+M880z&amp;sa=X&amp;ved=2ahUKEwj0oMzRsaD2AhVD_7MKHU_VBPsQ3JAGegQIAhAS
+
+List of prices [{"price":2456.72,"shop":"Aztek Computers"},{"price":2575.02,"shop":"The Printer Pros"},{"price":6813.33,"shop":"A Matter of Fax"},{"price":6861.12,"shop":"TonerParts.com"},{"price":8060.45,"shop":"WiseCom Technologies"},{"price":8060.45,"shop":"Miatlantic.us"},{"price":8725.44,"shop":"Miatlantic.us"},{"price":8798.08,"shop":"Multioculus.com"},{"price":8798.08,"shop":"Multioculus.com"},{"price":8895,"shop":"Printer-Central"},{"price":8998.9,"shop":"BlueDogSupplies.com"},{"price":9268.87,"shop":"OfficeCrave.com"},{"price":9375.45,"shop":"Myriad Greeyn"},{"price":9448.95,"shop":"Bluedogink"},{"price":9981.46,"shop":"Colamco"},{"price":10246.73,"shop":"TigerDirect.com"},{"price":10277.82,"shop":"Round Eye Supply"},{"price":11051.51,"shop":"OfficeCurb"},{"price":11380.67,"shop":"GoVets.com"},{"price":11423.67,"shop":"Nifty Concept"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark MX910de to (8450.55) - /shopping/product/r/US/8628680291789996299/offers?prds=oid:15237077436788284587,eto:15237077436788284587_0,epd:15237077436788284587,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+MX910de&amp;sa=X&amp;ved=2ahUKEwjW0aTVsaD2AhUAC4gJHWbpAikQ3JAGegQIAhAZ
+
+List of prices [{"price":7399.88,"shop":"A Matter of Fax"},{"price":8324.97,"shop":"NextWarehouse.com"},{"price":8457.55,"shop":"ShopBLT.com"},{"price":8685.39,"shop":"NeutronUSA"},{"price":8714.32,"shop":"Neobits.com"},{"price":9182.01,"shop":"Aztek Computers"},{"price":9506.39,"shop":"Consutronix"},{"price":9754.73,"shop":"BlueDogSupplies.com"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of HP 785f to (8389.95) - /shopping/product/r/US/7644667139088078687/offers?prds=oid:294584804116727242,eto:294584804116727242_0,epd:294584804116727242,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+785f&amp;sa=X&amp;ved=2ahUKEwiuovbZsaD2AhWD-7MKHW1VDB4Q_44IegQIAhAk
+
+List of prices [{"price":3349.88,"shop":"A Matter of Fax"},{"price":3629.61,"shop":"Aztek Computers"},{"price":8398.95,"shop":"Bluedogink"},{"price":8658.92,"shop":"Adorama"},{"price":8684.36,"shop":"JourneyEd"},{"price":9886.63,"shop":"GoVets.com"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark CX922DE to (8909.17) - /shopping/product/r/US/17947943350493193855/offers?prds=oid:15140995703302095769,eto:15140995703302095769_0,epd:15140995703302095769,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX922DE&amp;sa=X&amp;ved=2ahUKEwjx-5DcsaD2AhWvCIgJHWNeCzcQ3JAGegQIAhAZ
+
+List of prices [{"price":7499.88,"shop":"A Matter of Fax"},{"price":8624.78,"shop":"ShopBLT.com"},{"price":8916.17,"shop":"Neobits.com"},{"price":9193.35,"shop":"NextWarehouse.com"},{"price":9538.96,"shop":"NeutronUSA"},{"price":9548.67,"shop":"Aztek Computers"},{"price":9744.95,"shop":"Consutronix"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark CX860de to (9246.85) - /shopping/product/r/US/15154349746621315004/offers?prds=oid:2021371269055006939,eto:2021371269055006939_0,epd:2021371269055006939,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX860de&amp;sa=X&amp;ved=2ahUKEwjKzNLesaD2AhVyDIgJHWW7D-UQ3JAGegQIAhAZ
+
+List of prices [{"price":7799.88,"shop":"A Matter of Fax"},{"price":8812.1,"shop":"ShopBLT.com"},{"price":9253.85,"shop":"NextWarehouse.com"},{"price":9910.26,"shop":"Consutronix"},{"price":13509.6,"shop":"Aztek Computers"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of HP 785z+ to (9829.06) - /shopping/product/r/US/3461685654682645337/offers?prds=oid:5391023531928940045,eto:5391023531928940045_0,epd:5391023531928940045,prmr:1&amp;hl=en&amp;gl=us&amp;q=HP+785z+&amp;sa=X&amp;ved=2ahUKEwiIgqzlsaD2AhVktbMKHYLkDfIQ3JAGegQIAhAR
+
+List of prices [{"price":7036.25,"shop":"eBay"},{"price":8528.88,"shop":"A Matter of Fax"},{"price":8576.35,"shop":"BlueDogSupplies.com"},{"price":9836.06,"shop":"OfficeCurb"},{"price":10333.58,"shop":"ADA Business Supplies"},{"price":10385.5,"shop":"GoVets.com"},{"price":11233.54,"shop":"Competitive Choice Shop"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark CX860dtfe to (10203.62) - /shopping/product/r/US/16445195775600108757/offers?prds=oid:18383007575584685067,eto:18383007575584685067_0,epd:18383007575584685067,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX860dtfe&amp;sa=X&amp;ved=2ahUKEwiZ3v3nsaD2AhXBr7MKHS7cBeIQ3JAGegQIAhAZ
+
+List of prices [{"price":9209.88,"shop":"A Matter of Fax"},{"price":10076.93,"shop":"ShopBLT.com"},{"price":10209.62,"shop":"Aztek Computers"},{"price":10424.63,"shop":"Neobits.com"},{"price":10707.95,"shop":"NextWarehouse.com"},{"price":11145,"shop":"NeutronUSA"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark CX860dtfe to (10202.62) - /shopping/product/r/US/16445195775600108757/offers?prds=oid:18383007575584685067,eto:18383007575584685067_0,epd:18383007575584685067,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX860dtfe&amp;sa=X&amp;ved=2ahUKEwi4tenqsaD2AhUFtrMKHb8LBcQQ3JAGegQIAhAZ
+
+List of prices [{"price":9209.88,"shop":"A Matter of Fax"},{"price":10076.93,"shop":"ShopBLT.com"},{"price":10209.62,"shop":"Aztek Computers"},{"price":10424.63,"shop":"Neobits.com"},{"price":10707.95,"shop":"NextWarehouse.com"},{"price":11145,"shop":"NeutronUSA"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark CX923DXE to (10857.47) - /shopping/product/r/US/13222851992643995378/offers?prds=oid:17225939553999693810,eto:17225939553999693810_0,epd:17225939553999693810,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX923DXE&amp;sa=X&amp;ved=2ahUKEwia-MDssaD2AhXPBYgJHSH-AOMQ3JAGegQIAhAY
+
+List of prices [{"price":9507.77,"shop":"A Matter of Fax"},{"price":10415.14,"shop":"ShopBLT.com"},{"price":10865.47,"shop":"Neobits.com"},{"price":11161.26,"shop":"NextWarehouse.com"},{"price":11275.76,"shop":"Aztek Computers"},{"price":11578.62,"shop":"NeutronUSA"},{"price":14064,"shop":"BarcodeDiscount"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark CX860dte to (11516.6) - /shopping/product/r/US/6808068419886825535/offers?prds=oid:1765401968414509233,eto:1765401968414509233_0,epd:1765401968414509233,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX860dte&amp;sa=X&amp;ved=2ahUKEwiX2YrvsaD2AhVD_7MKHU_VBPsQ3JAGegQIAhAR
+
+List of prices [{"price":8751.11,"shop":"A Matter of Fax"},{"price":11221.14,"shop":"Neobits.com"},{"price":11526.6,"shop":"NextWarehouse.com"},{"price":11681.16,"shop":"ShopBLT.com"},{"price":12040.35,"shop":"NeutronUSA"},{"price":12793.66,"shop":"Aztek Computers"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark MX911dte to (11388.17) - /shopping/product/r/US/12265979486454016195/offers?prds=oid:7533475579632937148,eto:7533475579632937148_0,epd:7533475579632937148,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+MX911dte&amp;sa=X&amp;ved=2ahUKEwiSx_bxsaD2AhWDvrMKHXHbBOAQ3JAGegQIAhAQ
+
+List of prices [{"price":10997.77,"shop":"A Matter of Fax"},{"price":11045.57,"shop":"ShopBLT.com"},{"price":11393.17,"shop":"Neobits.com"},{"price":11703.45,"shop":"NextWarehouse.com"},{"price":11887.45,"shop":"Office Specialties"},{"price":12187.5,"shop":"NeutronUSA"},{"price":12947.58,"shop":"Aztek Computers"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark CX924DXE to (12733.53) - /shopping/product/r/US/3048075438475016275/offers?prds=oid:11852073664467746475,eto:11852073664467746475_0,epd:11852073664467746475,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX924DXE&amp;sa=X&amp;ved=2ahUKEwj7w4H0saD2AhXNmbMKHQKHCxwQ3JAGegQIAhAQ
+
+List of prices [{"price":11144.44,"shop":"A Matter of Fax"},{"price":12289.3,"shop":"ShopBLT.com"},{"price":12739.53,"shop":"Neobits.com"},{"price":12978.09,"shop":"Adorama"},{"price":12978.09,"shop":"Office Depot"},{"price":13125.98,"shop":"NextWarehouse.com"},{"price":13412.01,"shop":"Aztek Computers"},{"price":13619.59,"shop":"NeutronUSA"},{"price":13940.69,"shop":"GoVets.com"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Canon Z36 to (14988) - /shopping/product/r/US/5922157043361649923/offers?prds=oid:14579780513746898111,eto:14579780513746898111_0,epd:14579780513746898111,prmr:1&amp;hl=en&amp;gl=us&amp;q=Canon+Z36&amp;sa=X&amp;ved=2ahUKEwiPrqf2saD2AhUzBIgJHXbUBzQQ3JAGegQIAhAQ
+
+List of prices [{"price":14995,"shop":"Copyfaxes"},{"price":15745.95,"shop":"Wide-format-inkjet.com"},{"price":16232.09,"shop":"A-E Graphics"}]
+
+
+Amazon: []
+
+Ebay: []
+
+Techdata: []
+
+
+Set price of Lexmark MX912dxe to (15710.69) - /shopping/product/r/US/2476166217119317572/offers?prds=oid:17103295278653805327,eto:17103295278653805327_0,epd:17103295278653805327,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+MX912dxe&amp;sa=X&amp;ved=2ahUKEwjFi_v6saD2AhUKvrMKHea4DDoQ3JAGegQIAhAQ
+
+List of prices [{"price":15428.88,"shop":"A Matter of Fax"},{"price":15476.29,"shop":"ShopBLT.com"},{"price":15720.69,"shop":"Neobits.com"},{"price":16192.6,"shop":"NextWarehouse.com"},{"price":16559.76,"shop":"Office Specialties"},{"price":16872.62,"shop":"NeutronUSA"},{"price":17716.91,"shop":"Aztek Computers"},{"price":18682.08,"shop":"EliteWarehouse.com"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Lexmark CX924DTE to (15877.82) - /shopping/product/r/US/13325670851269255174/offers?prds=oid:18292405978955432907,eto:18292405978955432907_0,epd:18292405978955432907,prmr:1&amp;hl=en&amp;gl=us&amp;q=Lexmark+CX924DTE&amp;sa=X&amp;ved=2ahUKEwievsT9saD2AhW9CIgJHX0FDVYQ3JAGegQIAhAj
+
+List of prices [{"price":9499.88,"shop":"A Matter of Fax"},{"price":15425.04,"shop":"Neobits.com"},{"price":15887.82,"shop":"NextWarehouse.com"},{"price":15910.61,"shop":"ShopBLT.com"},{"price":16544.83,"shop":"NeutronUSA"},{"price":20157.05,"shop":"BarcodeDiscount"}]
+
+
+Amazon: undefined
+
+Ebay: undefined
+
+Techdata: undefined
+
+
+Set price of Canon Z36 to (14989) - /shopping/product/r/US/5922157043361649923/offers?prds=oid:14579780513746898111,eto:14579780513746898111_0,epd:14579780513746898111,prmr:1&amp;hl=en&amp;gl=us&amp;q=Canon+Z36&amp;sa=X&amp;ved=2ahUKEwjbq6LtvKD2AhWvCIgJHWNeCzcQ3JAGegQIAhAQ
+
+List of prices [{"price":14995,"shop":"Copyfaxes"},{"price":15745.95,"shop":"Wide-format-inkjet.com"},{"price":16232.09,"shop":"A-E Graphics"}]
+
+
+Amazon: []
+
+Ebay: []
+
+Techdata: []
+
+

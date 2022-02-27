@@ -30,12 +30,16 @@ class Database {
 	}
 
 	static getInstance(){
-		console.log(process.env.DB_HOST)
 		if(!this.db){
 			this.db = Database.createInstance()
 		}
 
 		return this.db;
+	}
+
+	static async makeQuery(query, params){
+		let res = await Database.getInstance().promise().query(query, params)
+		return res
 	}
 }
 

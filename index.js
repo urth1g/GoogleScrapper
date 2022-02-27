@@ -123,6 +123,7 @@ function changePrice(price){
 		return +(price - randomIntFromInterval(0, 1)).toFixed(2);
 	}
 }
+
 app.get('/crawl_google_printers', async (req, resp) => {
 
 
@@ -144,7 +145,7 @@ app.get('/crawl_google_printers', async (req, resp) => {
 
 
 	arr = arr.filter(x => !x.ShortName.includes('STI'));
-	arr = arr.slice(223);
+	arr = arr.slice(415);
 
 	//index = arr.findIndex(x => x.ShortName === 'Epson WorkForce Pro WF-C5710 - multifunction printer - color');
 

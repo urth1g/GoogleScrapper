@@ -171,7 +171,16 @@ async function findTheBestPriceAmazon(objects){
 					if(!p) p = $(".a-price span").text().substr(1);
 
 					p = tsfc(p)
-					_prices.push({price: parseFloat(p), url, text});
+
+					let infoObject = {price: parseFloat(p), url, text}
+
+					// Addition to use the same function for grabbing toners, diffirentiating between generic and genuine toners.
+					
+					if(typeof x.isGenuine !== undefined){
+						infoObject['isGenuine'] = x.isGenuine
+					}
+
+					_prices.push(infoObject);
 
 					if(i === objects.length - 1) resolve(_prices)
 				}catch(e){

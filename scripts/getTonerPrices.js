@@ -14,38 +14,6 @@ function randomIntFromInterval(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-function interateThroughSubsets(object, term, productName, model){
-	return new Promise ((resolve, reject) =>{
-		let grading = [];
-
-		object.forEach(async (x,i) => {
-			let subsets = await __subsets.v2(x.name);
-
-			let distance = Number.MAX_SAFE_INTEGER;
-
-			subsets.forEach(x => {
-				let _distance = search(tsfc(x), tsfc(model));
-				let __distance;
-
-				if(_distance < distance) distance = _distance;
-			})
-
-      if(distance === 0) grading.push({name: x.name, url: x.url, distance, term, price: tsfc(x.price), shop: x.shop})
-
-			if(i === object.length - 1){
-				resolve(grading)
-			}
-		})
-	})
-}
-
-function filterResults(object){
-      return object.filter(x => {
-        let text = x.name;
-        return text.includes('cartridge') || 
-        text.includes('toner')
-      })
-}
 async function searchGoogleToners(productName, partNumber){
 
 	let hl = "en";
@@ -72,29 +40,10 @@ async function searchGoogleToners(productName, partNumber){
 	})
 }
 
-
-
-async function findTheBestPriceToners(link){
-
-	let baseURL = 'https://shopping.google.com'
-
-	return new Promise( async (resolve, reject) => {
-	    let url = baseURL + link + '&sfr=compass&ei=DWTdYeK_G7qHytMPm7yLsAU&tbs=new%3A1';
-	    let arr = url.split("epd");
-	    arr[0] += ",scoring:tp,epd:"
-	    url = arr.join("")
-			axios.get(url).then( async res => {
-				await resolve(res)
-			}).catch(err => {
-				reject(err)
-			})
-	})
-}
-
 async function run(){
 	let toners = await Database.getInstance().promise().query("SELECT * FROM toner_details_final")
 
-	toners = toners[0]
+	toners = toners[0].slice(333)
 
 	for(let i = 0; i < toners.length; i++){
 		let toner = toners[i]
@@ -103,17 +52,20 @@ async function run(){
 		let color = toner['Color'].toLowerCase()
 		let name = toner['Name'].split(" - ")[0].toLowerCase()
 		let matnr = toner['Matnr'];
+		let pack = toner['Pack']
 
+		console.log("Current index: ", i)
+		
 		if(name.split(" ").length > 1){
-			await searchAmazonToners(name, color, model, matnr)
-			await timer(5000)
+			await searchAmazonToners(name, color, model, matnr, pack)
+			await timer(randomIntFromInterval(5000,7000))
 		}else{
 
 		}
 	}
 }
 
-async function searchAmazonToners(productName, color, model, matnr){
+async function searchAmazonToners(productName, color, model, matnr, pack){
 
 	return new Promise( async (resolve, reject) => {
 
@@ -123,11 +75,12 @@ async function searchAmazonToners(productName, color, model, matnr){
 		console.log(color)
 		console.log(model)
 		console.log(matnr)
+		console.log(pack)
 
 		try{
 			res = await axios.get('https://www.amazon.com/s?k=' + term, {
 				headers:{
-				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(23,65)}_${randomIntFromInterval(25,65)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
+				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(55,100)}_${randomIntFromInterval(59,100)}_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
 				}
 			});
 		}catch(e){
@@ -139,42 +92,39 @@ async function searchAmazonToners(productName, color, model, matnr){
 		let spans = $(".s-title-instructions-style").filter(function(){
 			let text = $(this).find(".a-text-normal span").text().toLowerCase()
 
-			return text.toLowerCase().includes('toner') || 
-			text.toLowerCase().includes('cartridge')  
+			if(pack){
+				let _pack = tsfc(pack).replaceAll(/pack/g, "pk")
+
+				let includesPack = tsfc(text).includes(tsfc(pack)) || tsfc(text).includes(_pack)
+				return ( text.toLowerCase().includes('toner') || 
+				text.toLowerCase().includes('cartridge') ) &&
+				includesPack
+			}else{
+				return text.toLowerCase().includes('toner') ||
+				text.toLowerCase().includes('cartridge') 
+			} 
 		});
 
 		let objects = [];
 
-		let _spans = [];
+		await spans.each(async function(){
+			let text = $(this).find(".a-text-normal span").text()
+			let href = 'https://amazon.com' + $(this).find(".a-text-normal").attr('href')
+			let isGenuine = text.toLowerCase().includes('replacement') ? false : true
 
-		spans.each(function(){
-			let text = $(this).find(".a-text-normal span").text();
-			let href = 'https://amazon.com' + $(this).find(".a-text-normal").attr('href');
-
-			_spans.push({text,href});
-		})
-
-		await _spans.forEach(async function(x, i){
-
-			let text = x.text;
-			let subset = await __subsets.v2(text);
-
-
-			let distance = Number.MAX_SAFE_INTEGER;
+			let subset = await __subsets.v2(text)
+			
+			let distance = Number.MAX_SAFE_INTEGER
 
 			subset.forEach(x => {
-				distance = Math.min(search(tsfc(x),tsfc(model)), distance);
-				//if(distance === 0 && tsfc(x).length !== tsfc(model).length) distance = 1;
-			});
+				distance = Math.min(search(tsfc(x),tsfc(model)), distance)
+			})
 
-			let exactMatch = false;
-
-			if(distance === 0) exactMatch = true;
-
-			if(exactMatch){
+			if(distance === 0){
 				objects.push({
-					text: x.text,
-					url: x.href
+					text: text,
+					url: href,
+					isGenuine: isGenuine
 				})
 			}
 		})
@@ -183,25 +133,70 @@ async function searchAmazonToners(productName, color, model, matnr){
 
 		_prices = _prices.filter(x => !Number.isNaN(x.price))
 
-		console.log(_prices)
+		if(_prices.length === 0){
+			await emptyAmazonLogs()
+			resolve([])
+			return;
+		}
+		let currentPrice = await Database.getInstance().promise().query("SELECT Cost FROM toner_details_final WHERE Matnr = ?", [matnr])
 
-		resolve(_prices)
-/*		Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
+		currentPrice = currentPrice.length > 1 ? currentPrice[0] : null
+		currentPrice = currentPrice.length > 1 ? currentPrice[0].Cost : null
+
+		let minimumPrice = _prices.filter( x => x.isGenuine ).sort((a,b) => a - b)
+
+		if(minimumPrice.length > 0){
+			let mp = minimumPrice[0].price;
+
+			Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
+				if(err) {
+					if(err.errno === 1062){
+						Database.getInstance().query("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr], (err, result) => {
+							if(err) console.log(err);
+	
+							console.log('UPDATED')
+							console.log(result)
+							console.log(matnr)
+							console.log('----------------')
+							resolve(_prices)
+						})
+					}
+				}
+
+				console.log('INSERTED')
+				console.log(result)
+				console.log(matnr)
+				console.log('----------------')
+	
+				resolve(_prices)
+			})
+		}else{
+			await emptyAmazonLogs()
+			resolve([])
+		}
+	})
+}
+
+function emptyAmazonLogs(matnr){
+
+	return new Promise( (resolve, reject) => {
+		Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, '[]'], (err, result) => {
+
+			console.log('inserted: ', matnr)
 			if(err) {
 				if(err.errno === 1062){
-					Database.getInstance().query("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr], (err, result) => {
-						if(err) console.log(err);
-
-						resolve(_prices)
+					Database.getInstance().query("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", ['[]', matnr], (err, result) => {
+						if(err) reject(err);
+	
+						console.log('updated: ', matnr)
+						resolve(true)
 					})
 				}
 			}
-
-			resolve(_prices)
-		})*/
+	
+			resolve(true)
+		})
 	})
 }
 
 run()
-
-module.exports = { searchGoogleToners, findTheBestPriceToners };

@@ -14,11 +14,12 @@ const { searchEbay, findTheBestPriceEbay } = require('./ebay/ebayScrapper');
 const { searchTechdata } = require('./techdata/techdataScrapper');
 const { getData } = require('./google/spreadsheets');
 const { pricesFromTxt } = require('./pricesFromTxt/pricesFromTxt');
-const getInventory = require('./helpers/getInventory');
 const fs = require('fs');
 const cors = require('cors');
+const searchGoogleToners = require('./scripts/getTonerPricesGoogle');
 
 require('dotenv').config()
+
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
@@ -50,7 +51,7 @@ app.get('/crawl_accessories', async (req, res) => {
 	let arr = [];
 
 	accessories.forEach(x => {
-		if(obj[x.Matnr]){ 
+		if(obj[x.printerNumber]){ 
 			return true;
 		}else{
 			arr.push(x);
@@ -818,4 +819,51 @@ app.get('/create_crawl_logs_from_txt', async (req, res) =>{
 	res.send('ok')
 })
 
+app.post('/crawl_google_toner', async (req, resp) => {
+	let { matnr } = req.body
+
+	let toner = await Database.makeQuery("SELECT * FROM toner_details_final WHERE Matnr = ?", [matnr])
+
+	toner = toner[0]
+	toner = toner.length > 0 ? toner[0] : false
+
+	if(!toner){
+		resp.send('false')
+		return
+	}
+
+	const model = toner['Model']
+	const name = toner['Name']
+	const color = toner['Color']
+	const pack = toner['Pack']
+	const printerNumber = toner['PrinterNumber']
+
+	let term = name.split(" ")[0] + " " + model;
+	let match = model;
+
+	let filterFunction = f => f
+
+	if(pack){
+		filterFunction = x => {
+			let _pack = tsfc(pack).replaceAll(/pack/g, "pk")
+
+			let text = tsfc(x.name)
+			let includesPack = text.includes(tsfc(pack)) || text.includes(_pack) || text.includes('packof2')
+
+			return includesPack
+		}
+	}
+	
+	console.log('Toner name: ', name)
+
+	let shopsToExclude = {}
+
+	shopsToExclude['PC &amp; More'] = true
+	shopsToExclude['A Matter of Fax'] = true 
+	shopsToExclude['Amofax'] = true 
+
+	let res = await searchGoogleToners(term, match, filterFunction, shopsToExclude, toner)
+
+	resp.send('ok')
+})
 app.listen(port, () => console.log('App running on 3030'))

@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-require('dotenv').config({path: '../.env'})
+require('dotenv').config({path: require('path').resolve(__dirname,'../.env')})
 
 class Database {
 	constructor(){

@@ -223,20 +223,22 @@ async function findTheBestPriceToners(link, name, shopsToExclude, toner){
 
         console.log("Current price of a toner is: ", currentPriceOfToner);
 
-        if(currentPriceOfToner){
-            if(newPrice < currentPriceOfToner){
-                await bestPriceGoogle.updateTonerPrice(newPrice, toner, url)
-            }
-        }else{
-            await bestPriceGoogle.updateTonerPrice(newPrice, toner, url)
-        }
+        // if(currentPriceOfToner){
+        //     if(newPrice < currentPriceOfToner){
+        //         await bestPriceGoogle.updateTonerPrice(newPrice, toner, url)
+        //     }
+        // }else{
+        //     await bestPriceGoogle.updateTonerPrice(newPrice, toner, url)
+        // }
 
+        await bestPriceGoogle.updateTonerPrice(newPrice, toner, url)
+        
         resolve(shops)
 
 	})
 }
 
-run()
+// run() 
 
 // 14
 // 15
@@ -245,3 +247,5 @@ run()
 // 22
 // 23
 // 33
+
+module.exports = searchGoogleToners

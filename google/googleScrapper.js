@@ -283,6 +283,7 @@ async function searchGoogle(productName, partNumber){
   console.log(model)
 
 	return new Promise( async (resolve, reject) => {
+
 		axios.get(`https://shopping.google.com/search?q=${term}&hl=${hl}&gl=${gl}&tbm=${tbm}`).then( async res => {
 			let regex = /((?<=href=\")((?!=\<|\{|\,|http[s]?).)*?\boffers\b.+?(?="))/g
 			let regex2 = /data\-what\=\"1\".+?\h3.+?\>(.+?(?=\<))/g
@@ -296,8 +297,6 @@ async function searchGoogle(productName, partNumber){
 
 			let matches = regex3.exec(res.data);
 
-      //fs.writeFile('./debugHTML.txt', res.data, { flag: 'a+' }, err => {})
-
 			let object = []
 
       let string = res.data.match(regex5);
@@ -308,7 +307,7 @@ async function searchGoogle(productName, partNumber){
         let _name = regex7.exec(string);
 
         do {
-          if(!_name) return;
+          if(!_name) break;
 
           let name = _name[1];
 
@@ -331,8 +330,11 @@ async function searchGoogle(productName, partNumber){
         } while((_matches = regex8.exec(res.data)) !== null);
 
       }else{
-
+        // ERROR HERE, FIX
+        // TypeError: Cannot read properties of null (reading '1')
         do {
+          if(!matches) break;
+
           let name = matches[1];
           let url = matches[2];
 
@@ -379,16 +381,16 @@ async function searchGoogle(productName, partNumber){
         grading.sort((a,b) => a.distance - b.distance);
       }
 
-      console.log(grading)
-
       if(grading.length === 0) resolve('Nothing found.')
+
       if(skipPage4){
-        await resolve(grading[0], skipPage4)
+        resolve(grading[0], skipPage4)
       }else{
-        await resolve(grading[0].url)
+        resolve(grading[0].url)
       }
 			
 		}).catch( err => {
+      console.log(err)
 			reject(err)
 		})
 	})

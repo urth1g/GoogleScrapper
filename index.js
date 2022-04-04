@@ -18,6 +18,7 @@ const fs = require('fs');
 const cors = require('cors');
 const searchGoogleToners = require('./scripts/getTonerPricesGoogle');
 const PriceSetter = require('./classes/PriceSetter');
+const { Console } = require('console');
 require('dotenv').config()
 
 
@@ -465,7 +466,7 @@ app.get('/shops', async (req, res) => {
 		console.log(obj500750.sort((a,b) => a - b)[Math.floor(obj500750.length / 2)])
 		console.log(obj7501000.sort((a,b) => a - b)[Math.floor(obj7501000.length / 2)])
 		console.log(obj10002000.sort((a,b) => a - b)[Math.floor(obj10002000.length / 2)])
-		console.log(obj20004000.sort((a,b) => a - b)[Math.floor(obj20004000.length / 2)])
+		console.log(obj20004000.sort((a,b) => a - b)[Math.floor(objWPL04000.length / 2)])
 		console.log(obj4000.sort((a,b) => a - b)[Math.floor(obj4000.length / 2)])*/
 		console.log(obj)
 		res.send('ok')
@@ -474,21 +475,25 @@ app.get('/shops', async (req, res) => {
 
 
 app.get('/crawl_amazon_printers', async (req, res) => {
-	let printers = await getPrinters();
+	let printers = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
+
+	printers = printers[0]
 
 	printers = printers.filter(x => !x.ShortName.includes('STI'));
 
-	printers = printers.slice(565);
+	let index = printers.findIndex(x => x.ShortName.toLowerCase().includes('m681f'));
 
-	for(let i = 0;i < printers.length; i++){
+	for(let i = 251; i < printers.length; i++){
 		let int = randomIntFromInterval(6333,7589);
 		let p1 = timer(int);
 
 		let name = printers[i].ShortName;
 		let mpn = printers[i].mpn;
 		let matnr = printers[i].Matnr;
+		console.log('runnin')
 		let p2 = searchAmazon(name.split(" - ")[0], mpn, matnr);
 
+		console.log('test')
 		await Promise.all([p1, p2]).then( res => {
 			console.log(int)
 			console.log('Promise resolved for ' + i);
@@ -534,8 +539,24 @@ app.post("/crawl_for_printer", async (req, resp) => {
 	try{
 		await searchGoogle(Name, printer[0].mpn).then(async (url, skipPage4) => {
 
+			console.log(url)
 			if(url === 'Nothing found.') {
-				resp.send([])
+				let priceSetter = new PriceSetter([], Matnr)
+				let sources = await priceSetter.getSourcesNetPrices(Matnr);
+
+				sources = sources.filter(x => x.state.toLowerCase() === 'new' || x.state.toLowerCase().includes('open') )
+				if(sources.length === 0){
+					resp.send({error: 'Nothing found. Price unchanged.'})
+				}else{
+					try{
+						await Database.setProductPrice(Matnr, sources[0].net)
+						resp.send({ok:true, newPrice: sources[0].getSourcesNetPrices})
+					}catch(e){
+						console.log(e)
+						resp.send({error: e})
+					}
+				}
+
 				return;
 			}
 			if(url.price){
@@ -570,7 +591,7 @@ app.post("/crawl_for_printer", async (req, resp) => {
 						console.log(result)
 					})
 				})();
-			}else if(skipPage4 && !url){
+			}else if (skipPage4 && !url){
 				resp.send([])
 				return;
 			}
@@ -609,12 +630,16 @@ app.post("/crawl_for_printer", async (req, resp) => {
 						totalPriceNew.push({price, shop: shops.shift()})
 					}while((matches3 = regex.exec(res.data)) !== null)
 
-					let priceSetter = new PriceSetter(totalPriceNew);
+					totalPriceNew.sort((a,b) => a.price - b.price)
+
+					console.log('shops')
+					console.log(totalPriceNew)
+					let priceSetter = new PriceSetter(totalPriceNew, Matnr);
 
 					await priceSetter.filterShopsBasedOnIgnoreList()
 					await priceSetter.filterShopsBasedOnSources(Matnr)
-					await priceSetter.applyMargins()
-					
+					await priceSetter.applyMargins() 
+
 					try{
 						await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?)", [Matnr, Name, JSON.stringify(totalPriceNew), url])
 					}catch(err){
@@ -644,10 +669,11 @@ app.post("/crawl_for_printer", async (req, resp) => {
 						if(index === totalPriceNew.length - 1) {
 							shopToBeat = totalPriceNew[index]
 							shopToBeat.price = shopToBeat.price + 90;
-							shopToBeat.price = +shopToBeat.price.toFixed(2)
+							shopToBeat.price = parseFloat(shopToBeat.price.toFixed(2))
 						}
 
 					}
+
 
 					let newPrice = 0;
 
@@ -658,10 +684,12 @@ app.post("/crawl_for_printer", async (req, resp) => {
 					if(shopToBeat){
 						newPrice = changePrice(shopToBeat.price);
 						newPrice = Math.round(parseFloat(newPrice * 100)) / 100
+						//newPrice = priceSetter.price
 					}else{
-						newPrice = priceSetter.price
+						newPrice = parseFloat(priceSetter.price.toFixed(2))
 					}
 
+					
 					if(Number.isNaN(newPrice)) return;
 
 					Database.getInstance().query("UPDATE products SET price = ? WHERE Matnr = ?", [newPrice, Matnr], (err, result) => {
@@ -687,7 +715,9 @@ app.post("/crawl_for_printer", async (req, resp) => {
 app.get('/crawl_ebay_printers', (req, res) => {
 
 	(async () => {
-		let printers = await getPrinters();
+		let printers = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
+
+		printers = printers[0]
 
 		printers = printers.filter(x => !x.ShortName.includes('STI'));
 
@@ -843,13 +873,16 @@ app.post("/set_price_from_logs", async (req,resp) => {
 	resp.setHeader("Transfer-Encoding", "chunked");
 	resp.setHeader('Content-Type', 'text/html; charset=UTF-8')
 
+
 	for(let i = 0; i < printers.length; i++){
 		let matnr = printers[i].Matnr;
 
-		let shouldCancel = await Database.makeQuery("SELECT * configuration WHERE action = ?", ['scrapping_enabled']);
+		let shouldCancel = await Database.makeQuery2("SELECT * FROM configuration WHERE action = ?", ['scrapping_enabled']);
 
-		shouldCancel = shouldCancel[0];
+		console.log(shouldCancel)
+		shouldCancel = shouldCancel[0]
 
+		if(Number(shouldCancel.value) === 0 ) break;
 		
 		try{
 			let res = await axios.post('http://localhost:3030/crawl_for_printer', {matnr})
@@ -865,4 +898,27 @@ app.post("/set_price_from_logs", async (req,resp) => {
 
 	resp.end()
 })
+
+app.post("/admin/enable_gpcw", async(req,resp) => {
+	try{
+		await Database.makeQuery2("UPDATE configuration SET value = 1 WHERE action = 'scrapping_enabled'")
+		resp.send({message: 'Global Price Configuration Wizard Enabled.'})
+	}catch(e){
+		resp.send({error: 'Unexpected error occured.'})
+	}
+})
+
+app.post("/admin/disable_gpcw", async(req,resp) => {
+	try{
+		await Database.makeQuery2("UPDATE configuration SET value = 0 WHERE action = 'scrapping_enabled'")
+		resp.send({message: 'Global Price Configuration Wizard Disabled.'})
+	}catch(e){
+		resp.send({error: 'Unexpected error occured.'})
+	}
+})
+
 app.listen(port, () => console.log('App running on 3030'))
+
+// 623cdw
+// 622cdw
+// intelifax 2940

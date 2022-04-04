@@ -52,7 +52,7 @@ async function searchEbay(productName, partNumber, matnr){
 		let res;
 		try{
 			let rand = randomIntFromInterval(12,35);
-			let url = `https://www.ebay.com/sch/i.html?_from=R40&_nkw=${term}`;
+			let url = `https://www.ebay.com/sch/i.html?_from=R40&rt=nc&LH_BIN=1&_nkw=${term}`;
 			console.log(url)
 			res = await axios.get(url, {
 				headers:{
@@ -147,11 +147,27 @@ async function searchEbay(productName, partNumber, matnr){
 			let condition = $(this).find(".s-item__subtitle span").text();
 			let price = $(this).find(".s-item__price").text().substr(1);
 			let link = $(this).find(".s-item__link").attr("href");
-
-			if(condition.toLowerCase().includes("new") || condition.toLowerCase().includes("open")){
-				_spans.push({text, price: parseFloat(tsfc(price)), link });
+			let shipping = $(this).find(".s-item__logisticsCost").text().trim()
+			
+			if( (shipping && shipping.toLocaleLowerCase().includes('free') ) || !shipping || shipping.includes('not specified') || shipping.includes('Freight')){
+				shipping = 0;
+			}else{
+				try{
+					shipping = shipping.match(/\$[\d|\.]*/g)[0]
+					shipping = parseFloat(shipping.substr(1))
+				}catch(e){
+					console.log(e)
+				}
 			}
 
+			price = parseFloat(tsfc(price))
+
+			let sum = parseFloat(shipping+price)
+			console.log(sum)
+			console.log(shipping)
+			console.log(price)
+			console.log(text)
+			_spans.push({text, price: sum, link, state: condition, shipping });
 		})
 
 		await _spans.forEach(async function(x, i){
@@ -186,7 +202,8 @@ async function searchEbay(productName, partNumber, matnr){
 				objects.push({
 					text: x.text,
 					price: x.price,
-					link: x.link
+					link: x.link,
+					state: x.state
 				})
 			}
 		})

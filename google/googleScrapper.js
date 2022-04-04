@@ -249,7 +249,9 @@ function filterResults(object){
         !text.toLowerCase().includes('board') &&
         !text.toLowerCase().includes('genuine') &&
         !text.toLowerCase().includes('scanner glass') && 
-        !text.toLowerCase().includes('sensor')
+        !text.toLowerCase().includes('sensor') && 
+        !text.toLowerCase().includes('guide') && 
+        !text.toLowerCase().includes('hinge')
       })
 }
 async function searchGoogle(productName, partNumber){
@@ -301,6 +303,7 @@ async function searchGoogle(productName, partNumber){
 
       let string = res.data.match(regex5);
 
+      console.log('stop1')
       if(string){
         string = string[0]
         let url = string.match(regex6)[0]
@@ -323,13 +326,15 @@ async function searchGoogle(productName, partNumber){
         _matches = regex8.exec(res.data);
         skipPage4 = true;
         do {
+          if(!_matches) break;
           let name = _matches[1];
           let price = _matches[2];
           let shop = _matches[3];
           object.push({name, price, shop})
         } while((_matches = regex8.exec(res.data)) !== null);
 
-      }else{
+      console.log('stop2')
+    }else{
         // ERROR HERE, FIX
         // TypeError: Cannot read properties of null (reading '1')
         do {
@@ -343,6 +348,7 @@ async function searchGoogle(productName, partNumber){
 
       }
 
+      console.log('stop3')
 
       object = object.map(x => {
         let name = x.name.match(regex4)
@@ -356,10 +362,14 @@ async function searchGoogle(productName, partNumber){
         }
       })
 
+      console.log('stop4')
+
 			object = filterResults(object)
 
+      console.log('stop5')
 			let grading = await interateThroughSubsets(object, term, productName, model);
 
+      console.log('stop6')
 			grading.sort((a,b) => a.distance - b.distance);
 
 
@@ -370,6 +380,7 @@ async function searchGoogle(productName, partNumber){
         skipPage4 = true;
 
         do {
+          if(!_matches) break;
           let name =  _matches[1];
           let price = _matches[2];
           let shop = _matches[3];

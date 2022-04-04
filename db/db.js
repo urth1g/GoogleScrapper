@@ -42,6 +42,11 @@ class Database {
 		return res
 	}
 
+	static async makeQuery2(query, params){
+		let res = await Database.getInstance().promise().query(query, params)
+		return res[0]
+	}
+
 	static async getSources(matnr){
 		let res = await Database.makeQuery("SELECT * FROM inventory WHERE Matnr = ? ", [matnr])
 		return res[0]
@@ -55,6 +60,16 @@ class Database {
 	static async getIgnoredShops(){
 		let res = await Database.makeQuery("SELECT * FROM inventory_ignore")
 		return res[0]
+	}
+
+	static async setProductPrice(Matnr, newPrice){
+		return new Promise( (resolve, reject ) => {
+			Database.getInstance().query("UPDATE products SET price = ? WHERE Matnr = ?", [newPrice, Matnr], (err, result) => {
+				if(err) reject(err)
+	
+				resolve(result)
+			})
+		})
 	}
 }
 

@@ -1,6 +1,7 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { getPrinters } = require('../database_getters/printers');
 const axios = require('axios');
+const Database = require('../db/db');
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
@@ -26,7 +27,9 @@ async function getData(){
 
 	const rows = await sheet.getRows(); // can pass in { limit, offset }
 
-	let printers = await getPrinters();
+	let _printers = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
+
+	let printers = _printers[0]
 
 	let obj = {};
 

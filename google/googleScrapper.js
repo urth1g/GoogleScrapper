@@ -164,8 +164,11 @@ return _arr;
 
 
 function interateThroughSubsets(object, term, productName, model){
+
 	return new Promise ((resolve, reject) =>{
 		let grading = [];
+
+    if(object.length === 0) resolve([])
 
 		object.forEach(async (x,i) => {
 			let subsets = await __subsets.v2(x.name);
@@ -186,7 +189,9 @@ function interateThroughSubsets(object, term, productName, model){
 			}
 		})
 	})
+
 }
+
 let d1 = DamerauLevenshtein();
 
 

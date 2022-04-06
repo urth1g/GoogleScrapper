@@ -265,6 +265,7 @@ Techdata: ${JSON.stringify(Techdata)}\n\n
 						if(amoFaxExists){
 							let index = totalPriceNew.findIndex(x => x.shop === 'A Matter of Fax');
 
+							console.log('exists')
 							shopToBeat = totalPriceNew[index + 2];
 
 							if(!shopToBeat) shopToBeat = totalPriceNew[index + 1]
@@ -544,7 +545,7 @@ app.post("/crawl_for_printer", async (req, resp) => {
 				let priceSetter = new PriceSetter([], Matnr)
 				let sources = await priceSetter.getSourcesNetPrices(Matnr);
 
-				sources = sources.filter(x => x.state.toLowerCase() === 'new' || x.state.toLowerCase().includes('open') )
+				sources = sources.filter(x => x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open') )
 				if(sources.length === 0){
 					resp.send({error: 'Nothing found. Price unchanged.'})
 				}else{
@@ -636,10 +637,6 @@ app.post("/crawl_for_printer", async (req, resp) => {
 					console.log(totalPriceNew)
 					let priceSetter = new PriceSetter(totalPriceNew, Matnr);
 
-					await priceSetter.filterShopsBasedOnIgnoreList()
-					await priceSetter.filterShopsBasedOnSources(Matnr)
-					await priceSetter.applyMargins() 
-
 					try{
 						await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?)", [Matnr, Name, JSON.stringify(totalPriceNew), url])
 					}catch(err){
@@ -662,13 +659,16 @@ app.post("/crawl_for_printer", async (req, resp) => {
 					if(amoFaxExists){
 						let index = totalPriceNew.findIndex(x => x.shop === 'A Matter of Fax');
 
+						console.log('exists')
 						shopToBeat = totalPriceNew[index + 2];
 
+						console.log(shopToBeat)
 						if(!shopToBeat) shopToBeat = totalPriceNew[index + 1]
 
+						console.log(shopToBeat)
 						if(index === totalPriceNew.length - 1) {
 							shopToBeat = totalPriceNew[index]
-							shopToBeat.price = shopToBeat.price + 90;
+							shopToBeat.price = shopToBeat.price + 30;
 							shopToBeat.price = parseFloat(shopToBeat.price.toFixed(2))
 						}
 
@@ -686,6 +686,9 @@ app.post("/crawl_for_printer", async (req, resp) => {
 						newPrice = Math.round(parseFloat(newPrice * 100)) / 100
 						//newPrice = priceSetter.price
 					}else{
+						await priceSetter.filterShopsBasedOnIgnoreList()
+						await priceSetter.filterShopsBasedOnSources(Matnr)
+						await priceSetter.applyMargins() 
 						newPrice = parseFloat(priceSetter.price.toFixed(2))
 					}
 
@@ -841,29 +844,6 @@ app.post('/crawl_google_toner', async (req, resp) => {
 	resp.send('ok')
 });
 
-app.get('/fix_ebay_delete_after', async (req,res) => {
-	let el = [12083689, 12109479, 12612454, 12612476, 13277004, 13303890, 13399278, 13556799, 13776594, 13780801, 14065033, 14319694]
-
-	let printers = await getPrinters();
-
-	for(let i = 0; i < el.length; i++){
-
-		let matnr = el[i];
-
-		let printer = printers.filter(x => x.Matnr === matnr)[0]
-
-		if(!printer) continue;
-
-		let name = printer.ShortName;
-		let mpn = printer.mpn;
-
-		let prices = await searchEbay(name.split(" - ")[0], mpn, matnr);
-
-		console.log(prices)
-		await timer(5000)
-	}
-})
-
 app.post("/set_price_from_logs", async (req,resp) => {
 
 	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
@@ -915,6 +895,45 @@ app.post("/admin/disable_gpcw", async(req,resp) => {
 	}catch(e){
 		resp.send({error: 'Unexpected error occured.'})
 	}
+})
+
+app.get("/statistics", async (req,resp) => {
+	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
+
+	let printers = res[0]
+
+	let keys = {}
+	for (const printer of printers){
+		let matnr = printer.Matnr;
+
+		let res = await Database.makeQuery("SELECT * FROM inventory_log WHERE Matnr = ? ", [matnr])
+		res = res[0]
+		if(res.length === 0) continue;
+
+		let feed = JSON.parse(res[0].Inventory) 
+
+		if(typeof feed === 'string') feed = JSON.parse(feed)
+
+		if(!feed) continue;
+
+		feed.push({shop: 'Amofax', price: printer.Price})
+
+
+		feed.sort((a,b) => a.price - b.price)
+
+		let index = feed.findIndex(x => x.shop === 'Amofax');
+
+		if(index === 0) {
+			console.log(feed)
+		}
+
+		if(!keys[index]) keys[index] = 1
+		else keys[index] = keys[index] + 1;
+
+		//await timer(5000)
+	}
+
+	resp.send(JSON.stringify(keys))
 })
 
 app.listen(port, () => console.log('App running on 3030'))

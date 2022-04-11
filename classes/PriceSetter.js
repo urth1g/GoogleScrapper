@@ -55,7 +55,6 @@ class PriceSetter{
 
         sources.sort((a,b) => a.price - b.price);
 
-        console.log(sources)
         sources = await Promise.all(sources.map(async x => {
 			let taxed = Math.ceil(x.price * 1.07)
 			let afterCreditCardFees = Math.ceil(taxed * 1.045)
@@ -72,8 +71,11 @@ class PriceSetter{
 
         sources = sources.filter(x => x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open'))
 
-        console.log(sources)
-        
+        if(sources.length === 0) {
+            this.shops = [];
+            return
+        }
+
         this.shops = this.shops.filter( x => x.price > sources[0].net)
         return this;
     }
@@ -129,7 +131,6 @@ class PriceSetter{
                 throw new Error("Unable to beat any shop")
             }else{
                 try{
-                    console.log(sources[0].net)
                     await Database.setProductPrice(this.matnr, sources[0].net)
                     throw new Error("Unable to beat any shop. Setting the price based on best source.")
                 }catch(e){

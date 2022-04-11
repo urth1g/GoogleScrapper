@@ -52,8 +52,10 @@ async function searchEbay(productName, partNumber, matnr){
 		let res;
 		try{
 			let rand = randomIntFromInterval(12,35);
-			let url = `https://www.ebay.com/sch/i.html?_from=R40&rt=nc&LH_BIN=1&_nkw=${term}`;
+			https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=brother+hl-l5200dwt+printer&_sacat=0&LH_TitleDesc=0&_odkw=brother+hl-l5200dw+printer&_osacat=0&LH_BIN=1&_sop=15
+			//let url = `https://www.ebay.com/sch/i.html?_from=R40&rt=nc&LH_BIN=1&_nkw=${term}+x`printer&_sop=15`;
 			console.log(url)
+			let url = ''
 			res = await axios.get(url, {
 				headers:{
 				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(12,35)}_${rand}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
@@ -100,7 +102,8 @@ async function searchEbay(productName, partNumber, matnr){
 			!text.toLowerCase().includes('ram') &&
 			!text.toLowerCase().includes('unit') &&
 			!text.toLowerCase().includes('cassette') && 
-			!text.toLowerCase().includes('cd') &&
+			!/\bcd\b/g.test(text.toLowerCase()) &&
+			!/\badf\b/g.test(text.toLowerCase()) &&
 			!text.toLowerCase().includes('sewing') && 
 			!text.toLowerCase().includes('tray') && 
 			!text.toLowerCase().includes('cable') && 
@@ -210,6 +213,10 @@ async function searchEbay(productName, partNumber, matnr){
 
 
 		let _prices = objects.map(x => x.price);
+
+		objects.push({
+			date: new Date().toUTCString()
+		});
 
 		Database.getInstance().query("INSERT INTO inventory (Matnr, Ebay) VALUES (?,?)", [matnr, JSON.stringify(objects)], (err, result) => {
 			if(err) {

@@ -123,6 +123,10 @@ async function searchAmazon(productName, partNumber, matnr){
 		let _prices = await findTheBestPriceAmazon(objects)
 		_prices = _prices.filter(x => !Number.isNaN(x.price))
 
+		_prices.push({
+			date: new Date().toUTCString()
+		})
+
 		Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
 			if(err) {
 				if(err.errno === 1062){

@@ -196,8 +196,10 @@ let d1 = DamerauLevenshtein();
 
 
 function filterResults(object){
+
       return object.filter(x => {
         let text = x.name;
+        
         return !text.toLowerCase().includes('drum') && 
         !text.toLowerCase().includes('toner') && 
         !text.toLowerCase().includes('cartridge') && 
@@ -217,7 +219,7 @@ function filterResults(object){
         !text.toLowerCase().includes('ram') &&
         !text.toLowerCase().includes('unit') &&
         !text.toLowerCase().includes('cassette') && 
-        !text.toLowerCase().includes('cd') &&
+        !/\bcd\b/g.test(text.toLowerCase()) &&
         !text.toLowerCase().includes('sewing') && 
         !text.toLowerCase().includes('tray') && 
         !text.toLowerCase().includes('cable') && 
@@ -295,7 +297,7 @@ async function searchGoogle(productName, partNumber){
 			let regex = /((?<=href=\")((?!=\<|\{|\,|http[s]?).)*?\boffers\b.+?(?="))/g
 			let regex2 = /data\-what\=\"1\".+?\h3.+?\>(.+?(?=\<))/g
 			//let regex3 = /title\=\"((?:(?!title|td).)*?)(\/shopping\/product.*?(?=\/offers).+?)(?=\")/g
-      let regex3 = /title\=\"((?:(?!title|td).)*?)<a href="(\/shopping\/product.*?(?=\/offers).+?)(?=\")/g
+      let regex3 = /title\=\"((?:(?!\btitle\b|\btd\b).)*?)<a href="(\/shopping\/product.*?(?=\/offers).+?)(?=\")/g
       let regex4 = /^(.+?)(?=\")/g;
       let regex5 = /Best\smatch.+?\/offers.+?\"/g
       let regex6 = /((?:(?!\").)*?\/offers.+?(?=\"))/g
@@ -308,7 +310,6 @@ async function searchGoogle(productName, partNumber){
 
       let string = res.data.match(regex5);
 
-      console.log('stop1')
       if(string){
         string = string[0]
         let url = string.match(regex6)[0]
@@ -325,6 +326,8 @@ async function searchGoogle(productName, partNumber){
         } while((_name = regex7.exec(string)) !== null);
       }
 
+			//fs.writeFile('./debugHTML.txt', res.data, { flag: 'a+' }, err => {})
+
       let _matches;
       let skipPage4;
 			if(!matches && object.length === 0) {
@@ -340,8 +343,6 @@ async function searchGoogle(productName, partNumber){
 
       console.log('stop2')
     }else{
-        // ERROR HERE, FIX
-        // TypeError: Cannot read properties of null (reading '1')
         do {
           if(!matches) break;
 
@@ -369,7 +370,9 @@ async function searchGoogle(productName, partNumber){
 
       console.log('stop4')
 
+      console.log(object)
 			object = filterResults(object)
+      console.log(object[0])
 
       console.log('stop5')
 			let grading = await interateThroughSubsets(object, term, productName, model);

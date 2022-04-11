@@ -34,17 +34,24 @@ async function getData(){
 	let obj = {};
 
 	printers.forEach(x => {
-		obj[x.mpn] = x.Price
+		obj[x.mpn] = { price: x.Price, gtin: x.gtin }
 	})
 
 	for(let i = 0; i < rows.length; i++){
 		await timer(3800)
 		let x = rows[i]
 
-		let price = obj[x.mpn];
+		let values = obj[x.mpn];
 
+		if(!values) continue;
+		let { price, gtin } = values;
+
+		if(Number(gtin) === 13803135459) continue;
+		
+		console.log(gtin)
 		x.price = price + " USD"
-		console.log(x)
+		x.gtin = `'` + gtin;
+		//console.log(x)
 		await x.save();
 	}
 }

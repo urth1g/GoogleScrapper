@@ -22,6 +22,18 @@ const { Console } = require('console');
 require('dotenv').config()
 
 
+// Ignore international items
+// Also be the first shop after a matter of fax
+// For techdata, always 2$ additional per item + shipping fee ( make a call based on weight to the UPS )
+// Techdata - look into the availability as well. If the date for the item to become available is 3 days into the future, consider it. Also re-flush techdata sources everyday.
+// Ebay - add printer and filter based on price 
+// If the printer model ends with T (DWT) find the pricing for DW and add the cost of the tray
+// Ignore in the future: BuyBizSupplies, School Specialty, Gov Group
+// Send email to Jonathan https://www.faxexpress.com/printers/Brother/Brother-HL-L5200DWT?rfrc=GoogleShopping&rfrt=GoogleShopping_BrotherHLL5200DWT
+// Setup a guard for google ads if the item is getting a lot of clicks and not being profitable. Profitable consists of several factors:
+// Position on google, CPC, and net - cost price. 
+// Crawl all of ebay and compare on page 4
+
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
 function randomIntFromInterval(min, max) { // min and max included 
@@ -592,6 +604,8 @@ app.post("/crawl_for_printer", async (req, resp) => {
 						console.log(result)
 					})
 				})();
+				resp.send([])
+				return;
 			}else if (skipPage4 && !url){
 				resp.send([])
 				return;
@@ -638,14 +652,17 @@ app.post("/crawl_for_printer", async (req, resp) => {
 					let priceSetter = new PriceSetter(totalPriceNew, Matnr);
 
 					try{
-						await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?)", [Matnr, Name, JSON.stringify(totalPriceNew), url])
+						await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, JSON.stringify(totalPriceNew), url, null])
 					}catch(err){
+						console.log(err)
 						if(err.errno === 1062){
 							await Database.getInstance().promise().query("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
 								JSON.stringify(totalPriceNew),
 								url,
 								Matnr
 							])
+
+							console.log('updated')
 						}
 					}
 
@@ -659,16 +676,11 @@ app.post("/crawl_for_printer", async (req, resp) => {
 					if(amoFaxExists){
 						let index = totalPriceNew.findIndex(x => x.shop === 'A Matter of Fax');
 
-						console.log('exists')
-						shopToBeat = totalPriceNew[index + 2];
+						shopToBeat = totalPriceNew[index + 1];
 
-						console.log(shopToBeat)
-						if(!shopToBeat) shopToBeat = totalPriceNew[index + 1]
-
-						console.log(shopToBeat)
 						if(index === totalPriceNew.length - 1) {
 							shopToBeat = totalPriceNew[index]
-							shopToBeat.price = shopToBeat.price + 30;
+							shopToBeat.price = shopToBeat.price + 10;
 							shopToBeat.price = parseFloat(shopToBeat.price.toFixed(2))
 						}
 
@@ -725,7 +737,7 @@ app.get('/crawl_ebay_printers', (req, res) => {
 		printers = printers.filter(x => !x.ShortName.includes('STI'));
 
 		for(let i = 0; i < printers.length; i++){
-			let int = randomIntFromInterval(7000,8000);
+			let int = randomIntFromInterval(3555,5323);
 			console.log(i)
 			await timer(int);
 
@@ -936,8 +948,38 @@ app.get("/statistics", async (req,resp) => {
 	resp.send(JSON.stringify(keys))
 })
 
-app.listen(port, () => console.log('App running on 3030'))
+app.get("/set_price_from_logs", async (req,resp) => {
 
-// 623cdw
-// 622cdw
-// intelifax 2940
+	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
+
+	let printers = res[0]
+
+	resp.setHeader("Transfer-Encoding", "chunked");
+	resp.setHeader('Content-Type', 'text/html; charset=UTF-8')
+
+
+	for(let i = 0; i < printers.length; i++){
+		let matnr = printers[i].Matnr;
+
+		let shouldCancel = await Database.makeQuery2("SELECT * FROM configuration WHERE action = ?", ['scrapping_enabled']);
+
+		shouldCancel = shouldCancel[0]
+
+		if(Number(shouldCancel.value) === 0 ) break;
+		
+		try{
+			let res = await axios.post('http://localhost:3030/crawl_for_printer', {matnr})
+			if(res.data.ok) resp.write(JSON.stringify({...res.data, index: i}))
+			if(res.data.error) resp.write(JSON.stringify({index: i, error: res.data.error}))
+		}catch(e){
+			console.log(e)
+		}
+
+		await timer(3000)
+
+	}
+
+	resp.end()
+})
+
+app.listen(port, () => console.log('App running on 3030'))

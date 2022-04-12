@@ -17,6 +17,10 @@ function randomIntFromInterval(min, max) { // min and max included
 
 async function searchAmazon(productName, partNumber, matnr){
 
+	let initialProductName = productName
+	let initialPartNumber = partNumber
+	let initialMatnr = matnr;
+
 	if(partNumber.includes('#')){
 		partNumber = partNumber.split("#")[0]
 	}
@@ -62,9 +66,12 @@ async function searchAmazon(productName, partNumber, matnr){
 			console.log(e)
 		}
 
+
+		if(!res){
+			console.log('error')
+			return await searchAmazon(initialProductName, initialPartNumber, initialMatnr);
+		}
 		const $ = cheerio.load(res.data);
-
-
 
 		let spans = $(".s-title-instructions-style").filter(function(){
 			let text = $(this).find(".a-text-normal span").text();
@@ -123,9 +130,9 @@ async function searchAmazon(productName, partNumber, matnr){
 		let _prices = await findTheBestPriceAmazon(objects)
 		_prices = _prices.filter(x => !Number.isNaN(x.price))
 
-		_prices.push({
-			date: new Date().toUTCString()
-		})
+		// _prices.push({
+		// 	date: new Date().toUTCString()
+		// })
 
 		Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
 			if(err) {

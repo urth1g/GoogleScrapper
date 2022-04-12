@@ -19,6 +19,7 @@ const cors = require('cors');
 const searchGoogleToners = require('./scripts/getTonerPricesGoogle');
 const PriceSetter = require('./classes/PriceSetter');
 const { Console } = require('console');
+const dailyUpdate = require ('./scripts/dailyUpdate');
 require('dotenv').config()
 
 
@@ -503,10 +504,8 @@ app.get('/crawl_amazon_printers', async (req, res) => {
 		let name = printers[i].ShortName;
 		let mpn = printers[i].mpn;
 		let matnr = printers[i].Matnr;
-		console.log('runnin')
 		let p2 = searchAmazon(name.split(" - ")[0], mpn, matnr);
 
-		console.log('test')
 		await Promise.all([p1, p2]).then( res => {
 			console.log(int)
 			console.log('Promise resolved for ' + i);
@@ -980,6 +979,10 @@ app.get("/set_price_from_logs", async (req,resp) => {
 	}
 
 	resp.end()
+})
+
+app.get('/trigger_daily_update', async (req,res) => {
+	dailyUpdate()
 })
 
 app.listen(port, () => console.log('App running on 3030'))

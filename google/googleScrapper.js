@@ -239,7 +239,7 @@ function filterResults(object){
         !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('76c')) &&
         !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('58d')) &&
         !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('41x')) &&
-        !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('32c')) &&
+        !(text.toLowerCase().includes('lexmark') && /\b32c\b/g.test(text.toLowerCase())) &&
         !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('57x')) &&
         !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('78c')) &&
         !(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('return')) &&
@@ -370,7 +370,7 @@ async function searchGoogle(productName, partNumber){
 
       console.log('stop4')
 
-      console.log(object)
+      console.log(object[0])
 			object = filterResults(object)
       console.log(object[0])
 

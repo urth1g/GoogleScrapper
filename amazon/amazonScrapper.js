@@ -69,7 +69,7 @@ async function searchAmazon(productName, partNumber, matnr){
 
 		if(!res){
 			console.log('error')
-			return await searchAmazon(initialProductName, initialPartNumber, initialMatnr);
+			resolve([])
 		}
 		const $ = cheerio.load(res.data);
 

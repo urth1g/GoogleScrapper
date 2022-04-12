@@ -20,8 +20,6 @@ async function run(){
 
 	let printers = res[0];
 
-    console.log(printers.length)
-
     for(let i = 0; i < printers.length; i++){
         let matnr = printers[i].Matnr;
 

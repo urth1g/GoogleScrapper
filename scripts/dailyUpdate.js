@@ -32,7 +32,7 @@ async function run(){
         }
 
         console.log(matnr)
-        await timer(4000)
+        await timer(15000)
     }
 }
 

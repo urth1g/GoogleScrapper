@@ -191,6 +191,7 @@ async function simulateAjaxCall(asin, pageno){
 			console.log(shipping, price)
 			let total =	parseFloat( (shipping + price).toFixed(2))
 
+			if(Number.isNaN(total)) return true;
 			prices.push({total, state});
 			sum += total;
 

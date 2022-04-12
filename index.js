@@ -53,6 +53,15 @@ app.use(
 
 app.use(express.json())
 
+
+process
+  .on('unhandledRejection', (reason, p) => {
+    console.error(reason, 'Unhandled Rejection at Promise', p);
+  })
+  .on('uncaughtException', err => {
+    console.error(err, 'Uncaught Exception thrown');
+  });
+
 app.get('/crawl_accessories', async (req, res) => {
 
 

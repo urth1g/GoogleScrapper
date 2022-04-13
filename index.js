@@ -991,7 +991,7 @@ app.get("/set_price_from_logs", async (req,resp) => {
 })
 
 app.get('/trigger_daily_update', async (req,res) => {
-	await dailyUpdate()
+	dailyUpdate()
 	res.send('started')
 })
 

@@ -177,8 +177,7 @@ function interateThroughSubsets(object, term, productName, model){
 
 			subsets.forEach(x => {
         if(x.includes("#")) x = x.split("#")[0]
-
-        console.log(x)
+        
 				let _distance = d1(tsfc(x), tsfc(model));
 				let __distance;
 
@@ -294,6 +293,7 @@ async function searchGoogle(productName, partNumber){
 
   if(term.includes("#")) term = term.split("#")[0]
   if(model.includes("#")) model = model.split("#")[0]
+  
   console.log(term)
   console.log(model)
 	return new Promise( async (resolve, reject) => {

@@ -176,6 +176,9 @@ function interateThroughSubsets(object, term, productName, model){
 			let distance = Number.MAX_SAFE_INTEGER;
 
 			subsets.forEach(x => {
+        if(x.includes("#")) x = x.split("#")[0]
+
+        console.log(x)
 				let _distance = d1(tsfc(x), tsfc(model));
 				let __distance;
 
@@ -288,9 +291,11 @@ async function searchGoogle(productName, partNumber){
     model = partNumber; 
   }
 
+
+  if(term.includes("#")) term = term.split("#")[0]
+  if(model.includes("#")) model = model.split("#")[0]
   console.log(term)
   console.log(model)
-
 	return new Promise( async (resolve, reject) => {
 
 		axios.get(`https://shopping.google.com/search?q=${term}&hl=${hl}&gl=${gl}&tbm=${tbm}`).then( async res => {
@@ -370,13 +375,12 @@ async function searchGoogle(productName, partNumber){
 
       console.log('stop4')
 
-      console.log(object[0])
 			object = filterResults(object)
-      console.log(object[0])
 
       console.log('stop5')
 			let grading = await interateThroughSubsets(object, term, productName, model);
 
+      console.log(term)
       console.log('stop6')
 			grading.sort((a,b) => a.distance - b.distance);
 

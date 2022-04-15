@@ -11,7 +11,7 @@ const { getPrinters } = require('./database_getters/printers');
 const { searchGoogle, findTheBestPrice, findAverage } = require('./google/googleScrapper');
 const { searchAmazon, findTheBestPriceAmazon } = require('./amazon/amazonScrapper');
 const { searchEbay, findTheBestPriceEbay } = require('./ebay/ebayScrapper');
-const { searchTechdata } = require('./techdata/techdataScrapper');
+const { searchTechdata, setTechdataPrice } = require('./techdata/techdataScrapper');
 const { getData } = require('./google/spreadsheets');
 const { pricesFromTxt } = require('./pricesFromTxt/pricesFromTxt');
 const fs = require('fs');
@@ -995,4 +995,31 @@ app.get('/trigger_daily_update', async (req,res) => {
 	res.send('started')
 })
 
+app.get("/techdata_test", async (req,resp) => {
+	await setTechdataPrice('13343578')
+	resp.send('ok')
+});
+
+app.get("/set_techdata_availability", async (req,resp) => {
+	console.log('running')
+	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
+
+	let printers = res[0]
+
+	for(let i = 143; i < printers.length; i++){
+		let matnr = printers[i].Matnr;
+		
+		try{
+			let res = await setTechdataPrice(matnr)
+			console.log(matnr)
+		}catch(e){
+			console.log(e)
+		}
+
+		await timer(3000)
+
+	}
+
+	resp.end()
+})
 app.listen(port, () => console.log('App running on 3030'))

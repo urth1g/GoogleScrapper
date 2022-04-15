@@ -4,6 +4,7 @@ const tsfc = require('../helpers/transformStringForComparison');
 const axios = require('axios');
 const Database = require('../db/db');
 const cheerio = require('cheerio');
+const { compareDocumentPosition } = require('domutils');
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
@@ -167,4 +168,161 @@ async function goThroughPage(url, pages){
 	}
 }
 
-module.exports = { searchTechdata }
+async function setTechdataToken(){
+	let url = 'https://sso.techdata.com/as/authorization.oauth2?client_id=shop_client&response_type=code&redirect_uri=https://shop.techdata.com/oauth&pfidpadapterid=ShieldBaseAuthnAdaptor&scope=freight%20warranty';
+
+	let res = await axios({
+		method: 'get',
+		url: url
+	})
+
+	let cookies = res.headers['set-cookie'];
+
+	let str = ""
+
+	cookies.forEach(x => {
+		x = x.split(";")[0]
+		str += x
+		str += "; "
+	})
+
+	let $ = cheerio.load(res.data)
+	let formAction = $("form").attr("action");
+
+	try{
+		let res2 = await axios({
+			method: 'POST',
+			headers: { 
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36',
+				'Cookie': str
+			},	
+			url: "https://sso.techdata.com" + formAction,
+			data: 'pf.username=641776&pf.pass=Harrison2022%2B&pf.passwordreset=&pf.ok=clicked&pf.cancel=&pf.adapterId=GlobalIONAuthnAdapter',
+			withCredentials: true,
+			maxRedirects: 0
+		})
+	}catch(e){
+//		PF = e.response.headers['set-cookie'][1]
+		
+		let location = e.response.headers['location']
+		console.log(str)
+		console.log(location)
+		// let match = PF.match(/PF=(.+?)\;/)
+
+
+		// if(match) PF = match[1]
+		// else throw new Error("PF value undefined")
+
+		let str2 = ""
+
+		e.response.headers['set-cookie'].forEach(x => {
+			x = x.split(";")[0]
+			str2 += x
+			str2 += "; "
+		})
+
+		let code = location.split("=")[1]
+
+		let shopauth = null;
+
+		try{
+			let res3 = await axios({
+				method: 'GET',
+				headers: {
+					'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36',
+					'authority': 'shop.techdata.com',
+					'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+				},	
+				url: location,
+				withCredentials: true,
+				maxRedirects: 0
+			})
+
+			let cookie = res3.response.headers['set-cookie'][1]
+
+		}catch(err){
+			console.log(err.response)			
+			shopauth = err.response.headers['set-cookie'][0].split(";")[0]
+		}
+
+		if(shopauth){
+			await Database.makeQuery2("UPDATE configuration SET value = ? WHERE action = 'techdata_token'", [shopauth])
+			return shopauth;
+		}else{
+			return null
+		}
+	}
+}
+
+async function getTokenFromDB(){
+	let result = await Database.makeQuery2("SELECT value FROM configuration WHERE action = 'techdata_token'");
+
+	let token = result[0];
+
+	return token;
+}
+
+async function getTechdataPrice(matnr){
+
+	let token = await getTokenFromDB();
+
+	let res4 = await axios.get(`https://shop.techdata.com/products/${matnr}/?P=${matnr}`, {headers:{
+		'Cookie': token.value,
+		'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36',
+	}})
+
+	let $ = cheerio.load(res4.data)
+
+	let price = $(".pricing-Display").text().trim();
+
+	return price.startsWith("$") ? Number(price.substr(1).replace(/\,/g, "")) : 0;
+}
+
+async function getTechdataAvailability(matnr, price){
+
+	let token = await getTokenFromDB();
+
+	console.log(`https://shop.techdata.com/api/products/availability/?id=${matnr}&price=$${price}`)
+	let res4 = await axios.get(`https://shop.techdata.com/api/products/availability/?id=${matnr}&price=$${price}`, {headers:{
+		'Cookie': token.value,
+		'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36',
+	}})
+
+	let $ = cheerio.load(res4.data)
+
+	return res4.data.availability.plantAvailability
+}
+
+async function setTechdataPrice(matnr){
+	//await setTechdataToken()
+	let price = await getTechdataPrice(matnr);
+	let availability = await getTechdataAvailability(matnr, price)
+
+	let curDate = Math.round(new Date().getTime() / 1000) ;
+
+	availability = availability.map(x => {
+
+		let futureDate = Math.round(new Date(x.estimatedAvailableDate).getTime() / 1000)
+
+		let days = Math.round( (futureDate - curDate) / (3600 * 24) )
+
+		return {
+			...x,
+			newBatchIn: (futureDate === 0 || Number.isNaN(futureDate)) ? 999 : days
+		}
+	})
+	let combinedObject = { price, availability }
+
+	let arr = [combinedObject];
+
+	console.log(arr)
+	try{
+		await Database.makeQuery2("UPDATE inventory SET Techdata = ? WHERE Matnr = ?", [JSON.stringify(arr), matnr])
+		return "Success"
+	}catch(e){
+		throw new Error(e)
+	}
+}
+
+module.exports = { searchTechdata, setTechdataPrice }

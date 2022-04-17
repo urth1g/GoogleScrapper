@@ -956,39 +956,6 @@ app.get("/statistics", async (req,resp) => {
 	resp.send(JSON.stringify(keys))
 })
 
-app.get("/set_price_from_logs", async (req,resp) => {
-
-	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
-
-	let printers = res[0]
-
-	resp.setHeader("Transfer-Encoding", "chunked");
-	resp.setHeader('Content-Type', 'text/html; charset=UTF-8')
-
-
-	for(let i = 0; i < printers.length; i++){
-		let matnr = printers[i].Matnr;
-
-		let shouldCancel = await Database.makeQuery2("SELECT * FROM configuration WHERE action = ?", ['scrapping_enabled']);
-
-		shouldCancel = shouldCancel[0]
-
-		if(Number(shouldCancel.value) === 0 ) break;
-		
-		try{
-			let res = await axios.post('http://localhost:3030/crawl_for_printer', {matnr})
-			if(res.data.ok) resp.write(JSON.stringify({...res.data, index: i}))
-			if(res.data.error) resp.write(JSON.stringify({index: i, error: res.data.error}))
-		}catch(e){
-			console.log(e)
-		}
-
-		await timer(3000)
-
-	}
-
-	resp.end()
-})
 
 app.get('/trigger_daily_update', async (req,res) => {
 	dailyUpdate()

@@ -208,10 +208,7 @@ async function getTechdataAvailability(matnr, price){
 }
 
 async function setTechdataPrice(matnr){
-	//await setTechdataToken()
 	let price = await getTechdataPrice(matnr);
-	console.log(price)
-	return;
 	let availability = await getTechdataAvailability(matnr, price)
 
 	let curDate = Math.round(new Date().getTime() / 1000) ;

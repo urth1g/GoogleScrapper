@@ -1000,26 +1000,30 @@ app.get("/techdata_test", async (req,resp) => {
 	resp.send('ok')
 });
 
-app.get("/set_techdata_availability", async (req,resp) => {
-	console.log('running')
-	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
+// app.get("/set_techdata_availability", async (req,resp) => {
+// 	console.log('running')
+// 	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
 
-	let printers = res[0]
+// 	let printers = res[0]
 
-	for(let i = 143; i < printers.length; i++){
-		let matnr = printers[i].Matnr;
+// 	let index = printers.findIndex(x => x.Matnr === 13174785);
+
+// 	console.log(index)
+// 	return;
+// 	for(let i = 143; i < printers.length; i++){
+// 		let matnr = printers[i].Matnr;
 		
-		try{
-			let res = await setTechdataPrice(matnr)
-			console.log(matnr)
-		}catch(e){
-			console.log(e)
-		}
+// 		try{
+// 			let res = await setTechdataPrice(matnr)
+// 			console.log(matnr)
+// 		}catch(e){
+// 			console.log(e)
+// 		}
 
-		await timer(3000)
+// 		await timer(3000)
 
-	}
+// 	}
 
-	resp.end()
-})
+// 	resp.end()
+// })
 app.listen(port, () => console.log('App running on 3030'))

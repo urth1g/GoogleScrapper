@@ -560,7 +560,6 @@ app.post("/crawl_for_printer", async (req, resp) => {
 	try{
 		await searchGoogle(Name, printer[0].mpn).then(async (url, skipPage4) => {
 
-			console.log(url)
 			if(url === 'Nothing found.') {
 				let priceSetter = new PriceSetter([], Matnr)
 				let sources = await priceSetter.getSourcesNetPrices(Matnr);
@@ -676,7 +675,7 @@ app.post("/crawl_for_printer", async (req, resp) => {
 
 					let amoFaxExists = totalPriceNew.filter(x => x.shop === 'A Matter of Fax').length === 1;
 
-					totalPriceNew = totalPriceNew.filter(x => x.shop !== 'Amofax');
+					totalPriceNew = totalPriceNew.filter(x => x.shop !== 'Amofax' && x.shop !== 'Amofax.com');
 
 					let shopToBeat = null;
 					let average = 0;
@@ -782,9 +781,8 @@ app.get('/crawl_ebay_links', async (req, res) => {
 
 })
 
-app.get('/crawl_techdata_printers', (req, res) => {
-	let urls = searchTechdata()
-	res.send('ok');
+app.get('/techdata_test', (req, res) => {
+	setTechdataPrice('11209612')
 })
 
 app.get('/create_crawl_logs_from_txt', async (req, res) =>{
@@ -962,35 +960,34 @@ app.get('/trigger_daily_update', async (req,res) => {
 	res.send('started')
 })
 
-app.get("/techdata_test", async (req,resp) => {
-	await setTechdataPrice('13343578')
-	resp.send('ok')
+app.post("/crawl_techdata_printer", async (req,resp) => {
+	let { matnr } = req.body;
+	let prices = await setTechdataPrice(matnr)
+	resp.send(prices)
 });
 
-// app.get("/set_techdata_availability", async (req,resp) => {
-// 	console.log('running')
-// 	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
+app.get("/set_techdata_availability", async (req,resp) => {
+	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
 
-// 	let printers = res[0]
+	let printers = res[0]
 
-// 	let index = printers.findIndex(x => x.Matnr === 13174785);
+	let index = printers.findIndex(x => x.Matnr === 13174785);
 
-// 	console.log(index)
-// 	return;
-// 	for(let i = 143; i < printers.length; i++){
-// 		let matnr = printers[i].Matnr;
+	for(let i = 0; i < printers.length; i++){
+		let matnr = printers[i].Matnr;
 		
-// 		try{
-// 			let res = await setTechdataPrice(matnr)
-// 			console.log(matnr)
-// 		}catch(e){
-// 			console.log(e)
-// 		}
+		try{
+			let res = await setTechdataPrice(matnr)
+			console.log(matnr)
+		}catch(e){
+			console.log(e)
+		}
 
-// 		await timer(3000)
+		await timer(3000)
 
-// 	}
+	}
 
-// 	resp.end()
-// })
+	resp.end()
+})
+
 app.listen(port, () => console.log('App running on 3030'))

@@ -5,6 +5,7 @@ const axios = require('axios');
 const Database = require('../db/db');
 const cheerio = require('cheerio');
 const { compareDocumentPosition } = require('domutils');
+const fs = require('fs');
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
@@ -28,7 +29,6 @@ let techDataUrlConfig = {
 }
 
 function grabLinks(){
-	console.log('test')
 	let baseUrl = "https://shop.techdata.com/products/category/category?cs=500001003&refinements=500100301&market=USA&psz=100"
 
 	return new Promise( (resolve, reject) => {
@@ -66,7 +66,6 @@ async function getPages(url){
 }
 
 async function searchTechdata(){
-		console.log('running')
 		let urlObjects = await grabLinks()
 
 		for(let i = 0; i < urlObjects.length; i++){
@@ -189,6 +188,7 @@ async function getTechdataPrice(matnr){
 
 	let price = $(".pricing-Display").text().trim();
 
+	console.log(price)
 	return price.startsWith("$") ? Number(price.substr(1).replace(/\,/g, "")) : 0;
 }
 
@@ -207,9 +207,47 @@ async function getTechdataAvailability(matnr, price){
 	return res4.data.availability.plantAvailability
 }
 
+async function getShippingPrice(matnr){
+	let result = await Database.makeQuery2("SELECT * FROM inventory_log WHERE Matnr = ?", [matnr]);
+
+	let { Link } = result[0]
+
+	if(!Link) return 12.56
+
+	console.log("https://www.google.com" + Link)
+	let responseGoogle = await axios.get("https://www.google.com" + Link + "&sfr=compass&ei=DWTdYeK_G7qHytMPm7yLsAU&tbs=new%3A1")
+
+	let regexToExtractShipping = /aria\-label\=\"Information on how the total price is calculated\".+?Shipping<\/td><td((?:(?!td).)+)?\>\$([^|]+?)\</g
+
+	let arr = [...responseGoogle.data.matchAll(regexToExtractShipping)]
+
+	let minShipping = Number.MAX_SAFE_INTEGER;
+
+	for(let match of arr){
+		let price = parseFloat(match[2])
+
+		console.log(price)
+		if(price < 6) continue
+
+		minShipping = Math.min(price, minShipping)
+	}
+
+	return Math.min(0, minShipping)
+}
+
 async function setTechdataPrice(matnr){
+	let shipping = await getShippingPrice(matnr)
 	let price = await getTechdataPrice(matnr);
+
+	//console.log(price, shipping);
+
+	if(price == 0) {
+		await Database.makeQuery2("UPDATE inventory SET Techdata = ? WHERE Matnr = ?", ['[]', matnr])
+		return []
+	}
+
 	let availability = await getTechdataAvailability(matnr, price)
+	let state = 'New';
 
 	let curDate = Math.round(new Date().getTime() / 1000) ;
 
@@ -224,14 +262,13 @@ async function setTechdataPrice(matnr){
 			newBatchIn: (futureDate === 0 || Number.isNaN(futureDate)) ? 999 : days
 		}
 	})
-	let combinedObject = { price, availability }
+	let combinedObject = { price: Math.round(Number(price) + Number(shipping)), availability, state }
 
 	let arr = [combinedObject];
 
-	console.log(arr)
 	try{
 		await Database.makeQuery2("UPDATE inventory SET Techdata = ? WHERE Matnr = ?", [JSON.stringify(arr), matnr])
-		return "Success"
+		return arr;
 	}catch(e){
 		throw new Error(e)
 	}

@@ -26,6 +26,7 @@ async function run(){
         try{
             await axios.post('http://localhost:3030/crawl_ebay_printer', {matnr} )
             await axios.post('http://localhost:3030/crawl_amazon_printer', {matnr} )
+            await axios.post('http://localhost:3030/crawl_techdata_printer', {matnr} )
             await axios.post('http://localhost:3030/crawl_for_printer', {matnr} )
         }catch(e){
             console.log(e)

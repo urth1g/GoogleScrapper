@@ -48,9 +48,8 @@ async function getData(){
 
 		if(Number(gtin) === 13803135459) continue;
 		
-		console.log(gtin)
 		x.price = price + " USD"
-		x.gtin = `'` + gtin;
+		console.log(price)
 		//console.log(x)
 		await x.save();
 	}

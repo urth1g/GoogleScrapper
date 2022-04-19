@@ -263,11 +263,8 @@ function filterResults(object){
         !text.toLowerCase().includes('hinge')
       })
 }
-async function searchGoogle(productName, partNumber){
 
-	let hl = "en";
-	let gl = "us";
-	let tbm = "shop";
+function generateGoogleConditions(productName, partNumber){
   let arr = productName.split(" ");
   let model = arr[arr.length - 1];
   let brand = arr[0];
@@ -294,8 +291,19 @@ async function searchGoogle(productName, partNumber){
   if(term.includes("#")) term = term.split("#")[0]
   if(model.includes("#")) model = model.split("#")[0]
   
-  console.log(term)
-  console.log(model)
+  if(term === 'D7P71A') term = 'HEWD7P71A';
+
+  return [ term, model ]
+}
+async function searchGoogle(productName, partNumber){
+
+	let hl = "en";
+	let gl = "us";
+	let tbm = "shop";
+
+
+  let [term, model] = generateGoogleConditions(productName, partNumber)
+
 	return new Promise( async (resolve, reject) => {
 
 		axios.get(`https://shopping.google.com/search?q=${term}&hl=${hl}&gl=${gl}&tbm=${tbm}`).then( async res => {
@@ -464,4 +472,4 @@ function findAverage(prices){
   return +num.toFixed(2)
 }
 
-module.exports = { searchGoogle, findTheBestPrice, findAverage };
+module.exports = { searchGoogle, findTheBestPrice, findAverage, generateGoogleConditions };

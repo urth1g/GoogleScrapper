@@ -49,9 +49,7 @@ class PriceSetter{
 
         if(Amazon) sources.push(...Amazon.map(x => x));
         if(Ebay) sources.push(...Ebay.map(x => x));
-        if(Techdata) sources.push(...Techdata.map(x => {
-            return { price:x, state: 'new'}
-        } ));
+        if(Techdata) sources.push(...Techdata.map(x => {x => x} ));
 
         sources.sort((a,b) => a.price - b.price);
 

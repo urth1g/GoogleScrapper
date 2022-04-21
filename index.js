@@ -9,6 +9,7 @@ const Database = require('./db/db');
 const { getAccessories } = require('./database_getters/accessories');
 const { getPrinters } = require('./database_getters/printers');
 const { searchGoogle, findTheBestPrice, findAverage } = require('./google/googleScrapper');
+const { getFeedSheetData } = require('./google/getFeedSheetData');
 const { searchAmazon, findTheBestPriceAmazon } = require('./amazon/amazonScrapper');
 const { searchEbay, findTheBestPriceEbay } = require('./ebay/ebayScrapper');
 const { searchTechdata, setTechdataPrice } = require('./techdata/techdataScrapper');
@@ -20,7 +21,8 @@ const searchGoogleToners = require('./scripts/getTonerPricesGoogle');
 const PriceSetter = require('./classes/PriceSetter');
 const { Console } = require('console');
 const dailyUpdate = require ('./scripts/dailyUpdate');
-require('dotenv').config()
+const { calculateStandardDeviation } = require('./helpers/calculateStandardDeviation');
+require('dotenv').config();
 
 
 // Ignore international items
@@ -131,6 +133,7 @@ app.get('/crawl_accessories', async (req, res) => {
 
 	res.send('ok')
 })
+
 
 function changePrice(price){
 	if(price >= 1000){
@@ -989,5 +992,38 @@ app.get("/set_techdata_availability", async (req,resp) => {
 
 	resp.end()
 })
+
+app.get('/test-email', async (req,resp) => {
+
+	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
+	let printers = res[0]
+
+	for(let i = 0; i < 1; i++){
+		let Matnr = printers[i].Matnr
+
+		let { data } = await axios.post('http://localhost:8080/admin/get_inventory', {Matnr})
+		let response = await axios.post('http://localhost:8080/log_info', {matnr: Matnr})
+
+		let feed = JSON.parse(response.data[0].Inventory)
+		let { combinedSources } = data;
+
+		console.log(feed)
+		console.log(combinedSources)
+	}
+
+	resp.send('ok')
+})
+
+app.get('/update_spreadsheet_price', async (req,resp) => {
+	let { matnr } = req.body;
+
+	try{
+		let printer = await Database.makeQuery2("SELECT * FROM products WHERE Matnr = ?", [matnr]);
+		let rows = await getFeedSheetData();
+	}catch(e){
+		console.log(e);
+	}
+
+});
 
 app.listen(port, () => console.log('App running on 3030'))

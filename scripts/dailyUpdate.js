@@ -20,6 +20,13 @@ async function run(){
 
 	let printers = res[0];
 
+    let ignoredMatnrs = await Database.makeQuery2("SELECT Matnr FROM products_locktable");
+
+    for(let object of ignoredMatnrs){
+        console.log(object)
+        printers = printers.filter(x => Number(x.Matnr) !== Number(object.Matnr))
+    }
+
     for(let i = 0; i < printers.length; i++){
         let matnr = printers[i].Matnr;
 
@@ -28,6 +35,7 @@ async function run(){
             await axios.post('http://localhost:3030/crawl_amazon_printer', {matnr} )
             await axios.post('http://localhost:3030/crawl_techdata_printer', {matnr} )
             await axios.post('http://localhost:3030/crawl_for_printer', {matnr} )
+            await axios.post('http://localhost:3030/update_spreadsheet_price', {matnr})
         }catch(e){
             console.log(e)
         }
@@ -36,5 +44,7 @@ async function run(){
         await timer(10000)
     }
 }
+
+run();
 
 module.exports = run;

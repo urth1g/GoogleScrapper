@@ -45,6 +45,4 @@ async function run(){
     }
 }
 
-run();
-
 module.exports = run;

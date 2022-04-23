@@ -1014,12 +1014,27 @@ app.get('/test-email', async (req,resp) => {
 	resp.send('ok')
 })
 
-app.get('/update_spreadsheet_price', async (req,resp) => {
+app.post('/update_spreadsheet_price', async (req,resp) => {
 	let { matnr } = req.body;
 
 	try{
 		let printer = await Database.makeQuery2("SELECT * FROM products WHERE Matnr = ?", [matnr]);
+		if(!printer || printer.length === 0) throw new Error("Unable to find requested printer.");
+
+		printer = printer[0]
+
 		let rows = await getFeedSheetData();
+	
+		let link = "https://amofax.com/item/" + printer.Matnr
+		let row = rows.filter(x => x.link === link)
+
+		if(!row || row.length === 0) throw new Error("Unable to find printer in feed catalog.")
+
+		row = row[0]
+
+		row.price = printer.Price + " USD";
+		await row.save();
+		console.log('done')
 	}catch(e){
 		console.log(e);
 	}

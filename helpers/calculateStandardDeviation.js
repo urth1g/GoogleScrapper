@@ -1,5 +1,5 @@
 function calculateStandardDeviation(arr){
-    if(arr.length < 2) return;
+    if(arr.length < 2) return 0;
 
     let mean = 0;
 

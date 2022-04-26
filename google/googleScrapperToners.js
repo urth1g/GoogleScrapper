@@ -38,29 +38,31 @@ function filterResults(object){
         text.includes('toner')
       })
 }
+
 async function searchGoogle(productName, partNumber){
 
 	let hl = "en";
 	let gl = "us";
 	let tbm = "shop";
-  let arr = productName.split(" ");
-  let model = arr[arr.length - 1];
-  let brand = arr[0];
+  	let arr = productName.split(" ");
+  	let model = arr[arr.length - 1];
+  	let brand = arr[0];
 
 	return new Promise( async (resolve, reject) => {
 		axios.get(`https://shopping.google.com/search?q=${term}&hl=${hl}&gl=${gl}&tbm=${tbm}`).then( async res => {
 			let regex = /((?<=href=\")((?!=\<|\{|\,|http[s]?).)*?\boffers\b.+?(?="))/g
 			let regex2 = /data\-what\=\"1\".+?\h3.+?\>(.+?(?=\<))/g
 			//let regex3 = /title\=\"((?:(?!title|td).)*?)(\/shopping\/product.*?(?=\/offers).+?)(?=\")/g
-      let regex3 = /title\=\"((?:(?!title|td).)*?)<a href="(\/shopping\/product.*?(?=\/offers).+?)(?=\")/g
-      let regex4 = /^(.+?)(?=\")/g;
-      let regex5 = /Best\smatch.+?\/offers.+?\"/g
-      let regex6 = /((?:(?!\").)*?\/offers.+?(?=\"))/g
-      let regex7 = /server\"\>.+?\>(?:(?!img))(.*?)\</g
-      let regex8 = /title\=\"((?:(?!title).)*?)".+?\$(.+?)<.+?<div.+?>.+?\>(.+?)</g
+     		let regex3 = /title\=\"((?:(?!title|td).)*?)<a href="(\/shopping\/product.*?(?=\/offers).+?)(?=\")/g
+      		let regex4 = /^(.+?)(?=\")/g;
+      		let regex5 = /Best\smatch.+?\/offers.+?\"/g
+      		let regex6 = /((?:(?!\").)*?\/offers.+?(?=\"))/g
+      		let regex7 = /server\"\>.+?\>(?:(?!img))(.*?)\</g
+      		let regex8 = /title\=\"((?:(?!title).)*?)".+?\$(.+?)<.+?<div.+?>.+?\>(.+?)</g
 
 			let matches = regex3.exec(res.data);
 
+		})
 	})
 }
 

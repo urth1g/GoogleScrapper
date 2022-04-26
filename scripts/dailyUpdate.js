@@ -35,7 +35,8 @@ async function run(){
             await axios.post('http://localhost:3030/crawl_amazon_printer', {matnr} )
             await axios.post('http://localhost:3030/crawl_techdata_printer', {matnr} )
             await axios.post('http://localhost:3030/crawl_for_printer', {matnr} )
-            await axios.post('http://localhost:3030/update_spreadsheet_price', {matnr})
+            await axios.post('http://localhost:3030/check_for_good_deals', {matnr} )
+            await axios.post('http://localhost:3030/update_spreadsheet_price', {matnr} )
         }catch(e){
             console.log(e)
         }

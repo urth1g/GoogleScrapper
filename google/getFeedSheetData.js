@@ -2,9 +2,6 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 require('dotenv').config({path: __dirname + '../.env'});
 
 async function getFeedSheetData(){
-	console.log(process.env.FEED_SHEET_EMAIL);
-	console.log(process.env.FEED_SHEET_ID);
-	console.log(process.env.FEED_SHEET_PRIVATE_KEY)
 	// Initialize the sheet - doc ID is the long id in the sheets URL
 	const doc = new GoogleSpreadsheet(process.env.FEED_SHEET_ID);
 

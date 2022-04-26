@@ -22,6 +22,8 @@ const PriceSetter = require('./classes/PriceSetter');
 const { Console } = require('console');
 const dailyUpdate = require ('./scripts/dailyUpdate');
 const { calculateStandardDeviation } = require('./helpers/calculateStandardDeviation');
+const { sendEmail } = require('./helpers/sendEmail');
+const { opportunityTemplate } = require('./email_templates/templates');
 require('dotenv').config();
 
 
@@ -998,22 +1000,75 @@ app.get('/test-email', async (req,resp) => {
 	let res = await Database.makeQuery("SELECT * FROM products WHERE SubClass LIKE '%Laser%' OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' ) GROUP BY products.Matnr ORDER BY products.Price");
 	let printers = res[0]
 
-	for(let i = 0; i < 1; i++){
+	for(let i = 0; i < 6; i++){
 		let Matnr = printers[i].Matnr
 
 		let { data } = await axios.post('http://localhost:8080/admin/get_inventory', {Matnr})
 		let response = await axios.post('http://localhost:8080/log_info', {matnr: Matnr})
 
+		let page4Link = "https://google.com" + response.data[0].Link
 		let feed = JSON.parse(response.data[0].Inventory)
 		let { combinedSources } = data;
 
-		console.log(feed)
+		if(combinedSources.length === 0 || feed.length === 0) return false 
+
+
+		combinedSources = combinedSources.filter(x => (!x.state.toLowerCase().includes('like')) && (x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open')))
+
+		let mappedFeed = feed.map(x => x.price)
+		let mappedSources = combinedSources.map(x => x.computed.net)
+
+		let multiplier = 0.8;
+
+		let feedPrice = mappedFeed[0];
+		let sourcePrice = mappedSources[0];
+
+		if(feedPrice > 3000) multiplier = 0.85;
+		if(feedPrice > 4700) multiplier = 0.9;
+
 		console.log(combinedSources)
+		let templateMsg = opportunityTemplate(combinedSources[0], feed, page4Link)
+		if(sourcePrice < feedPrice * multiplier){
+			await sendEmail("jon@amofmail.com", `Possible Opportunity - ${combinedSources[0].source}`, templateMsg)
+		}
 	}
 
 	resp.send('ok')
 })
 
+app.post("/check_for_good_deals", async (req,resp) => {
+	let { matnr } = req.body;
+
+	console.log('checking for good deals');
+	let { data } = await axios.post('http://localhost:8080/admin/get_inventory', {Matnr: matnr})
+	let response = await axios.post('http://localhost:8080/log_info', {matnr})
+
+	let page4Link = "https://google.com" + response.data[0].Link
+	let feed = JSON.parse(response.data[0].Inventory)
+	let { combinedSources } = data;
+
+	if(combinedSources.length === 0 || feed.length === 0) return false 
+
+	combinedSources = combinedSources.filter(x => (!x.state.toLowerCase().includes('like')) && (x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open')))
+
+	let mappedFeed = feed.map(x => x.price)
+	let mappedSources = combinedSources.map(x => x.computed.net)
+
+	let multiplier = 0.8;
+
+	let feedPrice = mappedFeed[0];
+	let sourcePrice = mappedSources[0];
+
+	if(feedPrice > 3000) multiplier = 0.85;
+	if(feedPrice > 4700) multiplier = 0.9;
+
+	let templateMsg = opportunityTemplate(combinedSources[0], feed, page4Link)
+	if(sourcePrice < feedPrice * multiplier){
+		await sendEmail("jon@amofmail.com", `Possible Opportunity - ${combinedSources[0].source}`, templateMsg)
+	}
+	
+	resp.send('ok')
+})
 app.post('/update_spreadsheet_price', async (req,resp) => {
 	let { matnr } = req.body;
 

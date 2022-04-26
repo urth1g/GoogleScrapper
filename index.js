@@ -1040,7 +1040,7 @@ app.post("/check_for_good_deals", async (req,resp) => {
 	let { matnr } = req.body;
 
 	console.log('checking for good deals');
-	let { data } = await axios.post('http://localhost:8080/admin/get_inventory', {Matnr: matnr})
+	let { data } = await axios.post(`${process.env.BACKEND_ENDPOINT_URL}/admin/get_inventory`, {Matnr: matnr})
 	let response = await axios.post('http://localhost:8080/log_info', {matnr})
 
 	let page4Link = "https://google.com" + response.data[0].Link

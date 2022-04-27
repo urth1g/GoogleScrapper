@@ -39,6 +39,14 @@ require('dotenv').config();
 // Position on google, CPC, and net - cost price. 
 // Crawl all of ebay and compare on page 4
 
+console.error = function(msg) {
+	// send email
+	// ...
+  
+	// additionaly log
+	sendEmail("jevremovicdjordje97@gmail.com", "Error", msg)
+	process.stderr.write(msg);
+};
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
 function randomIntFromInterval(min, max) { // min and max included 

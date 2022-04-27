@@ -197,14 +197,19 @@ async function getTechdataAvailability(matnr, price){
 	let token = await getTokenFromDB();
 
 	console.log(`https://shop.techdata.com/api/products/availability/?id=${matnr}&price=$${price}`)
-	let res4 = await axios.get(`https://shop.techdata.com/api/products/availability/?id=${matnr}&price=$${price}`, {headers:{
-		'Cookie': token.value,
-		'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36',
-	}})
 
-	let $ = cheerio.load(res4.data)
+	try{
+		let res4 = await axios.get(`https://shop.techdata.com/api/products/availability/?id=${matnr}&price=$${price}`, {headers:{
+			'Cookie': token.value,
+			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36',
+		}})
+		return res4.data.availability.plantAvailability
+	}catch(e){
+		console.log(e)
+		return []
+	}
 
-	return res4.data.availability.plantAvailability
+
 }
 
 async function getShippingPrice(matnr){

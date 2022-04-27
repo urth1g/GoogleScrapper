@@ -62,10 +62,10 @@ let errLog = console.error;
 console.error = function(msg){
 	let toSend =  null;
 	
-	let { message } = msg;
-	sendEmail("jevremovicdjordje97@gmail.com", "Error", msg.message)
+	sendEmail("jevremovicdjordje97@gmail.com", "Error", msg.stack)
 	errLog.apply(console, arguments)
 }
+
 
 process
   .on('unhandledRejection', (reason, p) => {
@@ -76,6 +76,8 @@ process
 	//sendEmail("jevremovicdjordje97@gmail.com", "Error", err.message)
     console.error(err, 'Uncaught Exception thrown');
   });
+
+throw new Error("e");
 
 app.get('/crawl_accessories', async (req, res) => {
 

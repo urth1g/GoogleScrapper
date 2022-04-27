@@ -89,7 +89,53 @@ async function searchAmazon(productName, partNumber, matnr){
 			!text.toLowerCase().includes('kit') && 
 			!text.toLowerCase().includes('casing') &&
 			!text.toLowerCase().includes('rfb') &&
-			!text.toLowerCase().includes('refurbished')
+			!text.toLowerCase().includes('manual') &&
+			!text.toLowerCase().includes('refurbished') && 
+			!text.toLowerCase().includes('charger') && 
+			!text.toLowerCase().includes('cover') && 
+			!text.toLowerCase().includes('ram') &&
+			!text.toLowerCase().includes('unit') &&
+			!text.toLowerCase().includes('cassette') && 
+			!/\bcd\b/g.test(text.toLowerCase()) &&
+			!text.toLowerCase().includes('sewing') && 
+			!text.toLowerCase().includes('tray') && 
+			!text.toLowerCase().includes('cable') && 
+			!text.toLowerCase().includes('fuser') &&
+			!(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('58d')) &&
+			!text.toLowerCase().includes('refill') &&
+			!text.toLowerCase().includes('powder') &&
+			!text.toLowerCase().includes('chip') &&
+			!text.toLowerCase().includes('replacement') &&
+			!text.toLowerCase().includes('developer') &&
+			!text.toLowerCase().includes('compatible') &&
+			!text.toLowerCase().includes('cabinet') &&
+			!(text.toLowerCase().includes('ink') && !text.toLowerCase().includes('jet')) &&
+			!text.toLowerCase().includes('cartouche') && 
+			!text.toLowerCase().includes('printhead') &&
+			!text.toLowerCase().includes('motor') &&
+			!(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('76c')) &&
+			!(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('58d')) &&
+			!(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('41x')) &&
+			!(text.toLowerCase().includes('lexmark') && /\b32c\b/g.test(text.toLowerCase())) &&
+			!(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('57x')) &&
+			!(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('78c')) &&
+			!(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('return')) &&
+			!(text.toLowerCase().includes('lexmark') && text.toLowerCase().includes('25b')) &&
+			!text.toLowerCase().includes('assembly') &&
+			!text.toLowerCase().includes('role') &&
+			!/\bfor\b/g.test(text.toLowerCase()) &&
+			!text.toLowerCase().includes('finisher') &&
+			!text.toLowerCase().includes('drawers') &&
+			!text.toLowerCase().includes('belt') &&
+			!text.toLowerCase().includes('215a') &&
+			!text.toLowerCase().includes('cyan') &&
+			!text.toLowerCase().includes('setup') &&
+			!text.toLowerCase().includes('board') &&
+			!text.toLowerCase().includes('genuine') &&
+			!text.toLowerCase().includes('scanner glass') && 
+			!text.toLowerCase().includes('sensor') && 
+			!text.toLowerCase().includes('guide') && 
+			!text.toLowerCase().includes('hinge')
 		});
 
 		let objects = [];

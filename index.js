@@ -77,8 +77,6 @@ process
     console.error(err, 'Uncaught Exception thrown');
   });
 
-throw new Error("e");
-
 app.get('/crawl_accessories', async (req, res) => {
 
 

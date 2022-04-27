@@ -968,6 +968,7 @@ app.get('/trigger_daily_update', async (req,res) => {
 app.post("/crawl_techdata_printer", async (req,resp) => {
 	let { matnr } = req.body;
 	let prices = await setTechdataPrice(matnr)
+	console.log('sending prices')
 	resp.send(prices)
 });
 

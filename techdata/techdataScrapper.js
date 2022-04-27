@@ -236,10 +236,9 @@ async function getShippingPrice(matnr){
 }
 
 async function setTechdataPrice(matnr){
+	console.log('setting techdata price')
 	let shipping = await getShippingPrice(matnr)
 	let price = await getTechdataPrice(matnr);
-
-	//console.log(price, shipping);
 
 	if(price == 0) {
 		await Database.makeQuery2("UPDATE inventory SET Techdata = ? WHERE Matnr = ?", ['[]', matnr])

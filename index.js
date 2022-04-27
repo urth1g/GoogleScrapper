@@ -1081,7 +1081,7 @@ app.post("/check_for_good_deals", async (req,resp) => {
 
 	let templateMsg = opportunityTemplate(combinedSources[0], feed, page4Link)
 	if(sourcePrice < feedPrice * multiplier){
-		await sendEmail("jon@amofmail.com", `Possible Opportunity - ${combinedSources[0].source}`, templateMsg)
+		await sendEmail("jevremovicdjordje97@gmail.com", `Possible Opportunity - ${combinedSources[0].source}`, templateMsg)
 	}
 	
 	resp.send('ok')

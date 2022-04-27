@@ -39,14 +39,6 @@ require('dotenv').config();
 // Position on google, CPC, and net - cost price. 
 // Crawl all of ebay and compare on page 4
 
-console.error = function(msg) {
-	// send email
-	// ...
-  
-	// additionaly log
-	sendEmail("jevremovicdjordje97@gmail.com", "Error", msg)
-	process.stderr.write(msg);
-};
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
 function randomIntFromInterval(min, max) { // min and max included 
@@ -65,12 +57,23 @@ app.use(
 
 app.use(express.json())
 
+let errLog = console.error;
+
+console.error = function(msg){
+	let toSend =  null;
+	
+	let { message } = msg;
+	sendEmail("jevremovicdjordje97@gmail.com", "Error", msg.message)
+	errLog.apply(console, arguments)
+}
 
 process
   .on('unhandledRejection', (reason, p) => {
+	//sendEmail("jevremovicdjordje97@gmail.com", "Error", reason)
     console.error(reason, 'Unhandled Rejection at Promise', p);
   })
   .on('uncaughtException', err => {
+	//sendEmail("jevremovicdjordje97@gmail.com", "Error", err.message)
     console.error(err, 'Uncaught Exception thrown');
   });
 

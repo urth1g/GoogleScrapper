@@ -64,6 +64,11 @@ async function searchEbay(productName, partNumber, matnr){
 		}
 
 		console.log('beforeLoading')
+
+		if(!res) {
+			resolve([])
+			return;
+		}
 		const $ = cheerio.load(res.data);
 
 		console.log('loading')

@@ -27,6 +27,7 @@ async function run(){
     }
 
     console.log(printers.length);
+    return;
     for(let i = 0; i < printers.length; i++){
         let matnr = printers[i].Matnr;
 

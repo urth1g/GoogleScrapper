@@ -242,10 +242,13 @@ async function getShippingPrice(matnr){
 }
 
 async function setTechdataPrice(matnr){
-	console.log('setting techdata price')
 	let shipping = await getShippingPrice(matnr)
 	let price = await getTechdataPrice(matnr);
+	let name;
 
+	let res = await Database.makeQuery2("SELECT ShortName FROM products WHERE Matnr = ?", [matnr])
+
+	name = res[0].ShortName
 	if(price == 0) {
 		await Database.makeQuery2("UPDATE inventory SET Techdata = ? WHERE Matnr = ?", ['[]', matnr])
 		return []
@@ -264,7 +267,9 @@ async function setTechdataPrice(matnr){
 
 		return {
 			...x,
-			newBatchIn: (futureDate === 0 || Number.isNaN(futureDate)) ? 999 : days
+			newBatchIn: (futureDate === 0 || Number.isNaN(futureDate)) ? 999 : days,
+			source: 'Techdata',
+			text: ShortName
 		}
 	})
 	let combinedObject = { price: Math.round(Number(price) + Number(shipping)), availability, state }

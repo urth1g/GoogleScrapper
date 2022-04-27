@@ -70,6 +70,7 @@ async function searchAmazon(productName, partNumber, matnr){
 		if(!res){
 			console.log('error')
 			resolve([])
+			return;	
 		}
 		const $ = cheerio.load(res.data);
 

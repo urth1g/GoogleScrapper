@@ -1043,7 +1043,7 @@ app.post("/check_for_good_deals", async (req,resp) => {
 
 	console.log('checking for good deals');
 	let { data } = await axios.post(`${process.env.BACKEND_ENDPOINT_URL}/admin/get_inventory`, {Matnr: matnr})
-	let response = await axios.post('http://localhost:8080/log_info', {matnr})
+	let response = await axios.post(`${process.env.BACKEND_ENDPOINT_URL}/log_info`, {matnr})
 
 	let page4Link = "https://google.com" + response.data[0].Link
 	let feed = JSON.parse(response.data[0].Inventory)

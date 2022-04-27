@@ -15,7 +15,7 @@ function randomIntFromInterval(min, max) { // min and max included
 }
 
 
-async function searchAmazon(productName, partNumber, matnr){
+async function searchAmazonToners(productName, partNumber, matnr){
 
 	let initialProductName = productName
 	let initialPartNumber = partNumber
@@ -29,32 +29,9 @@ async function searchAmazon(productName, partNumber, matnr){
 		partNumber = partNumber.split("-")[0]
 	}
 
+
 	return new Promise( async (resolve, reject) => {
-		let arr = productName.split(" ");
-		let model = arr[arr.length - 1];
-		let brand = arr[0];
 
-		arr.map(x => {
-			if(x.includes('HL-')) model = x;
-		})
-
-		let term = brand + " " + model;
-
-		if(model === 'All-in-One' || 
-			model === 'All-In-One' ||
-			model === 'PostScript' || 
-			model === 'MFP' || 
-			model === 'direct' || 
-			model.toLowerCase() === 'printer' ||
-			model.toLowerCase() === 'pack' ||
-			model.toLowerCase().includes('tank') ){
-			term = partNumber;
-			model = partNumber;	
-		}
-
-		console.log(model)
-		console.log(productName)
-		console.log(term)
 		let res;
 		try{
 			res = await axios.get('https://www.amazon.com/s?k=' + term, {
@@ -76,19 +53,7 @@ async function searchAmazon(productName, partNumber, matnr){
 		let spans = $(".s-title-instructions-style").filter(function(){
 			let text = $(this).find(".a-text-normal span").text();
 
-			return !text.toLowerCase().includes('drum') && 
-			!text.toLowerCase().includes('toner') && 
-			!text.toLowerCase().includes('cartridge') && 
-			!text.toLowerCase().includes('bundle') && 
-			!text.toLowerCase().includes('pack') &&
-			!text.toLowerCase().includes('yield') &&
-			!text.toLowerCase().includes("high") &&
-			!text.toLowerCase().includes('roller') && 
-			!text.toLowerCase().includes('bottle') && 
-			!text.toLowerCase().includes('kit') && 
-			!text.toLowerCase().includes('casing') &&
-			!text.toLowerCase().includes('rfb') &&
-			!text.toLowerCase().includes('refurbished')
+            return filterFunction(text)
 		});
 
 		let objects = [];
@@ -129,10 +94,6 @@ async function searchAmazon(productName, partNumber, matnr){
 
 		let _prices = await findTheBestPriceAmazon(objects)
 		_prices = _prices.filter(x => !Number.isNaN(x.price))
-
-		// _prices.push({
-		// 	date: new Date().toUTCString()
-		// })
 
 		Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
 			if(err) {
@@ -271,4 +232,4 @@ async function findTheBestPriceAmazon(objects){
 	})
 }
 
-module.exports = { searchAmazon, findTheBestPriceAmazon }
+module.exports = { searchAmazonToners, findTheBestPriceAmazon }

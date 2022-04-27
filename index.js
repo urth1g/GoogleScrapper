@@ -1015,16 +1015,18 @@ app.get('/test-email', async (req,resp) => {
 
 		combinedSources = combinedSources.filter(x => (!x.state.toLowerCase().includes('like')) && (x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open')))
 
+		if(combinedSources.length === 0) return false 
+
 		let mappedFeed = feed.map(x => x.price)
 		let mappedSources = combinedSources.map(x => x.computed.net)
 
-		let multiplier = 0.8;
+		let multiplier = 0.83;
 
 		let feedPrice = mappedFeed[0];
 		let sourcePrice = mappedSources[0];
 
-		if(feedPrice > 3000) multiplier = 0.85;
-		if(feedPrice > 4700) multiplier = 0.9;
+		if(feedPrice > 3000) multiplier = 0.88;
+		if(feedPrice > 4700) multiplier = 0.95;
 
 		console.log(combinedSources)
 		let templateMsg = opportunityTemplate(combinedSources[0], feed, page4Link)
@@ -1047,7 +1049,10 @@ app.post("/check_for_good_deals", async (req,resp) => {
 	let feed = JSON.parse(response.data[0].Inventory)
 	let { combinedSources } = data;
 
-	if(combinedSources.length === 0 || feed.length === 0) return false 
+	if(combinedSources.length === 0 || feed.length === 0) {
+		resp.send('false')
+		return;
+	} 
 
 	combinedSources = combinedSources.filter(x => (!x.state.toLowerCase().includes('like')) && (x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open')))
 
@@ -1089,11 +1094,107 @@ app.post('/update_spreadsheet_price', async (req,resp) => {
 
 		row.price = printer.Price + " USD";
 		await row.save();
-		console.log('done')
+		resp.send('ok')
 	}catch(e){
 		console.log(e);
 	}
 
+});
+
+app.get('/crawl_google_toner', async (req, resp) => {
+	let { matnr } = req.body
+
+	let toner = await Database.makeQuery("SELECT * FROM toner_details_final WHERE Matnr = ?", [matnr])
+
+	toner = toner[0]
+	toner = toner.length > 0 ? toner[0] : false
+
+	if(!toner){
+		resp.send('false')
+		return
+	}
+
+	const model = toner['Model']
+	const name = toner['Name']
+	const color = toner['Color']
+	const pack = toner['Pack']
+	const printerNumber = toner['PrinterNumber']
+
+	let term = name.split(" ")[0] + " " + model;
+	let match = model;
+
+	let filterFunction = f => f
+
+	if(pack){
+		filterFunction = x => {
+			let _pack = tsfc(pack).replaceAll(/pack/g, "pk")
+
+			let text = tsfc(x.name)
+			let includesPack = text.includes(tsfc(pack)) || text.includes(_pack) || text.includes('packof2')
+
+			return includesPack
+		}
+	}
+	
+	console.log('Toner name: ', name)
+
+	let shopsToExclude = {}
+
+	shopsToExclude['PC &amp; More'] = true
+	shopsToExclude['A Matter of Fax'] = true 
+	shopsToExclude['Amofax'] = true 
+
+	let res = await searchGoogleToners(term, match, filterFunction, shopsToExclude, toner)
+
+	resp.send('ok')
+});
+
+app.get('/crawl_amazon_toner', async (req, resp) => {
+	let { matnr } = req.body
+
+	let toner = await Database.makeQuery("SELECT * FROM toner_details_final WHERE Matnr = ?", [matnr])
+
+	toner = toner[0]
+	toner = toner.length > 0 ? toner[0] : false
+
+	if(!toner){
+		resp.send('false')
+		return
+	}
+
+	const model = toner['Model']
+	const name = toner['Name']
+	const color = toner['Color']
+	const pack = toner['Pack']
+	const printerNumber = toner['PrinterNumber']
+
+	let term = name.split(" ")[0] + " " + model;
+	let match = model;
+
+	let filterFunction = f => f
+
+	if(pack){
+		filterFunction = x => {
+			let _pack = tsfc(pack).replaceAll(/pack/g, "pk")
+
+			let text = tsfc(x.name)
+			let includesPack = text.includes(tsfc(pack)) || text.includes(_pack) || text.includes('packof2')
+
+			return includesPack
+		}
+	}
+	
+	console.log('Toner name: ', name)
+
+	let shopsToExclude = {}
+
+	shopsToExclude['PC &amp; More'] = true
+	shopsToExclude['A Matter of Fax'] = true 
+	shopsToExclude['Amofax'] = true 
+
+	let res = await searchAmazonToners(term, match, filterFunction, shopsToExclude, toner)
+
+	resp.send('ok')
 });
 
 app.listen(port, () => console.log('App running on 3030'))

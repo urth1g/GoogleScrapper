@@ -31,15 +31,7 @@ function interateThroughSubsets(object, term, productName, model){
 	})
 }
 
-function filterResults(object){
-      return object.filter(x => {
-        let text = x.name;
-        return text.includes('cartridge') || 
-        text.includes('toner')
-      })
-}
-
-async function searchGoogle(productName, partNumber){
+async function searchGoogleToners(productName, partNumber){
 
 	let hl = "en";
 	let gl = "us";
@@ -82,15 +74,4 @@ async function findTheBestPriceToners(link){
 	})
 }
 
-
-function findAverage(prices){
-  let avg = 0;
-
-  prices.forEach(x => avg += x.price);
-
-  let num = avg / prices.length;
-
-  return +num.toFixed(2)
-}
-
-module.exports = { searchGoogleToners, findTheBestPriceToners, findAverage };
+module.exports = { searchGoogleToners, findTheBestPriceToners };

@@ -781,6 +781,7 @@ app.get('/crawl_ebay_printers', (req, res) => {
 app.post('/crawl_ebay_printer', async (req, res) => {
 	let { matnr } = req.body;
 
+	console.log(matnr)
 	let printers = await getPrinters();
 
 	let printer = printers.filter(x => x.Matnr === matnr)[0]
@@ -1043,7 +1044,7 @@ app.get('/test-email', async (req,resp) => {
 		console.log(combinedSources)
 		let templateMsg = opportunityTemplate(combinedSources[0], feed, page4Link)
 		if(sourcePrice < feedPrice * multiplier){
-			await sendEmail("jon@amofmail.com", `Possible Opportunity - ${combinedSources[0].source}`, templateMsg)
+			await sendEmail("jevremovicdjordje97@gmail.com", `Possible Opportunity - ${combinedSources[0].source}`, templateMsg)
 		}
 	}
 
@@ -1162,7 +1163,7 @@ app.get('/crawl_google_toner', async (req, resp) => {
 });
 
 app.get('/crawl_amazon_toner', async (req, resp) => {
-	let { matnr } = req.body
+	let { matnr } = req.query;
 
 	let toner = await Database.makeQuery("SELECT * FROM toner_details_final WHERE Matnr = ?", [matnr])
 

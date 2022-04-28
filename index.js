@@ -1023,8 +1023,8 @@ app.get('/test-email', async (req,resp) => {
 		let feed = JSON.parse(response.data[0].Inventory)
 		let { combinedSources } = data;
 
-		if(combinedSources.length === 0 || feed.length === 0) return false 
 
+		if(combinedSources.length === 0 || feed.length === 0) return false 
 
 		combinedSources = combinedSources.filter(x => (!x.state.toLowerCase().includes('like')) && (x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open')))
 
@@ -1041,10 +1041,9 @@ app.get('/test-email', async (req,resp) => {
 		if(feedPrice > 3000) multiplier = 0.88;
 		if(feedPrice > 4700) multiplier = 0.95;
 
-		console.log(combinedSources)
 		let templateMsg = opportunityTemplate(combinedSources[0], feed, page4Link)
 		if(sourcePrice < feedPrice * multiplier){
-			await sendEmail("jevremovicdjordje97@gmail.com", `Possible Opportunity - ${combinedSources[0].source}`, templateMsg)
+			//await sendEmail("jevremovicdjordje97@gmail.com", `Possible Opportunity - ${combinedSources[0].source}`, templateMsg)
 		}
 	}
 
@@ -1069,6 +1068,10 @@ app.post("/check_for_good_deals", async (req,resp) => {
 
 	combinedSources = combinedSources.filter(x => (!x.state.toLowerCase().includes('like')) && (x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open')))
 
+	if(combinedSources.length === 0) {
+		resp.send('false')
+		return;
+	}
 	let mappedFeed = feed.map(x => x.price)
 	let mappedSources = combinedSources.map(x => x.computed.net)
 
@@ -1080,6 +1083,7 @@ app.post("/check_for_good_deals", async (req,resp) => {
 	if(feedPrice > 3000) multiplier = 0.85;
 	if(feedPrice > 4700) multiplier = 0.9;
 
+	console.log(combinedSources)
 	let templateMsg = opportunityTemplate(combinedSources[0], feed, page4Link)
 	if(sourcePrice < feedPrice * multiplier){
 		await sendEmail("jevremovicdjordje97@gmail.com", `Possible Opportunity - ${combinedSources[0].source}`, templateMsg)

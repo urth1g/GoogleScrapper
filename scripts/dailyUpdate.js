@@ -26,11 +26,9 @@ async function run(){
         printers = printers.filter(x => Number(x.Matnr) !== Number(object.Matnr))
     }
 
-    console.log(printers.length)
     for(let i = 0; i < printers.length; i++){
         let matnr = printers[i].Matnr;
 
-        console.log(matnr)
         try{
             console.log('Step 1 ---- Crawling Ebay for price initiated')
             await axios.post('http://localhost:3030/crawl_ebay_printer', {matnr} )

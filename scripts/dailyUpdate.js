@@ -26,6 +26,8 @@ async function run(){
         printers = printers.filter(x => Number(x.Matnr) !== Number(object.Matnr))
     }
 
+    console.log(printers.length);
+    
     for(let i = 0; i < printers.length; i++){
         let matnr = printers[i].Matnr;
 

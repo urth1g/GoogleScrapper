@@ -11,6 +11,7 @@ const { getPrinters } = require('./database_getters/printers');
 const { searchGoogle, findTheBestPrice, findAverage } = require('./google/googleScrapper');
 const { getFeedSheetData } = require('./google/getFeedSheetData');
 const { searchAmazon, findTheBestPriceAmazon } = require('./amazon/amazonScrapper');
+const { searchAmazonToners } = require('./amazon/amazonScrapperToners');
 const { searchEbay, findTheBestPriceEbay } = require('./ebay/ebayScrapper');
 const { searchTechdata, setTechdataPrice } = require('./techdata/techdataScrapper');
 const { getData } = require('./google/spreadsheets');
@@ -24,6 +25,7 @@ const dailyUpdate = require ('./scripts/dailyUpdate');
 const { calculateStandardDeviation } = require('./helpers/calculateStandardDeviation');
 const { sendEmail } = require('./helpers/sendEmail');
 const { opportunityTemplate } = require('./email_templates/templates');
+const tsfc  = require('./helpers/transformStringForComparison');
 require('dotenv').config();
 
 
@@ -209,6 +211,7 @@ app.get('/crawl_google_printers', async (req, resp) => {
 			searchGoogle(Name, arr[i].mpn).then(async (url, skipPage4) => {
 
 				if(url === 'Nothing found.') {
+					await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, '[]', url, null])
 					return;
 				}
 				if(url.price){
@@ -252,8 +255,6 @@ Techdata: ${JSON.stringify(Techdata)}\n\n
 					return;
 				}
 
-				console.log(url.price)
-			
 				try{
 					findTheBestPrice(url).then( async res => {
 
@@ -575,18 +576,33 @@ app.post("/crawl_for_printer", async (req, resp) => {
 
 	try{
 		await searchGoogle(Name, printer[0].mpn).then(async (url, skipPage4) => {
-
 			if(url === 'Nothing found.') {
+				try{
+					await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url, null])
+				}catch(err){
+					if(err.errno === 1062){
+						await Database.getInstance().promise().query("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
+							'[]',
+							url,
+							Matnr
+						])
+
+						console.log('updated')
+					}
+				}
+			
 				let priceSetter = new PriceSetter([], Matnr)
 				let sources = await priceSetter.getSourcesNetPrices(Matnr);
 
 				sources = sources.filter(x => x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open') )
 				if(sources.length === 0){
 					resp.send({error: 'Nothing found. Price unchanged.'})
+					return;
 				}else{
 					try{
 						await Database.setProductPrice(Matnr, sources[0].net)
 						resp.send({ok:true, newPrice: sources[0].getSourcesNetPrices})
+						return;
 					}catch(e){
 						console.log(e)
 						resp.send({error: e})
@@ -651,7 +667,20 @@ app.post("/crawl_for_printer", async (req, resp) => {
 					let shops = [];
 
 					if(!matches) {
-						console.log('Nothing found.')
+						try{
+							await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url, null])
+						}catch(err){
+							if(err.errno === 1062){
+								await Database.getInstance().promise().query("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
+									'[]',
+									url,
+									Matnr
+								])
+		
+								console.log('updated')
+							}
+						}
+						
 						resp.send({error: 'No price found.'})
 						return
 					}
@@ -832,6 +861,54 @@ app.get('/create_crawl_logs_from_txt', async (req, res) =>{
 })
 
 app.post('/crawl_google_toner', async (req, resp) => {
+	let { matnr } = req.body
+
+	let toner = await Database.makeQuery("SELECT * FROM toner_details_final WHERE Matnr = ?", [matnr])
+
+	toner = toner[0]
+	toner = toner.length > 0 ? toner[0] : false
+
+	if(!toner){
+		resp.send('false')
+		return
+	}
+
+	const model = toner['Model']
+	const name = toner['Name']
+	const color = toner['Color']
+	const pack = toner['Pack']
+	const printerNumber = toner['PrinterNumber']
+
+	let term = name.split(" ")[0] + " " + model;
+	let match = model;
+
+	let filterFunction = f => f
+
+	if(pack){
+		filterFunction = x => {
+			let _pack = tsfc(pack).replaceAll(/pack/g, "pk")
+
+			let text = tsfc(x.name)
+			let includesPack = text.includes(tsfc(pack)) || text.includes(_pack) || text.includes('packof2')
+
+			return includesPack
+		}
+	}
+	
+	console.log('Toner name: ', name)
+
+	let shopsToExclude = {}
+
+	shopsToExclude['PC &amp; More'] = true
+	shopsToExclude['A Matter of Fax'] = true 
+	shopsToExclude['Amofax'] = true 
+
+	let res = await searchGoogleToners(term, match, filterFunction, shopsToExclude, toner)
+
+	resp.send('ok')
+});
+
+app.get('/crawl_google_toner', async (req, resp) => {
 	let { matnr } = req.body
 
 	let toner = await Database.makeQuery("SELECT * FROM toner_details_final WHERE Matnr = ?", [matnr])
@@ -1169,47 +1246,44 @@ app.get('/crawl_google_toner', async (req, resp) => {
 app.get('/crawl_amazon_toner', async (req, resp) => {
 	let { matnr } = req.query;
 
+	console.log(matnr)
 	let toner = await Database.makeQuery("SELECT * FROM toner_details_final WHERE Matnr = ?", [matnr])
 
 	toner = toner[0]
 	toner = toner.length > 0 ? toner[0] : false
 
 	if(!toner){
+		console.log('not found')
 		resp.send('false')
 		return
 	}
 
-	const model = toner['Model']
-	const name = toner['Name']
-	const color = toner['Color']
-	const pack = toner['Pack']
-	const printerNumber = toner['PrinterNumber']
+	let filterFunction = f => f;
 
-	let term = name.split(" ")[0] + " " + model;
-	let match = model;
+	let checkForKeywords = x => {
+		return x.includes('toner') || x.includes('cartridge')
+	}
 
-	let filterFunction = f => f
+	filterFunction = checkForKeywords
+	let pack = toner['Pack']
 
 	if(pack){
-		filterFunction = x => {
+		let checkForPack = x => {
 			let _pack = tsfc(pack).replaceAll(/pack/g, "pk")
 
-			let text = tsfc(x.name)
+			let text = tsfc(x)
 			let includesPack = text.includes(tsfc(pack)) || text.includes(_pack) || text.includes('packof2')
 
 			return includesPack
 		}
+
+		filterFunction = x => {
+			return checkForKeywords(x) && checkForPack(x)
+		}
+
 	}
 	
-	console.log('Toner name: ', name)
-
-	let shopsToExclude = {}
-
-	shopsToExclude['PC &amp; More'] = true
-	shopsToExclude['A Matter of Fax'] = true 
-	shopsToExclude['Amofax'] = true 
-
-	let res = await searchAmazonToners(term, match, filterFunction, shopsToExclude, toner)
+	let res = await searchAmazonToners(toner,filterFunction)
 
 	resp.send('ok')
 });

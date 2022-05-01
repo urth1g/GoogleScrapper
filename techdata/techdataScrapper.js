@@ -218,9 +218,8 @@ async function getShippingPrice(matnr){
 
 	let { Link } = result[0]
 
-	if(!Link) return 12.56
+	if(!Link || !Link.startsWith("https")) return 12.56
 
-	console.log("https://www.google.com" + Link)
 	let responseGoogle = await axios.get("https://www.google.com" + Link + "&sfr=compass&ei=DWTdYeK_G7qHytMPm7yLsAU&tbs=new%3A1")
 
 	let regexToExtractShipping = /aria\-label\=\"Information on how the total price is calculated\".+?Shipping<\/td><td((?:(?!td).)+)?\>\$([^|]+?)\</g

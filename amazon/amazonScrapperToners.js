@@ -15,20 +15,17 @@ function randomIntFromInterval(min, max) { // min and max included
 }
 
 
-async function searchAmazonToners(productName, partNumber, matnr){
+async function searchAmazonToners(toner, filterFunction){
 
-	let initialProductName = productName
-	let initialPartNumber = partNumber
-	let initialMatnr = matnr;
+	const model = toner['Model']
+	const name = toner['Name']
+	const color = toner['Color']
+	const pack = toner['Pack']
+	const printerNumber = toner['PrinterNumber']
+	const matnr = toner['Matnr'];
 
-	if(partNumber.includes('#')){
-		partNumber = partNumber.split("#")[0]
-	}
-
-	if(partNumber.includes('-')){
-		partNumber = partNumber.split("-")[0]
-	}
-
+	let term = name.split(" ")[0] + " " + model;
+	let match = model;
 
 	return new Promise( async (resolve, reject) => {
 
@@ -47,14 +44,17 @@ async function searchAmazonToners(productName, partNumber, matnr){
 		if(!res){
 			console.log('error')
 			resolve([])
+			return;
 		}
+
 		const $ = cheerio.load(res.data);
 
 		let spans = $(".s-title-instructions-style").filter(function(){
 			let text = $(this).find(".a-text-normal span").text();
-
+			text = tsfc(text)
             return filterFunction(text)
 		});
+
 
 		let objects = [];
 
@@ -71,7 +71,7 @@ async function searchAmazonToners(productName, partNumber, matnr){
 
 			let text = x.text;
 			let subset = await subsets.v2(text);
-
+			let isGenuine = tsfc(text).includes("genuine") || tsfc(text).includes("original");
 
 			let distance = Number.MAX_SAFE_INTEGER;
 
@@ -87,7 +87,8 @@ async function searchAmazonToners(productName, partNumber, matnr){
 			if(exactMatch){
 				objects.push({
 					text: x.text,
-					url: x.href
+					url: x.href,
+					isGenuine
 				})
 			}
 		})
@@ -101,6 +102,7 @@ async function searchAmazonToners(productName, partNumber, matnr){
 					Database.getInstance().query("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr], (err, result) => {
 						if(err) console.log(err);
 
+						console.log(result)
 						resolve(_prices)
 					})
 				}
@@ -149,7 +151,6 @@ async function simulateAjaxCall(asin, pageno){
 			if(typeof shipping === 'string') shipping = parseFloat(tsfc(shipping.substr(1)))
 			if(typeof price === 'string') price = parseFloat(tsfc(price.substr(1)))
 
-			console.log(shipping, price)
 			let total =	parseFloat( (shipping + price).toFixed(2))
 
 			if(Number.isNaN(total)) return true;
@@ -167,37 +168,27 @@ async function simulateAjaxCall(asin, pageno){
 
 async function findTheBestPriceAmazon(objects){
 	let _prices = [];
-	return new Promise( (resolve, reject) => {
+	return new Promise( async (resolve, reject) => {
 		if(objects.length === 0) resolve([]);
 
-		objects.forEach(async (x, i) => {
-				await timer(3000 * i);
-				let { url, text } = x;
+		for(let i = 0; i < objects.length; i++){
+				let { url, text, isGenuine } = objects[i];
 
 				try{
 					let res = await axios.get(url, getRequestOptions())
 
 					let $ = cheerio.load(res.data);
 
-					//fs.writeFile('./debugHTML.txt', res.data, { flag: 'a+' }, err => {})
 
-					// let p = $(".priceToPay").text().substr(1);
-					// if(!p) p = $("[data-action='show-all-offers-display'] .a-color-price").text().substr(1);
-					// if(!p) p = $(".a-price span").text().substr(1);
 					let link = $("[data-action='show-all-offers-display'] a").attr("href")
 
-
 					if(link){
-						//fs.writeFile('./debugHTML.txt', res.data, { flag: 'a+' }, err => {})
-
 						let asin = link.split('/')[3]
 
 						let checkSum = 0;
 						let i = 1;
 
 						while(true){
-
-
 							try{
 								let [ prices, sum ] = await simulateAjaxCall(asin, i++)
 								console.log(prices)
@@ -206,12 +197,12 @@ async function findTheBestPriceAmazon(objects){
 								}
 	
 								checkSum = sum;
-	
+
 								prices.forEach(x => {
 									let { total, state } = x
 	
 									_prices.push({
-										price: total, url, text, state
+										price: total, url, text, state, isGenuine
 									})
 								})
 	
@@ -222,13 +213,17 @@ async function findTheBestPriceAmazon(objects){
 							}
 						}						
 					}
-					if(i === objects.length - 1) resolve(_prices)
+
+					if(i === objects.length - 1) {
+						resolve(_prices)
+					}
+					await timer(3000);
 				}catch(e){
 					console.log(e)
 					reject(e);
 				}
 
-		})
+		}
 	})
 }
 

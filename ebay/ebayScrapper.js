@@ -46,9 +46,6 @@ async function searchEbay(productName, partNumber, matnr){
 			model = partNumber;	
 		}
 
-		console.log(model)
-		console.log(productName)
-		console.log(term)
 		let res;
 		try{
 			let rand = randomIntFromInterval(12,35);
@@ -60,7 +57,7 @@ async function searchEbay(productName, partNumber, matnr){
 			});
 		}catch(error){
 			console.log(error.response)
-			reject(error)
+			resolve([])
 		}
 
 		console.log('beforeLoading')

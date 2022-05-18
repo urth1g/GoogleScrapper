@@ -17,7 +17,7 @@ function randomIntFromInterval(min, max) { // min and max included
 
 async function searchAmazonToners(toner, filterFunction){
 
-	const model = toner['Model']
+	const model = toner['Model'] || 'Toner'
 	const name = toner['Name']
 	const color = toner['Color']
 	const pack = toner['Pack']
@@ -33,11 +33,12 @@ async function searchAmazonToners(toner, filterFunction){
 		try{
 			res = await axios.get('https://www.amazon.com/s?k=' + term, {
 				headers:{
-				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(23,65)}_${randomIntFromInterval(25,65)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
+				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(58,155)}_${randomIntFromInterval(59,155)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
 				}
 			});
 		}catch(e){
 			console.log(e)
+			resolve([])
 		}
 
 
@@ -71,7 +72,8 @@ async function searchAmazonToners(toner, filterFunction){
 
 			let text = x.text;
 			let subset = await subsets.v2(text);
-			let isGenuine = tsfc(text).includes("genuine") || tsfc(text).includes("original");
+			
+			let isGenuine = (tsfc(text).includes("genuine") || tsfc(text).includes("original")) || !(tsfc(text).includes("replacement"));
 
 			let distance = Number.MAX_SAFE_INTEGER;
 
@@ -96,9 +98,10 @@ async function searchAmazonToners(toner, filterFunction){
 		let _prices = await findTheBestPriceAmazon(objects)
 		_prices = _prices.filter(x => !Number.isNaN(x.price))
 
-		Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
+		Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon, Ebay, Techdata) VALUES (?,?,?,?)", [matnr, JSON.stringify(_prices), '[]', '[]'], (err, result) => {
 			if(err) {
 				if(err.errno === 1062){
+					console.log('Amazon inventory updated.')
 					Database.getInstance().query("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr], (err, result) => {
 						if(err) console.log(err);
 
@@ -117,7 +120,7 @@ async function searchAmazonToners(toner, filterFunction){
 function getRequestOptions(){
 	return{
 		headers:{
-			'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(25,55)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`,
+			'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(58,155)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`,
 			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
 			'Accept-Encoding': 'gzip',
 			'Accept-Language': 'en-US,en;q=0.9,es;q=0.8',
@@ -156,7 +159,6 @@ async function simulateAjaxCall(asin, pageno){
 			if(Number.isNaN(total)) return true;
 			prices.push({total, state});
 			sum += total;
-
 		})
 
 		return [ prices, sum ]
@@ -174,6 +176,10 @@ async function findTheBestPriceAmazon(objects){
 		for(let i = 0; i < objects.length; i++){
 				let { url, text, isGenuine } = objects[i];
 
+				if(_prices.length >= 30){
+					resolve(_prices)
+					return
+				}
 				try{
 					let res = await axios.get(url, getRequestOptions())
 
@@ -188,9 +194,10 @@ async function findTheBestPriceAmazon(objects){
 						let checkSum = 0;
 						let i = 1;
 
+						let keepTotal = 0;
 						while(true){
 							try{
-								let [ prices, sum ] = await simulateAjaxCall(asin, i++)
+								let [ prices, sum ] = await simulateAjaxCall(asin, i++, keepTotal)
 								console.log(prices)
 								if(Math.round(checkSum) === Math.round(sum)){
 									break;
@@ -206,7 +213,8 @@ async function findTheBestPriceAmazon(objects){
 									})
 								})
 	
-								await timer(3000)
+								if(_prices.length >= 35) break;
+								await timer(2000)
 							}catch(e){
 								console.log(e);
 								break;

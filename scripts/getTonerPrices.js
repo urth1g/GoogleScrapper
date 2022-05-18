@@ -40,31 +40,6 @@ async function searchGoogleToners(productName, partNumber){
 	})
 }
 
-async function run(){
-	let toners = await Database.getInstance().promise().query("SELECT * FROM toner_details_final")
-
-	toners = toners[0].slice(333)
-
-	for(let i = 0; i < toners.length; i++){
-		let toner = toners[i]
-
-		let model = toner['Model'] ? toner['Model'].toLowerCase() : ''
-		let color = toner['Color'].toLowerCase()
-		let name = toner['Name'].split(" - ")[0].toLowerCase()
-		let matnr = toner['Matnr'];
-		let pack = toner['Pack']
-
-		console.log("Current index: ", i)
-		
-		if(name.split(" ").length > 1){
-			await searchAmazonToners(name, color, model, matnr, pack)
-			await timer(randomIntFromInterval(5000,7000))
-		}else{
-
-		}
-	}
-}
-
 async function searchAmazonToners(productName, color, model, matnr, pack){
 
 	return new Promise( async (resolve, reject) => {
@@ -151,6 +126,7 @@ async function searchAmazonToners(productName, color, model, matnr, pack){
 			Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
 				if(err) {
 					if(err.errno === 1062){
+					console.log('Amazon inventory updated.')
 						Database.getInstance().query("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr], (err, result) => {
 							if(err) console.log(err);
 	
@@ -185,6 +161,8 @@ function emptyAmazonLogs(matnr){
 			console.log('inserted: ', matnr)
 			if(err) {
 				if(err.errno === 1062){
+					console.log('Amazon inventory updated.')
+
 					Database.getInstance().query("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", ['[]', matnr], (err, result) => {
 						if(err) reject(err);
 	
@@ -199,4 +177,4 @@ function emptyAmazonLogs(matnr){
 	})
 }
 
-run()
+//run()

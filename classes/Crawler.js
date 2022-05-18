@@ -4,12 +4,16 @@ const { searchEbay, findTheBestPriceEbay } = require('../ebay/ebayScrapper');
 const { searchAmazonToners } = require('../amazon/amazonTonerScrapper');
 const { filter } = require('domutils');
 const axios = require('axios');
+const Helpers = require("../helpers/helpers.js");
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
 class Crawler{
-    constructor(){
 
+    googleHelpers;
+
+    constructor(){
+        this.googleHelpers = new Helpers()
     }
 
     async searchForItem(){

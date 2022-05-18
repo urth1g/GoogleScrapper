@@ -71,6 +71,28 @@ class Database {
 			})
 		})
 	}
+
+	static async setInventoryLog(Matnr, inventory){
+		let res = await Database.makeQuery2("UPDATE inventory_log SET Inventory = ? WHERE Matnr = ?", [inventory, Matnr])
+		return res
+	}
+
+	static generateMatnr(length) {
+		const characters ='123456789';
+		let result = '1';
+		const charactersLength = characters.length;
+		for ( let i = 0; i < length; i++ ) {
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+	
+		return Number(result);
+	}
+
+	static generateRating(min, max, decimalPlaces) {  
+		var rand = Math.random() < 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min);  // could be min or max or anything in between
+		var power = Math.pow(10, decimalPlaces);
+		return Math.floor(rand*power) / power;
+	}
 }
 
 

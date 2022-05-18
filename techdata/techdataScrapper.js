@@ -92,7 +92,7 @@ async function updateDatabase(elements){
 			let _prices = x.price;
 			let matnr = x.matnr;
 
-			Database.getInstance().query("INSERT INTO inventory (Matnr, Techdata) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
+			Database.getInstance().query("INSERT INTO inventory (Matnr, Techdata, Amazon, Ebay) VALUES (?,?,?,?)", [matnr, JSON.stringify(_prices), '[]','[]'], (err, result) => {
 				if(err) {
 					if(err.errno === 1062){
 						Database.getInstance().query("UPDATE inventory SET Techdata = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr], (err, result) => {

@@ -16,6 +16,9 @@ class BestPriceGoogle{
         let regex2 = /<span class="[a-zA-Z]{6}">((?:(?!img).)+?)</g;
         let matches = regex2.exec(this.data);
 
+        if(!matches){
+            throw new Error("No shops found via regex.")
+        }
         do{
             this.shops.push(matches[1]);
         } while((matches = regex2.exec(this.data)) !== null)
@@ -119,14 +122,7 @@ class BestPriceGoogle{
 
         if(isInventoryEmpty) return false;
 
-
         let inventory = {}
-
-        for (const key in toner){
-            if(!toner[key]) continue 
-
-            inventory[key] = JSON.parse(toner[key])
-        }
 
         this.inventory = inventory;
     }
@@ -138,15 +134,17 @@ class BestPriceGoogle{
         console.log('Written output to file.')
         
         try{
-            await Database.makeQuery("INSERT INTO inventory_log VALUES (?,?,?,?)", [toner['Matnr'], toner['Name'], JSON.stringify(this.catalog), url])
+            await Database.makeQuery("INSERT INTO inventory_log VALUES (?,?,?,?,?)", [toner['Matnr'], toner['Name'], JSON.stringify(this.catalog), url, null])
         }catch(e){
             if(e.errno === 1062){
-                await Database.makeQuery("UPDATE inventory_log SET Name = ?, Inventory = ?, Link = ? WHERE Matnr = ?", [        
+                let res = await Database.makeQuery("UPDATE inventory_log SET Name = ?, Inventory = ?, Link = ? WHERE Matnr = ?", [        
                     toner['Name'],
                     JSON.stringify(this.catalog),
                     url,
                     toner['Matnr']
                 ])
+
+                console.log(res)
             }
         }
 

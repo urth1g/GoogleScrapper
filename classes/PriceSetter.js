@@ -70,11 +70,17 @@ class PriceSetter{
         sources = sources.filter(x => x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open'))
 
         if(sources.length === 0) {
-            this.shops = [];
-            return
+            return this.shops;
         }
 
-        this.shops = this.shops.filter( x => x.price > sources[0].net)
+        return this;
+    }
+
+    async filterOnAuthenticity(){
+        let sources = this.sources.filter(x => x.isGenuine)
+
+        console.log(this.sources)
+        if(sources.length !== 0) this.shops = this.shops.filter( x => x.price > sources[0].net)
         return this;
     }
 
@@ -99,7 +105,7 @@ class PriceSetter{
         if(Amazon) sources.push(...Amazon.map(x => x));
         if(Ebay) sources.push(...Ebay.map(x => x));
         if(Techdata) sources.push(...Techdata.map(x => {
-            return { price:x, state: 'new'}
+            return { ...x, state: 'new'}
         } ));
 
         sources.sort((a,b) => a.price - b.price);
@@ -112,7 +118,7 @@ class PriceSetter{
 
 			//let computed = { taxed, afterCreditCardFees, margin, net}
 
-            return {net: net, state: x.state || ''}
+            return {net: net, state: x.state || '', isGenuine: x.isGenuine}
         }))
 
 
@@ -121,15 +127,23 @@ class PriceSetter{
         return sources;
     }
 
-    async applyMargins(){
+    async applyMargins(callback, toner, url){
 
+        console.log(this.shops)
+        console.log(this.sources)
         if(this.shops.length === 0){
             let sources = this.sources.filter(x => x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open') )
+            sources = sources.filter(x => x.isGenuine)
             if(sources.length === 0){
+                console.log("unable")
+                await Database.setInventoryLog(this.matnr, '[]')
                 throw new Error("Unable to beat any shop")
             }else{
                 try{
-                    await Database.setProductPrice(this.matnr, sources[0].net)
+                    if (!callback) await Database.setProductPrice(this.matnr, sources[0].net)
+                    else callback(sources[0].net, toner, url)
+
+                    await Database.setInventoryLog(this.matnr, JSON.stringify(this.shops))
                     throw new Error("Unable to beat any shop. Setting the price based on best source.")
                 }catch(e){
                     console.log(e)

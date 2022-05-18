@@ -17,6 +17,8 @@ class Helpers{
                 let distance = Number.MAX_SAFE_INTEGER;
     
                 subsets.forEach(x => {
+                    x = x.toLowerCase().replace(/(2pk|3pk)/g, "")
+                    toMatch = toMatch.toLowerCase().replace(/(2pk|3pk)/g, "")
                     let _distance = d1(tsfc(x), tsfc(toMatch));
 
                     if(_distance < distance) distance = _distance;
@@ -56,6 +58,9 @@ class Helpers{
 		let regex8 = /title\=\"((?:(?!title).)*?)".+?\$(.+?)<.+?<div.+?>.+?\>(.+?)</g
 
         let _matches = regex8.exec(regexInput);
+
+        if(!_matches) return false;
+
         do {
           let name = _matches[1];
           let price = _matches[2];

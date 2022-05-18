@@ -13,6 +13,7 @@ const { getFeedSheetData } = require('./google/getFeedSheetData');
 const { searchAmazon, findTheBestPriceAmazon } = require('./amazon/amazonScrapper');
 const { searchAmazonToners } = require('./amazon/amazonScrapperToners');
 const { searchEbay, findTheBestPriceEbay } = require('./ebay/ebayScrapper');
+const { searchEbayToners } = require('./ebay/ebayScrapperToners');
 const { searchTechdata, setTechdataPrice } = require('./techdata/techdataScrapper');
 const { getData } = require('./google/spreadsheets');
 const { pricesFromTxt } = require('./pricesFromTxt/pricesFromTxt');
@@ -869,11 +870,12 @@ app.post('/crawl_google_toner', async (req, resp) => {
 	toner = toner.length > 0 ? toner[0] : false
 
 	if(!toner){
+		console.log('not-found')
 		resp.send('false')
 		return
 	}
 
-	const model = toner['Model']
+	const model = toner['Model'] || 'Toner'
 	const name = toner['Name']
 	const color = toner['Color']
 	const pack = toner['Pack']
@@ -882,11 +884,15 @@ app.post('/crawl_google_toner', async (req, resp) => {
 	let term = name.split(" ")[0] + " " + model;
 	let match = model;
 
-	let filterFunction = f => f
+	let filterFunction = x => {
+		if(x.url.includes("/review")) return false
+	}
 
 	if(pack){
 		filterFunction = x => {
 			let _pack = tsfc(pack).replaceAll(/pack/g, "pk")
+
+			if(x.url.includes("/review")) return false
 
 			let text = tsfc(x.name)
 			let includesPack = text.includes(tsfc(pack)) || text.includes(_pack) || text.includes('packof2')
@@ -903,13 +909,14 @@ app.post('/crawl_google_toner', async (req, resp) => {
 	shopsToExclude['A Matter of Fax'] = true 
 	shopsToExclude['Amofax'] = true 
 
+	console.log('got-here')
 	let res = await searchGoogleToners(term, match, filterFunction, shopsToExclude, toner)
 
 	resp.send('ok')
 });
 
 app.get('/crawl_google_toner', async (req, resp) => {
-	let { matnr } = req.body
+	let { matnr } = req.query;
 
 	let toner = await Database.makeQuery("SELECT * FROM toner_details_final WHERE Matnr = ?", [matnr])
 
@@ -1134,21 +1141,30 @@ app.post("/check_for_good_deals", async (req,resp) => {
 	let { data } = await axios.post(`${process.env.BACKEND_ENDPOINT_URL}/admin/get_inventory`, {Matnr: matnr})
 	let response = await axios.post(`${process.env.BACKEND_ENDPOINT_URL}/log_info`, {matnr})
 
+	console.log('step1')
+	if(!response.data[0]) {
+		resp.send('not ok')
+		return;
+	}
 	let page4Link = "https://google.com" + response.data[0].Link
 	let feed = JSON.parse(response.data[0].Inventory)
 	let { combinedSources } = data;
 
+	console.log('step2')
 	if(combinedSources.length === 0 || feed.length === 0) {
 		resp.send('false')
 		return;
 	} 
 
-	combinedSources = combinedSources.filter(x => (!x.state.toLowerCase().includes('like')) && (x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open')))
+	combinedSources = combinedSources.filter(x => x.state).filter(x => (!x.state.toLowerCase().includes('like')) && (x.state.toLowerCase().includes('new') || x.state.toLowerCase().includes('open')))
 
+	console.log('step3')
 	if(combinedSources.length === 0) {
 		resp.send('false')
 		return;
 	}
+	
+	console.log('step4')
 	let mappedFeed = feed.map(x => x.price)
 	let mappedSources = combinedSources.map(x => x.computed.net)
 
@@ -1160,7 +1176,6 @@ app.post("/check_for_good_deals", async (req,resp) => {
 	if(feedPrice > 3000) multiplier = 0.85;
 	if(feedPrice > 4700) multiplier = 0.9;
 
-	console.log(combinedSources)
 	let templateMsg = opportunityTemplate(combinedSources[0], feed, page4Link)
 	if(sourcePrice < feedPrice * multiplier){
 		await sendEmail("jevremovicdjordje97@gmail.com", `Possible Opportunity - ${combinedSources[0].source}`, templateMsg)
@@ -1203,12 +1218,13 @@ app.get('/crawl_google_toner', async (req, resp) => {
 	toner = toner[0]
 	toner = toner.length > 0 ? toner[0] : false
 
+	console.log(toner)
 	if(!toner){
 		resp.send('false')
 		return
 	}
 
-	const model = toner['Model']
+	const model = toner['Model'] || 'Toner'
 	const name = toner['Name']
 	const color = toner['Color']
 	const pack = toner['Pack']
@@ -1243,8 +1259,8 @@ app.get('/crawl_google_toner', async (req, resp) => {
 	resp.send('ok')
 });
 
-app.get('/crawl_amazon_toner', async (req, resp) => {
-	let { matnr } = req.query;
+app.post('/crawl_amazon_toner', async (req, resp) => {
+	let { matnr } = req.body;
 
 	console.log(matnr)
 	let toner = await Database.makeQuery("SELECT * FROM toner_details_final WHERE Matnr = ?", [matnr])
@@ -1284,6 +1300,60 @@ app.get('/crawl_amazon_toner', async (req, resp) => {
 	}
 	
 	let res = await searchAmazonToners(toner,filterFunction)
+
+	resp.send('ok')
+});
+
+app.get('/crawl_amazon_toners', async (req, resp) => {
+	let toners = await Database.makeQuery2("SELECT * FROM toner_details_final ORDER BY Matnr")
+
+	for(let toner of toners){
+		let res = await axios.get('http://localhost:3030/crawl_amazon_toner?matnr=' + toner['Matnr'])
+		console.log(res)
+	}
+})
+
+app.post('/crawl_ebay_toner', async (req, resp) => {
+	let { matnr } = req.body;
+
+	console.log(matnr)
+	let toner = await Database.makeQuery("SELECT * FROM toner_details_final WHERE Matnr = ?", [matnr])
+
+	toner = toner[0]
+	toner = toner.length > 0 ? toner[0] : false
+
+	if(!toner){
+		console.log('not found')
+		resp.send('false')
+		return
+	}
+
+	let filterFunction = f => f;
+
+	let checkForKeywords = x => {
+		return x.includes('toner') || x.includes('cartridge')
+	}
+
+	filterFunction = checkForKeywords
+	let pack = toner['Pack']
+
+	if(pack){
+		let checkForPack = x => {
+			let _pack = tsfc(pack).replaceAll(/pack/g, "pk")
+
+			let text = tsfc(x)
+			let includesPack = text.includes(tsfc(pack)) || text.includes(_pack) || text.includes('packof2')
+
+			return includesPack
+		}
+
+		filterFunction = x => {
+			return checkForKeywords(x) && checkForPack(x)
+		}
+
+	}
+	
+	let res = await searchEbayToners(toner,filterFunction)
 
 	resp.send('ok')
 });

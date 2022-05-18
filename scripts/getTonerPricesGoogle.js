@@ -7,6 +7,7 @@ const Helpers = require('../helpers/helpers');
 const BestPriceGoogle = require('../helpers/BestPriceGoogle');
 const changePrice = require('../helpers/changePrice');
 const fs = require('fs')
+const PriceSetter = require("../classes/PriceSetter")
 
 async function statistics(){
 
@@ -148,7 +149,7 @@ async function searchGoogleToners(term, mustMatch, filterFunction, shopsToExclud
    
                 helpers.searchForBestOffer(string, object)
 
-                if(!matches && object.length === 0) {
+                if(!matches) {
                     helpers.searchPageOne(res.data, object)
                 }else{
                     helpers.continueWithoutBestOffer(res.data, object, matches)
@@ -156,15 +157,22 @@ async function searchGoogleToners(term, mustMatch, filterFunction, shopsToExclud
 
                 object = helpers.extractCompanyNames(object)
                 object = object.filter(filterFunction)
-                
+
+  
+                if(object.length === 0) {
+                    helpers.searchPageOne(res.data, object)
+                }
+                console.log(object)
                 if(object.length === 0) resolve([])
+
                 let gradedSearchResults = await helpers.gradeResults(object, term, mustMatch)
 
                 console.log(gradedSearchResults)
+                console.log('we here')
                 if(gradedSearchResults.length > 0){
                     let bestResult = gradedSearchResults[0]
                     let { url } = bestResult 
-                    let bestPrice = await findTheBestPriceToners(url, term, shopsToExclude, toner)
+                    let bestPrice = url ? await findTheBestPriceToners(url, term, shopsToExclude, toner) : await findTheBestPriceTonersNoLink(object, toner)
                     resolve(bestPrice)
                 }else{
                     resolve([])
@@ -201,41 +209,70 @@ async function findTheBestPriceToners(link, name, shopsToExclude, toner){
             console.log('Nothing was found for ' + name)
         }
 
+        let Matnr = toner['Matnr']
 
-        await bestPriceGoogle.getShops()
-        await bestPriceGoogle.generatePrices()
+        try{
+            await bestPriceGoogle.getShops()
+            await bestPriceGoogle.generatePrices()    
+        }catch(e){
+            console.log(e)
+            resolve(e)
+        }
 
         let { catalog } = bestPriceGoogle
 
-        console.log(catalog)
-        await bestPriceGoogle.getInventory(toner['Matnr'])
+        await bestPriceGoogle.getInventory(Matnr)
 
         let shopToBeat = await bestPriceGoogle.getShopForOutbidding(shopsToExclude, true)
-        console.log(shopToBeat)
 
-        let newPrice = changePrice(shopToBeat.price)
-        console.log("New price of toner would be: ", newPrice)
+        let priceSetter = new PriceSetter(catalog, Matnr);
 
-        let currentPriceOfToner = await Database.getInstance().promise().query("SELECT Cost FROM toner_details_final WHERE Matnr = ?", [ toner['Matnr'] ])
-        currentPriceOfToner = currentPriceOfToner[0]
+        let newPrice = null; 
 
-        currentPriceOfToner = currentPriceOfToner.length > 0 ? currentPriceOfToner[0].Cost : false
-
-        console.log("Current price of a toner is: ", currentPriceOfToner);
-
-        // if(currentPriceOfToner){
-        //     if(newPrice < currentPriceOfToner){
-        //         await bestPriceGoogle.updateTonerPrice(newPrice, toner, url)
-        //     }
-        // }else{
-        //     await bestPriceGoogle.updateTonerPrice(newPrice, toner, url)
-        // }
-
-        await bestPriceGoogle.updateTonerPrice(newPrice, toner, url)
+        try{
+            await priceSetter.filterShopsBasedOnIgnoreList()
+            await priceSetter.getSourcesNetPrices(Matnr)
+            await priceSetter.filterOnAuthenticity()
+            await priceSetter.applyMargins(bestPriceGoogle.updateTonerPrice, toner, url)
+    
+            newPrice = parseFloat(priceSetter.price.toFixed(2))
+    
+            await bestPriceGoogle.updateTonerPrice(newPrice, toner, url)   
+            resolve(catalog)
+        }catch(e){
+            console.log(e)
+            resolve(catalog)
+        }
         
-        resolve(shops)
 
 	})
+}
+
+async function findTheBestPriceTonersNoLink(catalog, toner){
+
+    console.log('this was ran')
+    let Matnr = toner['Matnr']
+    let priceSetter = new PriceSetter(catalog, Matnr);
+    let bestPriceGoogle = new BestPriceGoogle([])
+
+    let newPrice = null; 
+
+    try{
+        await priceSetter.filterShopsBasedOnIgnoreList()
+        await priceSetter.getSourcesNetPrices(Matnr)
+        await priceSetter.filterOnAuthenticity()
+        await priceSetter.applyMargins(bestPriceGoogle.updateTonerPrice, toner, 'Page 1')
+
+        newPrice = parseFloat(priceSetter.price.toFixed(2))
+
+        console.log(newPrice)
+        await bestPriceGoogle.updateTonerPrice(newPrice, toner, 'Page 1')
+        return catalog   
+    }catch(e){
+        console.log(e)
+        return catalog
+    }
+
 }
 
 // run() 

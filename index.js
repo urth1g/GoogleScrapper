@@ -1400,6 +1400,17 @@ app.get('/test-route', (res, resp) => {
 })
 
 app.post('/test_route', (req, resp) => {
+	let { matnr } = req.body;
+
+	console.log(matnr)
+	let printers = await getPrinters();
+
+	let printer = printers.filter(x => x.Matnr === matnr)[0]
+
+	let name = printer.ShortName;
+	let mpn = printer.mpn;
+
+	let prices = await searchEbay(name.split(" - ")[0], mpn, matnr);
 	resp.send('ok')
 })
 app.listen(port, () => console.log('App running on 3030'))

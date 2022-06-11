@@ -1398,4 +1398,8 @@ app.get('/load_balancer', async (req, res) => {
 app.get('/test-route', (res, resp) => {
 	resp.send('ok')
 })
+
+app.post('/test-route', (req, resp) => {
+	resp.send('ok')
+})
 app.listen(port, () => console.log('App running on 3030'))

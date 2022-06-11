@@ -27,6 +27,7 @@ const { calculateStandardDeviation } = require('./helpers/calculateStandardDevia
 const { sendEmail } = require('./helpers/sendEmail');
 const { opportunityTemplate } = require('./email_templates/templates');
 const tsfc  = require('./helpers/transformStringForComparison');
+const ServersQueue = require('./classes/ServersQueue');
 require('dotenv').config();
 
 
@@ -1358,4 +1359,43 @@ app.post('/crawl_ebay_toner', async (req, resp) => {
 	resp.send('ok')
 });
 
+app.get('/load_balancer', async (req, res) => {
+	const sqo = new ServersQueue()
+
+	let server = await sqo.getFreeServer();
+
+	let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%'");;
+
+	let { port } = server
+
+	let accessPort = port + 1000;
+
+	let url = "https://personal-server.xyz:" + accessPort
+    for(let i = 0; i < 1; i++){
+		let matnr = items[i].Matnr
+		console.log(matnr)
+        try{
+            console.log('Step 1 ---- Crawling Ebay for price initiated')
+            await axios.post( url + '/crawl_ebay_printer', {matnr} )
+            console.log('Step 2 ---- Crawling Amazon for price initiated')
+            await axios.post( url + '/crawl_amazon_printer', {matnr} )
+            console.log('Step 3 ---- Crawling Techdata for price initiated')
+            await axios.post(url + '/crawl_techdata_printer', {matnr} )
+            console.log('Step 4 ---- Setting the price based on feed initiated')
+            await axios.post(url + '/crawl_for_printer', {matnr} )
+            console.log('Step 5 ---- Checking for any ULTRA GOOD deals')
+            await axios.post(url + '/check_for_good_deals', {matnr} )
+            console.log('Step 6 ---- Updating the price in google feed initiated')
+            await axios.post(url + '/update_spreadsheet_price', {matnr} )
+            console.log('updated_123')
+            await timer(2000)
+        }catch(e){
+            console.log(e)
+        }
+    }
+});
+
+app.get('/test-route', (res, resp) => {
+	resp.send('ok')
+})
 app.listen(port, () => console.log('App running on 3030'))

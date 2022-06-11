@@ -1380,13 +1380,13 @@ app.get('/load_balancer', async (req, res) => {
             console.log('Step 2 ---- Crawling Amazon for price initiated')
             await axios.post( url + '/crawl_amazon_printer', {matnr} )
             console.log('Step 3 ---- Crawling Techdata for price initiated')
-            await axios.post(url + '/crawl_techdata_printer', {matnr} )
+            await axios.post( url + '/crawl_techdata_printer', {matnr} )
             console.log('Step 4 ---- Setting the price based on feed initiated')
-            await axios.post(url + '/crawl_for_printer', {matnr} )
+            await axios.post( url + '/crawl_for_printer', {matnr} )
             console.log('Step 5 ---- Checking for any ULTRA GOOD deals')
-            await axios.post(url + '/check_for_good_deals', {matnr} )
+            await axios.post( url + '/check_for_good_deals', {matnr} )
             console.log('Step 6 ---- Updating the price in google feed initiated')
-            await axios.post(url + '/update_spreadsheet_price', {matnr} )
+            await axios.post( url + '/update_spreadsheet_price', {matnr} )
             console.log('updated_123')
             await timer(2000)
         }catch(e){
@@ -1399,7 +1399,7 @@ app.get('/test-route', (res, resp) => {
 	resp.send('ok')
 })
 
-app.post('/test-route', (req, resp) => {
+app.post('/test_route', (req, resp) => {
 	resp.send('ok')
 })
 app.listen(port, () => console.log('App running on 3030'))

@@ -15,7 +15,7 @@ class Database {
 		  port : process.env.DB_PORT,
 		  multipleStatements: true,
 		  waitForConnections: true,
-		  connectionLimit: 10,
+		  connectionLimit: 120,
 		  queueLimit: 0
 		})
 

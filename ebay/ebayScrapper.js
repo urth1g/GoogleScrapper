@@ -34,6 +34,7 @@ async function searchEbay(productName, partNumber, matnr){
 
 		let term = brand + " " + model;
 
+		console.log(term)
 		if(model === 'All-in-One' || 
 			model === 'All-In-One' ||
 			model === 'PostScript' || 

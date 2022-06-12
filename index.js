@@ -546,7 +546,7 @@ app.post('/crawl_amazon_printer', async (req,res) => {
 
 	let printers = await Database.makeQuery2("SELECT * FROM products")
 
-	let printer = printers.filter(x => x.Matnr === matnr)[0]
+	let printer = printers.filter(x => x.Matnr === Number(matnr))[0]
 
 	let name = printer.ShortName;
 	let mpn = printer.mpn;
@@ -561,7 +561,7 @@ app.post("/crawl_for_printer", async (req, resp) => {
 
 	let matnr = req.body.matnr;
 
-	let printer = printers.filter(x => x.Matnr === matnr);
+	let printer = printers.filter(x => x.Matnr === Number(matnr));
 
 	if(printer.length === 0) return;
 
@@ -812,11 +812,14 @@ app.get('/crawl_ebay_printers', (req, res) => {
 app.post('/crawl_ebay_printer', async (req, res) => {
 	let { matnr } = req.body;
 
-	console.log(matnr)
-	let printers = await Database.makeQuery2("SELECT * FROM products")
+	let printer = await Database.makeQuery2("SELECT * FROM products WHERE Matnr = ?", [matnr])
 
-	let printer = printers.filter(x => x.Matnr === matnr)[0]
+	if(printer.length === 0) {
+		res.send('err')
+		return
+	}
 
+	printer = printer[0]
 	let name = printer.ShortName;
 	let mpn = printer.mpn;
 
@@ -1362,55 +1365,40 @@ app.post('/crawl_ebay_toner', async (req, resp) => {
 app.get('/load_balancer', async (req, res) => {
 	const sqo = new ServersQueue()
 
-	let server = await sqo.getFreeServer();
 
 	let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%'");;
+	
+	console.log(items.length)
 
-	let { port } = server
+	let batches = []
 
-	let accessPort = port + 1000;
+	for(let i = 0; i < items.length; i+=100){
 
-	let url = "https://personal-server.xyz:" + accessPort
-    for(let i = 0; i < 1; i++){
-		let matnr = items[i].Matnr
-		console.log(matnr)
-        try{
-            console.log('Step 1 ---- Crawling Ebay for price initiated')
-            await axios.post( url + '/crawl_ebay_printer', {matnr} )
-            console.log('Step 2 ---- Crawling Amazon for price initiated')
-            await axios.post( url + '/crawl_amazon_printer', {matnr} )
-            console.log('Step 3 ---- Crawling Techdata for price initiated')
-            await axios.post( url + '/crawl_techdata_printer', {matnr} )
-            console.log('Step 4 ---- Setting the price based on feed initiated')
-            await axios.post( url + '/crawl_for_printer', {matnr} )
-            console.log('Step 5 ---- Checking for any ULTRA GOOD deals')
-            await axios.post( url + '/check_for_good_deals', {matnr} )
-            console.log('Step 6 ---- Updating the price in google feed initiated')
-            await axios.post( url + '/update_spreadsheet_price', {matnr} )
-            console.log('updated_123')
-            await timer(2000)
-        }catch(e){
-            console.log(e)
-        }
-    }
+		for(let c = 0; c < c + 100; c++){
+			let matnr = items[c].Matnr
+	
+	
+			let server = await sqo.getFreeServer();
+			let { port } = server
+			let accessPort = port + 1000;
+		
+			let url = "https://personal-server.xyz:" + accessPort
+	
+			console.log(server)
+			try{
+				console.log('Step 1 ---- Crawling Ebay for price initiated')
+				axios.post( url + '/crawl_ebay_printer', {matnr} )
+				//console.log('Step 2 ---- Crawling Amazon for price initiated')
+				//await axios.post( url + '/crawl_amazon_printer', {matnr} )
+				//console.log('Step 4 ---- Setting the price based on feed initiated')
+				//await axios.post( url + '/crawl_for_printer', {matnr} )
+			}catch(e){
+				console.log(e)
+			}
+		}
+		console.log('done')
+		await timer(40000)
+	}
 });
 
-app.get('/test-route', (res, resp) => {
-	resp.send('ok')
-})
-
-app.post('/test_route', async (req, resp) => {
-	let { matnr } = req.body;
-
-	console.log(matnr)
-	let printers = await getPrinters();
-
-	let printer = printers.filter(x => x.Matnr === matnr)[0]
-
-	let name = printer.ShortName;
-	let mpn = printer.mpn;
-
-	let prices = await searchEbay(name.split(" - ")[0], mpn, matnr);
-	resp.send('ok')
-})
 app.listen(port, () => console.log('App running on 3030'))

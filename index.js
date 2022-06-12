@@ -544,7 +544,7 @@ app.get('/crawl_amazon_printers', async (req, res) => {
 app.post('/crawl_amazon_printer', async (req,res) => {
 	let { matnr } = req.body;
 
-	let printers = await getPrinters();
+	let printers = await Database.makeQuery2("SELECT * FROM products")
 
 	let printer = printers.filter(x => x.Matnr === matnr)[0]
 
@@ -557,7 +557,7 @@ app.post('/crawl_amazon_printer', async (req,res) => {
 })
 
 app.post("/crawl_for_printer", async (req, resp) => {
-	let printers = await getPrinters();
+	let printers = await Database.makeQuery2("SELECT * FROM products")
 
 	let matnr = req.body.matnr;
 
@@ -813,7 +813,7 @@ app.post('/crawl_ebay_printer', async (req, res) => {
 	let { matnr } = req.body;
 
 	console.log(matnr)
-	let printers = await getPrinters();
+	let printers = await Database.makeQuery2("SELECT * FROM products")
 
 	let printer = printers.filter(x => x.Matnr === matnr)[0]
 

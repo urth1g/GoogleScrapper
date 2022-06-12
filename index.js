@@ -1399,7 +1399,7 @@ app.get('/test-route', (res, resp) => {
 	resp.send('ok')
 })
 
-app.post('/test_route', (req, resp) => {
+app.post('/test_route', async (req, resp) => {
 	let { matnr } = req.body;
 
 	console.log(matnr)

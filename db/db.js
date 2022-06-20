@@ -42,9 +42,26 @@ class Database {
 		return res
 	}
 
+	// static async makeQuery2(query, params){
+	// 	let res = await Database.getInstance().promise().query(query, params)
+	// 	return res[0]
+	// }
+
 	static async makeQuery2(query, params){
-		let res = await Database.getInstance().promise().query(query, params)
-		return res[0]
+
+		return new Promise( (resolve, reject) => {
+			Database.getInstance().getConnection(async function(err, conn) {
+				// Do something with the connection
+				let res = await conn.promise().query(query, params);
+				// Don't forget to release the connection when finished!
+				console.log(res[0])
+	
+				if(conn) conn.release()
+	
+				resolve(res[0])
+			 })
+		})
+		
 	}
 
 	static async getSources(matnr){

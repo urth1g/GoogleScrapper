@@ -1366,7 +1366,7 @@ app.get('/load_balancer', async (req, res) => {
 	const sqo = new ServersQueue()
 
 
-	let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%'");;
+	let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%'");
 	
 	console.log(items.length)
 
@@ -1374,7 +1374,7 @@ app.get('/load_balancer', async (req, res) => {
 
 	for(let i = 0; i < items.length; i+=100){
 
-		for(let c = 0; c < c + 100; c++){
+		for(let c = i*100; c < i*100+100; c++){
 			let matnr = items[c].Matnr
 	
 	
@@ -1388,6 +1388,7 @@ app.get('/load_balancer', async (req, res) => {
 			try{
 				console.log('Step 1 ---- Crawling Ebay for price initiated')
 				axios.post( url + '/crawl_ebay_printer', {matnr} )
+				console.log(c)
 				//console.log('Step 2 ---- Crawling Amazon for price initiated')
 				//await axios.post( url + '/crawl_amazon_printer', {matnr} )
 				//console.log('Step 4 ---- Setting the price based on feed initiated')
@@ -1397,8 +1398,15 @@ app.get('/load_balancer', async (req, res) => {
 			}
 		}
 		console.log('done')
-		await timer(40000)
+		await timer(60000)
 	}
 });
+
+app.get("/test-route", async (req,resp) => {
+	let items = await Database.makeQuery3("SELECT * FROM products WHERE Class LIKE '%Network%'");;
+	
+	console.log(items)
+	resp.send('ok')
+})
 
 app.listen(port, () => console.log('App running on 3030'))

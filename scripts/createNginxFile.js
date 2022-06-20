@@ -19,21 +19,20 @@ async function run(){
     console.log(servers)
 
     let str = (port) => `
-    server{
-        listen [::]:${port + 1000} ssl ipv6only=on;
-        listen ${port + 1000} ssl;
+server{
+    listen [::]:${port + 1000} ssl ipv6only=on;
+    listen ${port + 1000} ssl;
+    
+    server_name personal-server.xyz;
+    location / {
+        proxy_pass http://127.0.0.1:${port};
+    }
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
       
-        server_name personal-server.xyz;
-        location / {
-          proxy_pass http://127.0.0.1:${port};
-        }
-      
-          ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-          ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-          include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-          ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-      
-    }\r\n      
+}\r\n      
     `
 
     for(let server of servers){

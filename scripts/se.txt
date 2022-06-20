@@ -7,15 +7,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3800;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4801 ssl ipv6only=on;
     listen 4801 ssl;
@@ -24,15 +23,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3801;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4802 ssl ipv6only=on;
     listen 4802 ssl;
@@ -41,15 +39,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3802;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4803 ssl ipv6only=on;
     listen 4803 ssl;
@@ -58,15 +55,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3803;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4804 ssl ipv6only=on;
     listen 4804 ssl;
@@ -75,15 +71,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3804;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4805 ssl ipv6only=on;
     listen 4805 ssl;
@@ -92,15 +87,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3805;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4806 ssl ipv6only=on;
     listen 4806 ssl;
@@ -109,15 +103,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3806;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4807 ssl ipv6only=on;
     listen 4807 ssl;
@@ -126,15 +119,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3807;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4808 ssl ipv6only=on;
     listen 4808 ssl;
@@ -143,15 +135,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3808;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4809 ssl ipv6only=on;
     listen 4809 ssl;
@@ -160,15 +151,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3809;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4810 ssl ipv6only=on;
     listen 4810 ssl;
@@ -177,15 +167,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3810;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4811 ssl ipv6only=on;
     listen 4811 ssl;
@@ -194,15 +183,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3811;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4812 ssl ipv6only=on;
     listen 4812 ssl;
@@ -211,15 +199,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3812;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4813 ssl ipv6only=on;
     listen 4813 ssl;
@@ -228,15 +215,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3813;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4814 ssl ipv6only=on;
     listen 4814 ssl;
@@ -245,15 +231,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3814;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4815 ssl ipv6only=on;
     listen 4815 ssl;
@@ -262,15 +247,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3815;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4816 ssl ipv6only=on;
     listen 4816 ssl;
@@ -279,15 +263,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3816;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4817 ssl ipv6only=on;
     listen 4817 ssl;
@@ -296,15 +279,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3817;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4818 ssl ipv6only=on;
     listen 4818 ssl;
@@ -313,15 +295,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3818;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4819 ssl ipv6only=on;
     listen 4819 ssl;
@@ -330,15 +311,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3819;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4820 ssl ipv6only=on;
     listen 4820 ssl;
@@ -347,15 +327,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3820;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4821 ssl ipv6only=on;
     listen 4821 ssl;
@@ -364,15 +343,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3821;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4822 ssl ipv6only=on;
     listen 4822 ssl;
@@ -381,15 +359,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3822;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4823 ssl ipv6only=on;
     listen 4823 ssl;
@@ -398,15 +375,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3823;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4824 ssl ipv6only=on;
     listen 4824 ssl;
@@ -415,15 +391,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3824;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4825 ssl ipv6only=on;
     listen 4825 ssl;
@@ -432,15 +407,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3825;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4826 ssl ipv6only=on;
     listen 4826 ssl;
@@ -449,15 +423,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3826;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4827 ssl ipv6only=on;
     listen 4827 ssl;
@@ -466,15 +439,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3827;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4828 ssl ipv6only=on;
     listen 4828 ssl;
@@ -483,15 +455,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3828;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4829 ssl ipv6only=on;
     listen 4829 ssl;
@@ -500,15 +471,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3829;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4830 ssl ipv6only=on;
     listen 4830 ssl;
@@ -517,15 +487,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3830;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4831 ssl ipv6only=on;
     listen 4831 ssl;
@@ -534,15 +503,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3831;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4832 ssl ipv6only=on;
     listen 4832 ssl;
@@ -551,15 +519,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3832;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4833 ssl ipv6only=on;
     listen 4833 ssl;
@@ -568,15 +535,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3833;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4834 ssl ipv6only=on;
     listen 4834 ssl;
@@ -585,15 +551,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3834;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4835 ssl ipv6only=on;
     listen 4835 ssl;
@@ -602,15 +567,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3835;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4836 ssl ipv6only=on;
     listen 4836 ssl;
@@ -619,15 +583,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3836;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4837 ssl ipv6only=on;
     listen 4837 ssl;
@@ -636,15 +599,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3837;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4838 ssl ipv6only=on;
     listen 4838 ssl;
@@ -653,15 +615,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3838;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4839 ssl ipv6only=on;
     listen 4839 ssl;
@@ -670,15 +631,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3839;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4840 ssl ipv6only=on;
     listen 4840 ssl;
@@ -687,15 +647,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3840;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4841 ssl ipv6only=on;
     listen 4841 ssl;
@@ -704,15 +663,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3841;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4842 ssl ipv6only=on;
     listen 4842 ssl;
@@ -721,15 +679,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3842;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4843 ssl ipv6only=on;
     listen 4843 ssl;
@@ -738,15 +695,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3843;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4844 ssl ipv6only=on;
     listen 4844 ssl;
@@ -755,15 +711,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3844;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4845 ssl ipv6only=on;
     listen 4845 ssl;
@@ -772,15 +727,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3845;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4846 ssl ipv6only=on;
     listen 4846 ssl;
@@ -789,15 +743,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3846;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4847 ssl ipv6only=on;
     listen 4847 ssl;
@@ -806,15 +759,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3847;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4848 ssl ipv6only=on;
     listen 4848 ssl;
@@ -823,15 +775,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3848;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4849 ssl ipv6only=on;
     listen 4849 ssl;
@@ -840,15 +791,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3849;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4850 ssl ipv6only=on;
     listen 4850 ssl;
@@ -857,15 +807,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3850;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4851 ssl ipv6only=on;
     listen 4851 ssl;
@@ -874,15 +823,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3851;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4852 ssl ipv6only=on;
     listen 4852 ssl;
@@ -891,15 +839,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3852;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4853 ssl ipv6only=on;
     listen 4853 ssl;
@@ -908,15 +855,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3853;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4854 ssl ipv6only=on;
     listen 4854 ssl;
@@ -925,15 +871,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3854;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4855 ssl ipv6only=on;
     listen 4855 ssl;
@@ -942,15 +887,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3855;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4856 ssl ipv6only=on;
     listen 4856 ssl;
@@ -959,15 +903,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3856;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4857 ssl ipv6only=on;
     listen 4857 ssl;
@@ -976,15 +919,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3857;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4858 ssl ipv6only=on;
     listen 4858 ssl;
@@ -993,15 +935,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3858;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4859 ssl ipv6only=on;
     listen 4859 ssl;
@@ -1010,15 +951,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3859;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4860 ssl ipv6only=on;
     listen 4860 ssl;
@@ -1027,15 +967,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3860;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4861 ssl ipv6only=on;
     listen 4861 ssl;
@@ -1044,15 +983,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3861;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4862 ssl ipv6only=on;
     listen 4862 ssl;
@@ -1061,15 +999,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3862;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4863 ssl ipv6only=on;
     listen 4863 ssl;
@@ -1078,15 +1015,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3863;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4864 ssl ipv6only=on;
     listen 4864 ssl;
@@ -1095,15 +1031,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3864;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4865 ssl ipv6only=on;
     listen 4865 ssl;
@@ -1112,15 +1047,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3865;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4866 ssl ipv6only=on;
     listen 4866 ssl;
@@ -1129,15 +1063,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3866;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4867 ssl ipv6only=on;
     listen 4867 ssl;
@@ -1146,15 +1079,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3867;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4868 ssl ipv6only=on;
     listen 4868 ssl;
@@ -1163,15 +1095,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3868;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4869 ssl ipv6only=on;
     listen 4869 ssl;
@@ -1180,15 +1111,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3869;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4870 ssl ipv6only=on;
     listen 4870 ssl;
@@ -1197,15 +1127,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3870;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4871 ssl ipv6only=on;
     listen 4871 ssl;
@@ -1214,15 +1143,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3871;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4872 ssl ipv6only=on;
     listen 4872 ssl;
@@ -1231,15 +1159,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3872;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4873 ssl ipv6only=on;
     listen 4873 ssl;
@@ -1248,15 +1175,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3873;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4874 ssl ipv6only=on;
     listen 4874 ssl;
@@ -1265,15 +1191,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3874;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4875 ssl ipv6only=on;
     listen 4875 ssl;
@@ -1282,15 +1207,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3875;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4876 ssl ipv6only=on;
     listen 4876 ssl;
@@ -1299,15 +1223,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3876;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4877 ssl ipv6only=on;
     listen 4877 ssl;
@@ -1316,15 +1239,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3877;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4878 ssl ipv6only=on;
     listen 4878 ssl;
@@ -1333,15 +1255,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3878;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4879 ssl ipv6only=on;
     listen 4879 ssl;
@@ -1350,15 +1271,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3879;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4880 ssl ipv6only=on;
     listen 4880 ssl;
@@ -1367,15 +1287,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3880;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4881 ssl ipv6only=on;
     listen 4881 ssl;
@@ -1384,15 +1303,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3881;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4882 ssl ipv6only=on;
     listen 4882 ssl;
@@ -1401,15 +1319,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3882;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4883 ssl ipv6only=on;
     listen 4883 ssl;
@@ -1418,15 +1335,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3883;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4884 ssl ipv6only=on;
     listen 4884 ssl;
@@ -1435,15 +1351,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3884;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4885 ssl ipv6only=on;
     listen 4885 ssl;
@@ -1452,15 +1367,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3885;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4886 ssl ipv6only=on;
     listen 4886 ssl;
@@ -1469,15 +1383,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3886;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4887 ssl ipv6only=on;
     listen 4887 ssl;
@@ -1486,15 +1399,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3887;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4888 ssl ipv6only=on;
     listen 4888 ssl;
@@ -1503,15 +1415,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3888;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4889 ssl ipv6only=on;
     listen 4889 ssl;
@@ -1520,15 +1431,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3889;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4890 ssl ipv6only=on;
     listen 4890 ssl;
@@ -1537,15 +1447,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3890;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4891 ssl ipv6only=on;
     listen 4891 ssl;
@@ -1554,15 +1463,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3891;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4892 ssl ipv6only=on;
     listen 4892 ssl;
@@ -1571,15 +1479,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3892;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4893 ssl ipv6only=on;
     listen 4893 ssl;
@@ -1588,15 +1495,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3893;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4894 ssl ipv6only=on;
     listen 4894 ssl;
@@ -1605,15 +1511,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3894;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4895 ssl ipv6only=on;
     listen 4895 ssl;
@@ -1622,15 +1527,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3895;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4896 ssl ipv6only=on;
     listen 4896 ssl;
@@ -1639,15 +1543,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3896;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4897 ssl ipv6only=on;
     listen 4897 ssl;
@@ -1656,15 +1559,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3897;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4898 ssl ipv6only=on;
     listen 4898 ssl;
@@ -1673,15 +1575,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3898;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4899 ssl ipv6only=on;
     listen 4899 ssl;
@@ -1690,15 +1591,14 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3899;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     
-
 server{
     listen [::]:4900 ssl ipv6only=on;
     listen 4900 ssl;
@@ -1707,11 +1607,11 @@ server{
     location / {
         proxy_pass http://127.0.0.1:3900;
     }
-    
-        ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    
+    ssl_certificate /etc/letsencrypt/live/personal-server.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/personal-server.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      
 }
+      
     

@@ -13,7 +13,7 @@ const myOAuth2Client = new OAuth2(
 )
 
 myOAuth2Client.setCredentials({
-  refresh_token:"1//04NCPghGREkwQCgYIARAAGAQSNwF-L9Ir6r_z8mbSIU1y813vgMub2FhvoAs4j7G2DFapWnbyUEDyPd6fCE3Za8T6u2P-LNJ7Bdw"
+  refresh_token: '1//04k6W573uvutVCgYIARAAGAQSNwF-L9IrUkHAb8Iu1LgG7Xz_LY6ME2qaFjaMuBCkvfkabWajLGK5AyG9vaEZeuKM-iigdQ6EVCI'
 });
 
 
@@ -27,7 +27,7 @@ async function sendEmail(to, subject, message){
          user: "amofax.notifications@gmail.com", //your gmail account you used to set the project up in google cloud console"
          clientId: CLIID,
          clientSecret: SECRET,
-         refreshToken: "1//04NCPghGREkwQCgYIARAAGAQSNwF-L9Ir6r_z8mbSIU1y813vgMub2FhvoAs4j7G2DFapWnbyUEDyPd6fCE3Za8T6u2P-LNJ7Bdw",
+         refreshToken: '1//04k6W573uvutVCgYIARAAGAQSNwF-L9IrUkHAb8Iu1LgG7Xz_LY6ME2qaFjaMuBCkvfkabWajLGK5AyG9vaEZeuKM-iigdQ6EVCI',
          accessToken: ACCESS_TOKEN //access token variable we defined earlier
     }});
 

@@ -1409,4 +1409,8 @@ app.get("/test-route", async (req,resp) => {
 	resp.send('ok')
 })
 
+app.get('/test-bla', async (req,resp) => {
+	resp.send('ok')
+})
+
 app.listen(port, () => console.log('App running on 3030'))

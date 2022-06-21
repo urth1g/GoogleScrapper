@@ -1405,9 +1405,6 @@ app.get('/load_balancer', async (req, res) => {
 app.get("/test-route", async (req,resp) => {
 	let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%'");
 	
-	console.log(items)
-
-	items = null;
 	resp.send('ok')
 })
 

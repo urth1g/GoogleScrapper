@@ -59,6 +59,8 @@ class Database {
 				if(conn) conn.release()
 	
 				resolve(res[0])
+				res[0] = null;
+				return;
 			 })
 		})
 		

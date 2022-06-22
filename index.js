@@ -66,7 +66,7 @@ let errLog = console.error;
 console.error = function(msg){
 	let toSend =  null;
 	
-	sendEmail("jevremovicdjordje97@gmail.com", "Error", msg.stack)
+	//sendEmail("jevremovicdjordje97@gmail.com", "Error", msg.stack)
 	errLog.apply(console, arguments)
 }
 
@@ -1367,7 +1367,7 @@ app.get('/load_balancer', async (req, res) => {
 
 	for await( let items of generateRows()){
 		console.log(items.length)
-		for(let i = 0; i < 10; i++){
+		for(let i = 0; i < 50; i++){
 			let matnr = items[i].Matnr
 		
 			let server = await sqo.getFreeServer();

@@ -54,8 +54,6 @@ class Database {
 				// Do something with the connection
 				let res = await conn.promise().query(query, params);
 				// Don't forget to release the connection when finished!
-				console.log(res[0])
-	
 				if(conn) conn.release()
 	
 				resolve(res[0])

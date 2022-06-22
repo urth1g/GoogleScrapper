@@ -1365,19 +1365,11 @@ app.post('/crawl_ebay_toner', async (req, resp) => {
 app.get('/load_balancer', async (req, res) => {
 	const sqo = new ServersQueue()
 
-
-	let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%'");
-	
-	console.log(items.length)
-
-	let batches = []
-
-	for(let i = 0; i < items.length; i+=100){
-
-		for(let c = i*100; c < i*100+100; c++){
-			let matnr = items[c].Matnr
-	
-	
+	for await( let items of generateRows()){
+		console.log(items.length)
+		for(let i = 0; i < 10; i++){
+			let matnr = items[i].Matnr
+		
 			let server = await sqo.getFreeServer();
 			let { port } = server
 			let accessPort = port + 1000;
@@ -1388,7 +1380,6 @@ app.get('/load_balancer', async (req, res) => {
 			try{
 				console.log('Step 1 ---- Crawling Ebay for price initiated')
 				axios.post( url + '/crawl_ebay_printer', {matnr} )
-				console.log(c)
 				//console.log('Step 2 ---- Crawling Amazon for price initiated')
 				//await axios.post( url + '/crawl_amazon_printer', {matnr} )
 				//console.log('Step 4 ---- Setting the price based on feed initiated')
@@ -1397,7 +1388,6 @@ app.get('/load_balancer', async (req, res) => {
 				console.log(e)
 			}
 		}
-		console.log('done')
 		await timer(60000)
 	}
 });
@@ -1409,7 +1399,17 @@ app.get("/test-route", async (req,resp) => {
 })
 
 app.get('/test-bla', async (req,resp) => {
-	resp.send('ok')
+	
 })
+
+async function* generateRows(){
+	let count = await Database.makeQuery2("SELECT COUNT(*) as C FROM products WHERE class LIKE '%Network%'");
+	let rows = count[0]['C']
+	for(let i = 0; i < Math.ceil(rows / 100) * 100; i+= 100){
+		yield Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%' LIMIT 100 OFFSET " + i)
+	}
+
+	return true
+}
 
 app.listen(port, () => console.log('App running on 3030'))

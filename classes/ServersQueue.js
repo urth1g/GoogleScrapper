@@ -17,7 +17,7 @@ class ServersQueue{
                 console.log('reverted back')
                 Database.makeQuery2("UPDATE servers_queue SET taken = 0 WHERE id = ?", [id])
             }
-            , 20000
+            , 30000
         )
         return servers[0]
     }

@@ -1367,7 +1367,7 @@ app.get('/load_balancer', async (req, res) => {
 
 	for await( let items of generateRows()){
 		console.log(items.length)
-		for(let i = 0; i < 50; i++){
+		for(let i = 0; i < 100; i++){
 			let matnr = items[i].Matnr
 		
 			let server = await sqo.getFreeServer();
@@ -1380,11 +1380,12 @@ app.get('/load_balancer', async (req, res) => {
 			try{
 				console.log('Step 1 ---- Crawling Ebay for price initiated')
 				axios.post( url + '/crawl_ebay_printer', {matnr} )
+				//await timer(300)
 				//console.log('Step 2 ---- Crawling Amazon for price initiated')
 				//await axios.post( url + '/crawl_amazon_printer', {matnr} )
 				//console.log('Step 4 ---- Setting the price based on feed initiated')
 				//await axios.post( url + '/crawl_for_printer', {matnr} )
-			}catch(e){
+			}catch(e){	
 				console.log(e)
 			}
 		}
@@ -1395,6 +1396,8 @@ app.get('/load_balancer', async (req, res) => {
 app.get("/test-route", async (req,resp) => {
 	let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%' LIMIT 100");
 	
+	console.log(items)
+	console.log(items.length)
 	resp.send('ok')
 })
 

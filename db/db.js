@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+const axios = require('axios');
 require('dotenv').config({path: require('path').resolve(__dirname,'../.env')})
 
 class Database {
@@ -49,19 +50,21 @@ class Database {
 
 	static async makeQuery2(query, params){
 
-		return new Promise( (resolve, reject) => {
-			Database.getInstance().getConnection(async function(err, conn) {
-				// Do something with the connection
-				let res = await conn.promise().query(query, params);
-				// Don't forget to release the connection when finished!
-				if(conn) conn.release()
+		// return new Promise( (resolve, reject) => {
+		// 	Database.getInstance().getConnection(async function(err, conn) {
+
+		// 		let res = await conn.promise().query(query, params);
+
+		// 		if(conn) conn.release()
 	
-				resolve(res[0])
-				res[0] = null;
-				return;
-			 })
-		})
-		
+		// 		resolve(res[0])
+		// 		res[0] = null;
+		// 		return;
+		// 	})
+		// })
+
+		let res = await axios.post("http://personal-server.xyz:4901/query", {query, params, key: process.env.KEY})
+		return res.data;
 	}
 
 	static async getSources(matnr){

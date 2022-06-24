@@ -218,10 +218,10 @@ async function searchEbay(productName, partNumber, matnr){
 		// 	date: new Date().toUTCString()
 		// });
 
-		Database.getInstance().query("INSERT INTO inventory (Matnr, Ebay, Amazon, Techdata) VALUES (?,?,?,?)", [matnr, JSON.stringify(objects), '[]', '[]'], (err, result) => {
+		Database.makeQuery2("INSERT INTO inventory (Matnr, Ebay, Amazon, Techdata) VALUES (?,?,?,?)", [matnr, JSON.stringify(objects), '[]', '[]'], (err, result) => {
 			if(err) {
 				if(err.errno === 1062){
-					Database.getInstance().query("UPDATE inventory SET Ebay = ? WHERE Matnr = ?", [JSON.stringify(objects), matnr], (err, result) => {
+					Database.makeQuery2("UPDATE inventory SET Ebay = ? WHERE Matnr = ?", [JSON.stringify(objects), matnr], (err, result) => {
 						if(err) console.log(err);
 
 						resolve(objects)

@@ -5,14 +5,15 @@ class ServersQueue{
     }
 
     async getFreeServer(){
-        let servers = await Database.makeQuery2("SELECT * FROM servers_queue WHERE taken = 0 ORDER BY port");
+        //let servers = await Database.makeQuery2("SELECT * FROM servers_queue WHERE taken = 0 ORDER BY port");
+
+        let servers = await Database.makeQuery2("SELECT * FROM servers_queue WHERE taken = 0")
 
         if(servers.length === 0) throw new Error("No free servers found at the moment.")
 
         let { id } = servers[0]
 
-        await Database.makeQuery2("UPDATE servers_queue SET taken = 1 WHERE id = ?", [id])
-
+        let data = await Database.makeQuery2("UPDATE servers_queue SET taken = 1 WHERE id = ?", [id])
         setTimeout( () => {
                 console.log('reverted back')
                 Database.makeQuery2("UPDATE servers_queue SET taken = 0 WHERE id = ?", [id])

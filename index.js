@@ -1365,9 +1365,11 @@ app.post('/crawl_ebay_toner', async (req, resp) => {
 app.get('/load_balancer', async (req, res) => {
 	const sqo = new ServersQueue()
 
-	for await( let items of generateRows()){
+	for await( let items of generateRows() ){
 		console.log(items.length)
+
 		for(let i = 0; i < 100; i++){
+			console.log(i)
 			let matnr = items[i].Matnr
 		
 			let server = await sqo.getFreeServer();
@@ -1394,7 +1396,7 @@ app.get('/load_balancer', async (req, res) => {
 });
 
 app.get("/test-route", async (req,resp) => {
-	let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%' LIMIT 100");
+	let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%' LIMIT 1");
 	
 	console.log(items)
 	console.log(items.length)

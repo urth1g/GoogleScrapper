@@ -1372,6 +1372,7 @@ app.get('/load_balancer', async (req, res) => {
 			console.log(i)
 			let matnr = items[i].Matnr
 		
+			console.log(matnr)
 			let server = await sqo.getFreeServer();
 			let { port } = server
 			let accessPort = port + 1000;
@@ -1396,10 +1397,11 @@ app.get('/load_balancer', async (req, res) => {
 });
 
 app.get("/test-route", async (req,resp) => {
-	let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%' LIMIT 1");
+	//let items = await Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%' LIMIT 1");
 	
-	console.log(items)
-	console.log(items.length)
+	//console.log(items)
+	//console.log(items.length)
+	await axios.post('http://localhost:3030/crawl_ebay_printer', {matnr: 12986585})
 	resp.send('ok')
 })
 

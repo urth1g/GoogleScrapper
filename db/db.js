@@ -63,8 +63,9 @@ class Database {
 		// 	})
 		// })
 
-		let res = await axios.post("http://personal-server.xyz:4901/query", {query, params, key: process.env.KEY})
+		let res = await axios.post("http://localhost:4901/query", {query, params, key: process.env.KEY})
 		return res.data;
+
 	}
 
 	static async getSources(matnr){

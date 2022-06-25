@@ -1368,7 +1368,7 @@ app.get('/load_balancer', async (req, res) => {
 	for await( let items of generateRows() ){
 		console.log(items.length)
 
-		for(let i = 0; i < 100; i++){
+		for(let i = 0; i < 3; i++){
 			console.log(i)
 			let matnr = items[i].Matnr
 		

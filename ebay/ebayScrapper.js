@@ -231,7 +231,8 @@ async function searchEbay(productName, partNumber, matnr){
 		}catch(e){
 			console.log(e)
 		}
-		freeServer()
+		console.log('Freeing server')
+		await freeServer()
 		resolve(objects)
 	})
 }

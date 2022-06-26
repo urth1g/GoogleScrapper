@@ -1365,11 +1365,17 @@ app.post('/crawl_ebay_toner', async (req, resp) => {
 app.get('/load_balancer', async (req, res) => {
 	const sqo = new ServersQueue()
 
+	let multiplier = 1;
 	for await( let items of generateRows() ){
 		console.log(items.length)
 
-		for(let i = 0; i < 3; i++){
+		if(multiplier < 35){
+			multiplier++
+			continue;
+		}
+		for(let i = 0; i < 100; i++){
 			console.log(i)
+			console.log(100 * multiplier)
 			let matnr = items[i].Matnr
 		
 			console.log(matnr)
@@ -1393,6 +1399,7 @@ app.get('/load_balancer', async (req, res) => {
 			}
 		}
 		await timer(60000)
+		multiplier++
 	}
 });
 
@@ -1403,10 +1410,6 @@ app.get("/test-route", async (req,resp) => {
 	//console.log(items.length)
 	await axios.post('http://localhost:3030/crawl_ebay_printer', {matnr: 12986585})
 	resp.send('ok')
-})
-
-app.get('/test-bla', async (req,resp) => {
-	
 })
 
 async function* generateRows(){

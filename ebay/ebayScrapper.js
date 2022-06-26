@@ -4,7 +4,7 @@ const tsfc = require('../helpers/transformStringForComparison');
 const axios = require('axios');
 const Database = require('../db/db');
 const cheerio = require('cheerio');
-
+const getCurrentHostname = require('../shell/getCurrentHostname');
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
@@ -231,12 +231,19 @@ async function searchEbay(productName, partNumber, matnr){
 		}
 
 		resolve(objects)
+
+		setTimeout(() => freeServer(), 3000)
 	})
 }
 
-function findTheBestPriceEbay(){
 
+async function freeServer(){
+	let id = await getCurrentHostname()
+
+	let resp = await Database.makeQuery2("UPDATE servers_queue SET taken = 0 WHERE id LIKE ?", ['%' + id + '%'])
+	
+	console.log(resp)
+	console.log(id)
 }
 
-
-module.exports = { searchEbay, findTheBestPriceEbay }
+module.exports = { searchEbay }

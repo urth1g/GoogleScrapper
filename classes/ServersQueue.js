@@ -14,12 +14,6 @@ class ServersQueue{
         let { id } = servers[0]
 
         let data = await Database.makeQuery2("UPDATE servers_queue SET taken = 1 WHERE id = ?", [id])
-        setTimeout( () => {
-                console.log('reverted back')
-                Database.makeQuery2("UPDATE servers_queue SET taken = 0 WHERE id = ?", [id])
-            }
-            , 30000
-        )
         return servers[0]
     }
 }

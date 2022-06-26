@@ -18,12 +18,4 @@ function getCurrentHostname(){
     })
 }
 
-async function run(){
-    let host = await getCurrentHostname()
-
-    console.log(host)
-}
-
-run()
-
 module.exports = getCurrentHostname

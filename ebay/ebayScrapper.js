@@ -58,12 +58,14 @@ async function searchEbay(productName, partNumber, matnr){
 			});
 		}catch(error){
 			console.log(error.response)
+			setTimeout(() => freeServer(), 3000)
 			resolve([])
 		}
 
 		console.log('beforeLoading')
 
 		if(!res) {
+			setTimeout(() => freeServer(), 3000)
 			resolve([])
 			return;
 		}
@@ -229,10 +231,8 @@ async function searchEbay(productName, partNumber, matnr){
 		}catch(e){
 			console.log(e)
 		}
-
-		resolve(objects)
-
 		setTimeout(() => freeServer(), 3000)
+		resolve(objects)
 	})
 }
 

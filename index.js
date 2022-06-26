@@ -1369,23 +1369,35 @@ app.get('/load_balancer', async (req, res) => {
 	for await( let items of generateRows() ){
 		console.log(items.length)
 
-		if(multiplier < 35){
-			multiplier++
-			continue;
-		}
+		// if(multiplier < 1){
+		// 	multiplier++
+		// 	continue;
+		// }
 		for(let i = 0; i < 100; i++){
 			console.log(i)
 			console.log(100 * multiplier)
 			let matnr = items[i].Matnr
 		
-			console.log(matnr)
-			let server = await sqo.getFreeServer();
-			let { port } = server
-			let accessPort = port + 1000;
+			let server;
+			let port;
+			let accessPort;
+			while(true){
+				server = await sqo.getFreeServer();
+				if(!server){
+					await timer(100)
+					continue;
+				}
+				
+				port = server.port
+				accessPort = port + 1000;
+				
+				if(server && port && accessPort) break;
+			}
+
+			console.log(server)
 		
 			let url = "https://personal-server.xyz:" + accessPort
 	
-			console.log(server)
 			try{
 				console.log('Step 1 ---- Crawling Ebay for price initiated')
 				axios.post( url + '/crawl_ebay_printer', {matnr} )
@@ -1398,7 +1410,6 @@ app.get('/load_balancer', async (req, res) => {
 				console.log(e)
 			}
 		}
-		await timer(60000)
 		multiplier++
 	}
 });
@@ -1416,7 +1427,7 @@ async function* generateRows(){
 	let count = await Database.makeQuery2("SELECT COUNT(*) as C FROM products WHERE class LIKE '%Network%'");
 	let rows = count[0]['C']
 	for(let i = 0; i < Math.ceil(rows / 100) * 100; i+= 100){
-		yield Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%' LIMIT 100 OFFSET " + i)
+		yield Database.makeQuery2("SELECT * FROM products WHERE Class LIKE '%Network%' ORDER BY Matnr LIMIT 100 OFFSET " + i)
 	}
 
 	return true

@@ -9,7 +9,7 @@ class ServersQueue{
 
         let servers = await Database.makeQuery2("SELECT * FROM servers_queue WHERE taken = 0")
 
-        if(servers.length === 0) throw new Error("No free servers found at the moment.")
+        if(servers.length === 0) return undefined
 
         let { id } = servers[0]
 

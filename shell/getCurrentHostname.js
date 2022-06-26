@@ -13,7 +13,7 @@ function getCurrentHostname(){
                 console.log(`stderr: ${stderr}`);
                 return;
             }
-            return stdout;
+            resolve(stdout.trim());
         });
     })
 }

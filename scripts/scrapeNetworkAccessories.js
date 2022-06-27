@@ -1,4 +1,4 @@
-const axios = requiore('axios')
+const axios = require('axios')
 const ServersQueue = require('../classes/ServersQueue');
 
 async function* generateRows(){

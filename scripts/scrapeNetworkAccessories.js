@@ -34,12 +34,13 @@ async function run(){
 			let port;
 			let accessPort;
 			while(true){
+				await timer(400)
 				server = await sqo.getFreeServer();
 				if(!server){
-					await timer(100)
+					await timer(500)
 					continue;
 				}
-				
+
 				port = server.port
 				accessPort = port + 1000;
 				

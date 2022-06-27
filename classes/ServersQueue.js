@@ -9,7 +9,8 @@ class ServersQueue{
 
         let servers = await Database.makeQuery2("SELECT * FROM servers_queue WHERE taken = 0")
 
-        if(servers.length === 0) return undefined
+        console.log(servers[0])
+        if(servers.length === 0 || !servers[0]) return undefined
 
         let { id } = servers[0]
 

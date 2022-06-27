@@ -1,5 +1,6 @@
 const axios = require('axios')
 const ServersQueue = require('../classes/ServersQueue');
+const Database = require('../db/db');
 
 async function* generateRows(){
 	let count = await Database.makeQuery2("SELECT COUNT(*) as C FROM products WHERE class LIKE '%Network%'");

@@ -1369,7 +1369,7 @@ app.get('/load_balancer', async (req, res) => {
 	for await( let items of generateRows() ){
 		console.log(items.length)
 
-		if(multiplier < 90){
+		if(multiplier < 110){
 			multiplier++
 			continue;
 		}
@@ -1384,7 +1384,7 @@ app.get('/load_balancer', async (req, res) => {
 			while(true){
 				server = await sqo.getFreeServer();
 				if(!server){
-					await timer(100)
+					await timer(500)
 					continue;
 				}
 				

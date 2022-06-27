@@ -1369,10 +1369,10 @@ app.get('/load_balancer', async (req, res) => {
 	for await( let items of generateRows() ){
 		console.log(items.length)
 
-		// if(multiplier < 1){
-		// 	multiplier++
-		// 	continue;
-		// }
+		if(multiplier < 90){
+			multiplier++
+			continue;
+		}
 		for(let i = 0; i < 100; i++){
 			console.log(i)
 			console.log(100 * multiplier)

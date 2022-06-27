@@ -11,6 +11,8 @@ async function* generateRows(){
 	return true
 }
 
+const timer = ms => new Promise( (resolve, reject) => setTimeout(resolve, ms))
+
 async function run(){
 	const sqo = new ServersQueue()
 
@@ -18,7 +20,7 @@ async function run(){
 	for await( let items of generateRows() ){
 		console.log(items.length)
 
-		if(multiplier < 90){
+		if(multiplier < 105){
 			multiplier++
 			continue;
 		}

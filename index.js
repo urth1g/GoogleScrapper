@@ -1381,8 +1381,9 @@ app.get('/load_balancer', async (req, res) => {
 			let server;
 			let port;
 			let accessPort;
+			
 			while(true){
-				await timer(200)
+				await timer(1000)
 				server = await sqo.getFreeServer();
 				if(!server){
 					await timer(500)

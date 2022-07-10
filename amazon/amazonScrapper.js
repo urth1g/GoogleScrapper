@@ -7,6 +7,7 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const req = require('express/lib/request');
 const AmazonEnums = require('../classes/AmazonEnums');
+const freeServer = require('../helpers/freeServer')
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
@@ -177,23 +178,18 @@ async function searchAmazon(productName, partNumber, matnr){
 		let _prices = await findTheBestPriceAmazon(objects)
 		_prices = _prices.filter(x => !Number.isNaN(x.price))
 
-		// _prices.push({
-		// 	date: new Date().toUTCString()
-		// })
-
-		Database.getInstance().query("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)], (err, result) => {
-			if(err) {
-				if(err.errno === 1062){
-					Database.getInstance().query("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr], (err, result) => {
-						if(err) console.log(err);
-
-						resolve(_prices)
-					})
+		try{
+			let resp = await Database.makeQuery2("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)])
+			if(res) {
+				if(res.errno === 1062){
+					Database.makeQuery2("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr])
 				}
-			}
+			}		
+		}catch(e){
 
-			resolve(_prices)
-		})
+		}
+		await freeServer()
+		resolve(_prices)
 	})
 }
 
@@ -201,7 +197,7 @@ async function searchAmazon(productName, partNumber, matnr){
 function getRequestOptions(){
 	return{
 		headers:{
-			'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(25,55)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`,
+			'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(25,205)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`,
 			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
 			'Accept-Encoding': 'gzip',
 			'Accept-Language': 'en-US,en;q=0.9,es;q=0.8',

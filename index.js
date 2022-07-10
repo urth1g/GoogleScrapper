@@ -544,26 +544,31 @@ app.get('/crawl_amazon_printers', async (req, res) => {
 app.post('/crawl_amazon_printer', async (req,res) => {
 	let { matnr } = req.body;
 
-	let printers = await Database.makeQuery2("SELECT * FROM products")
+	let printer = await Database.makeQuery2("SELECT * FROM products WHERE Matnr = ?", [matnr])
 
-	let printer = printers.filter(x => x.Matnr === Number(matnr))[0]
+	if(printer.length === 0) {
+		res.send('err')
+		return
+	}
 
+	printer = printer[0]
 	let name = printer.ShortName;
 	let mpn = printer.mpn;
 
-	let prices = await searchAmazon(name.split(" - ")[0], mpn, matnr)
+	let prices = await searchAmazon(name.split(" - ")[0], mpn, matnr, name)
 
 	res.send(prices);
 })
 
 app.post("/crawl_for_printer", async (req, resp) => {
-	let printers = await Database.makeQuery2("SELECT * FROM products")
-
 	let matnr = req.body.matnr;
 
-	let printer = printers.filter(x => x.Matnr === Number(matnr));
+	let printer = await Database.makeQuery2("SELECT * FROM products WHERE Matnr = ?", [matnr])
 
-	if(printer.length === 0) return;
+	if(printer.length === 0) {
+		resp.send('err')
+		return
+	}
 
 	let Matnr = printer[0].Matnr;
 	let Name = printer[0].ShortName;
@@ -577,7 +582,7 @@ app.post("/crawl_for_printer", async (req, resp) => {
 	Name = `${brand} ${model}`
 
 	try{
-		await searchGoogle(Name, printer[0].mpn).then(async (url, skipPage4) => {
+		await searchGoogle(Name, printer[0].mpn, printer[0].ShortName).then(async (url, skipPage4) => {
 			if(url === 'Nothing found.') {
 				try{
 					await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url, null])
@@ -823,7 +828,7 @@ app.post('/crawl_ebay_printer', async (req, res) => {
 	let name = printer.ShortName;
 	let mpn = printer.mpn;
 
-	let prices = await searchEbay(name.split(" - ")[0], mpn, matnr);
+	let prices = await searchEbay(name.split(" - ")[0], mpn, matnr, name);
 
 	res.send(prices)
 })

@@ -21,7 +21,7 @@ async function run(){
 	for await( let items of generateRows() ){
 		console.log(items.length)
 
-		if(multiplier < 105){
+		if(multiplier < 253){
 			multiplier++
 			continue;
 		}

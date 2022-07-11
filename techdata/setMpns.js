@@ -33,7 +33,7 @@ let techDataUrlConfig = async () => {
 }
 
 async function run(){
-    let res = await Database.makeQuery2("SELECT * FROM products WHERE mpn = '' LIMIT 1");
+    let res = await Database.makeQuery2("SELECT * FROM products WHERE mpn = '' ORDER BY RAND() LIMIT 1");
 
     let dict = {} 
 
@@ -56,6 +56,7 @@ async function run(){
             console.log(matnr)
             if(data.includes("The requested product was not found.")){
                 let ch = await Database.makeQuery2("UPDATE products SET mpn = ? WHERE Matnr = ?", ['SKIP', matnr])
+                console.log(res[i])
             }
 
             let $ = cheerio.load(data)

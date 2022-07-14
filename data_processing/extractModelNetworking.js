@@ -5,7 +5,13 @@ const timer = ms => new Promise(res => setTimeout(res, ms))
 
 async function run(class1, subclass, cw){
 
-    let res = await Database.makeQuery2("SELECT ShortName, LongName, products.Matnr, products.mpn, models_information.Model FROM products LEFT JOIN models_information on products.Matnr = models_information.Matnr WHERE Class LIKE '%" + class1 + "%' AND SubClass LIKE '%" + subclass + "%' AND models_information.Model IS NULL ORDER BY RAND();")
+    let res;
+
+    if(cw){
+        res = await Database.makeQuery2("SELECT ShortName, LongName, products.Matnr, products.mpn, check_words.Word FROM products LEFT JOIN check_words on products.Matnr = check_words.Matnr WHERE Class LIKE '%" + class1 + "%' AND SubClass LIKE '%" + subclass + "%' AND check_words.Word IS NULL ORDER BY RAND();")
+    }else{
+        res = await Database.makeQuery2("SELECT ShortName, LongName, products.Matnr, products.mpn, models_information.Model FROM products LEFT JOIN models_information on products.Matnr = models_information.Matnr WHERE Class LIKE '%" + class1 + "%' AND SubClass LIKE '%" + subclass + "%' AND models_information.Model IS NULL ORDER BY RAND();")
+    }
     
     for(let i = 0; i < 1; i++){
         let r = res[i]
@@ -46,7 +52,7 @@ async function run(class1, subclass, cw){
         console.log(model)
 
         if(cw){
-            let resp = await Database.makeQuery2("INSERT INTO check_words (word) VALUES (?)", [model])
+            let resp = await Database.makeQuery2("INSERT INTO check_words (Matnr, Word) VALUES (?,?)", [r.Matnr, model])
         }else{
             let resp = await Database.makeQuery2("INSERT into models_information (Matnr, Model) VALUES (?,?)", [r.Matnr, model])
         }

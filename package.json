@@ -19,5 +19,8 @@
     "images-scraper": "^6.4.0",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.3"
+  },
+  "devDependencies": {
+    "check-if-word": "^1.2.1"
   }
 }

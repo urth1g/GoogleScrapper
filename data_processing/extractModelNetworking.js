@@ -4,9 +4,9 @@ const fs = require('fs')
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
 async function run(class1, subclass){
-    let res = await Database.makeQuery2("SELECT ShortName, LongName, Matnr FROM products WHERE Class LIKE '%" + class1 + "%' AND SubClass LIKE '%" + subclass + "%';")
+    let res = await Database.makeQuery2("SELECT ShortName, LongName, Matnr FROM products WHERE Class LIKE '%" + class1 + "%' AND SubClass LIKE '%" + subclass + "%' ORDER BY RAND();")
 
-    for(let i = 0; i < res.length; i++){
+    for(let i = 0; i < 1; i++){
         let r = res[i]
         console.log('Index is: ', i)
         console.log(r)
@@ -44,7 +44,7 @@ async function run(class1, subclass){
         console.log('Model is: \n')
         console.log(model)
 
-        fs.writeFile('./models.txt', model + " - " + split + " - " + r.Matnr + "\r\n", { flag: 'a+' }, err => {})
+        fs.writeFile('./models.txt', model + " - " + r.ShortName + " - " + r.Matnr + "\r\n", { flag: 'a+' }, err => {})
 
         let resp = await Database.makeQuery2("INSERT into models_information (Matnr, Model) VALUES (?,?)", [r.Matnr, model])
         //let resp = await Database.makeQuery2("DELETE FROM models_information WHERE Matnr = ?", [r.Matnr])

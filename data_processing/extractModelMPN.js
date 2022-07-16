@@ -8,7 +8,6 @@ async function run(class1, subclass){
     let res = await Database.makeQuery2("SELECT ShortName, LongName, products.Matnr, products.mpn, models_information.Model FROM products LEFT JOIN models_information on products.Matnr = models_information.Matnr WHERE Class LIKE '%" + class1 + "%' AND SubClass LIKE '%" + subclass + "%' AND mpn != '' AND models_information.Model IS NULL ORDER BY RAND() LIMIT 1;")
 
     console.log(res.length)
-    process.exit(1)
     for(let i = 0; i < 1; i++){
         let r = res[i]
         console.log(r.mpn)

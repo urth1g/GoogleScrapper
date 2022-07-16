@@ -53,9 +53,6 @@ async function searchAmazon(productName, partNumber, matnr){
 			model = partNumber;	
 		}
 
-		console.log(model)
-		console.log(productName)
-		console.log(term)
 		let res;
 		try{
 			res = await axios.get('https://www.amazon.com/s?k=' + term, {

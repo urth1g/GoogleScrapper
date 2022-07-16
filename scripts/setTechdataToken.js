@@ -32,7 +32,7 @@ async function setTechdataToken(){
 				'Cookie': str
 			},	
 			url: "https://sso.techdata.com" + formAction,
-			data: 'pf.username=641776&pf.pass=Harrison2022%2B&pf.passwordreset=&pf.ok=clicked&pf.cancel=&pf.adapterId=GlobalIONAuthnAdapter',
+			data: 'pf.username=641776&pf.pass=Djordje1%2B&pf.passwordreset=&pf.ok=clicked&pf.cancel=&pf.adapterId=GlobalIONAuthnAdapter',
 			withCredentials: true,
 			maxRedirects: 0
 		})

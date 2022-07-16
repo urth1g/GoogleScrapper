@@ -16,8 +16,9 @@ async function run(){
 
     let notLikeThisDate = getFormattedDate();
 
-	let res = await Database.makeQuery("SELECT *, inventory_log.updated_at FROM products INNER JOIN inventory_log ON products.Matnr = inventory_log.Matnr WHERE (inventory_log.updated_at NOT LIKE '%" + notLikeThisDate + "%' AND SubClass LIKE '%Laser%') OR ( SubClass LIKE '%Multifunction%' AND LongName LIKE '%Laser%' AND inventory_log.updated_at NOT LIKE '%" + notLikeThisDate +"%') GROUP BY products.Matnr ORDER BY products.Price");
+	//let res = await Database.makeQuery("SELECT * FROM products LEFT JOIN inventory_log ON products.Matnr = inventory_log.Matnr LEFT JOIN models_information ON models_information.Matnr = products.Matnr WHERE inventory_log.updated_at NOT LIKE '%" + notLikeThisDate + "%' GROUP BY products.Matnr ORDER BY products.Price");
 
+    let res = await Database.makeQuery("SELECT * FROM models_information INNER JOIN products on models_information.Matnr = products.Matnr ORDER BY RAND() LIMIT 1")
 	let printers = res[0];
 
     let ignoredMatnrs = await Database.makeQuery2("SELECT Matnr FROM products_locktable");
@@ -28,7 +29,7 @@ async function run(){
 
     console.log(printers.length);
     
-    for(let i = 0; i < printers.length; i++){
+    for(let i = 0; i < 1; i++){
         let matnr = printers[i].Matnr;
 
         try{
@@ -41,11 +42,11 @@ async function run(){
             console.log('Step 4 ---- Setting the price based on feed initiated')
             await axios.post('http://localhost:3030/crawl_for_printer', {matnr} )
             console.log('Step 5 ---- Checking for any ULTRA GOOD deals')
-            await axios.post('http://localhost:3030/check_for_good_deals', {matnr} )
-            console.log('Step 6 ---- Updating the price in google feed initiated')
-            await axios.post('http://localhost:3030/update_spreadsheet_price', {matnr} )
-            console.log('updated_123')
-            await timer(2000)
+            //await axios.post('http://localhost:3030/check_for_good_deals', {matnr} )
+            //console.log('Step 6 ---- Updating the price in google feed initiated')
+            //await axios.post('http://localhost:3030/update_spreadsheet_price', {matnr} )
+            //console.log('updated_123')
+            //await timer(2000)
         }catch(e){
             console.log(e)
         }

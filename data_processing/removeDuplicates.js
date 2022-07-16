@@ -7,7 +7,7 @@ async function removeDuplicates(class1, subclass){
 
     console.log(res.length)
 
-    for(let r of res){
+    for(let r of res){  
 
         let queryResult = await Database.makeQuery2("DELETE FROM models_information WHERE Matnr = ?", [r.Matnr])
         console.log(queryResult)

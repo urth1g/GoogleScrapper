@@ -25,27 +25,15 @@ async function searchEbay(productName, partNumber, matnr){
 
 	return new Promise( async (resolve, reject) => {
 		let arr = productName.split(" ");
-		let model = arr[arr.length - 1];
+		let model = null;
 		let brand = arr[0];
 
-		arr.map(x => {
-			if(x.includes('HL-')) model = x;
-		})
+		let m = await Database.makeQuery2("SELECT Model FROM models_information WHERE matnr = ?", [matnr])
 
+		model = m[0].Model;
+
+		console.log(model)
 		let term = brand + " " + model;
-
-		console.log(term)
-		if(model === 'All-in-One' || 
-			model === 'All-In-One' ||
-			model === 'PostScript' || 
-			model === 'MFP' || 
-			model === 'direct' || 
-			model.toLowerCase() === 'printer' ||
-			model.toLowerCase() === 'pack' ||
-			model.toLowerCase().includes('tank') ){
-			term = partNumber;
-			model = partNumber;	
-		}
 
 		let res;
 		try{

@@ -21,14 +21,6 @@ async function run(){
     let res = await Database.makeQuery2("SELECT *, COALESCE(products.Matnr, models_information.Matnr) as Matnr FROM models_information LEFT JOIN products on models_information.Matnr = products.Matnr LEFT JOIN inventory_log ON products.Matnr = inventory_log.Matnr WHERE updated_at NOT LIKE '%" + notLikeThisDate + "%' OR updated_at IS NULL ORDER BY RAND() LIMIT 1")
 	let printers = res;
 
-    console.log(printers)
-    let ignoredMatnrs = await Database.makeQuery2("SELECT Matnr FROM products_locktable");
-
-    for(let object of ignoredMatnrs){
-        printers = printers.filter(x => Number(x.Matnr) !== Number(object.Matnr))
-    }
-
-    
     for(let i = 0; i < 1; i++){
         let matnr = printers[i].Matnr;
 

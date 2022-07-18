@@ -22,10 +22,10 @@ async function run(){
     let matnr = process.argv[3]
 
     try{
-        //console.log('Step 1 ---- Crawling Ebay for price initiated')
-        //await axios.post('http://localhost:3030/crawl_ebay_toner', {matnr} )
-        //console.log('Step 2 ---- Crawling Amazon for price initiated')
-        //await axios.post('http://localhost:3030/crawl_amazon_toner', {matnr} )
+        console.log('Step 1 ---- Crawling Ebay for price initiated')
+        await axios.post('http://localhost:3030/crawl_ebay_toner', {matnr} )
+        console.log('Step 2 ---- Crawling Amazon for price initiated')
+        await axios.post('http://localhost:3030/crawl_amazon_toner', {matnr} )
         console.log('Step 3 ---- Setting the price based on feed initiated')
         await axios.post('http://localhost:3030/crawl_google_toner', {matnr} )
         //console.log('Step 4 ---- Checking for any ULTRA GOOD deals')

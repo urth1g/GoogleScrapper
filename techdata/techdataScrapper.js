@@ -275,6 +275,8 @@ async function getTechdataAvailability(matnr, price){
 async function getShippingPrice(matnr){
 	let result = await Database.makeQuery2("SELECT * FROM inventory_log WHERE Matnr = ?", [matnr]);
 
+	if(!result[0]) return 12.56;
+
 	let { Link } = result[0]
 
 	if(!Link || !Link.startsWith("https")) return 12.56
@@ -327,7 +329,7 @@ async function setTechdataPrice(matnr){
 			...x,
 			newBatchIn: (futureDate === 0 || Number.isNaN(futureDate)) ? 999 : days,
 			source: 'Techdata',
-			text: ShortName
+			text: name
 		}
 	})
 	let combinedObject = { price: Math.round(Number(price) + Number(shipping)), availability, state }

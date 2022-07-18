@@ -577,18 +577,23 @@ app.post("/crawl_for_printer", async (req, resp) => {
 	let splitted = _Name.split(" ");
 
 	let brand = splitted[0];
-	let model = splitted[splitted.length - 1];
+	let model = null;
+
+	let m = await Database.makeQuery2("SELECT * FROM models_information WHERE Matnr = ?", [matnr])
+
+	model = m[0].Model
 
 	Name = `${brand} ${model}`
 
+	console.log(Name)
 	try{
-		await searchGoogle(Name, printer[0].mpn, printer[0].ShortName).then(async (url, skipPage4) => {
+		await searchGoogle(Name, printer[0].mpn, printer[0].ShortName, model).then(async (url, skipPage4) => {
 			if(url === 'Nothing found.') {
 				try{
-					await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url, null])
+					await Database.makeQuery2("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url, null])
 				}catch(err){
 					if(err.errno === 1062){
-						await Database.getInstance().promise().query("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
+						await Database.makeQuery2("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
 							'[]',
 							url,
 							Matnr
@@ -824,6 +829,7 @@ app.post('/crawl_ebay_printer', async (req, res) => {
 		return
 	}
 
+	console.log(printer[0])
 	printer = printer[0]
 	let name = printer.ShortName;
 	let mpn = printer.mpn;

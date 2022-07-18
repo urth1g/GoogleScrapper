@@ -40,9 +40,9 @@ class PriceSetter{
         if(inventory.length === 0) return this.shops
 
         try{
-            Amazon = JSON.parse(inventory[0].Amazon);
-            Ebay = JSON.parse(inventory[0].Ebay);
-            Techdata = JSON.parse(inventory[0].Techdata);
+            Amazon = JSON.parse(inventory.Amazon);
+            Ebay = JSON.parse(inventory.Ebay);
+            Techdata = JSON.parse(inventory.Techdata);
         }catch(er){
             console.log(er)
         }
@@ -89,15 +89,16 @@ class PriceSetter{
 
         let inventory = await Database.getSources(matnr)
 
+        console.log(inventory)
         let Amazon = null,
             Ebay = null,
             Techdata = null;
         if(inventory.length === 0) return this.shops
 
         try{
-            Amazon = JSON.parse(inventory[0].Amazon);
-            Ebay = JSON.parse(inventory[0].Ebay);
-            Techdata = JSON.parse(inventory[0].Techdata);
+            Amazon = JSON.parse(inventory.Amazon);
+            Ebay = JSON.parse(inventory.Ebay);
+            Techdata = JSON.parse(inventory.Techdata);
         }catch(er){
             console.log(er)
         }

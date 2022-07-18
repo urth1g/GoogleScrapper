@@ -69,17 +69,17 @@ class Database {
 	}
 
 	static async getSources(matnr){
-		let res = await Database.makeQuery("SELECT * FROM inventory WHERE Matnr = ? ", [matnr])
+		let res = await Database.makeQuery2("SELECT * FROM inventory WHERE Matnr = ? ", [matnr])
 		return res[0]
 	}
 
 	static async getMargins(){
-		let res = await Database.makeQuery("SELECT * FROM margins");
+		let res = await Database.makeQuery2("SELECT * FROM margins");
 		return res[0]
 	}
 
 	static async getIgnoredShops(){
-		let res = await Database.makeQuery("SELECT * FROM inventory_ignore")
+		let res = await Database.makeQuery2("SELECT * FROM inventory_ignore")
 		return res[0]
 	}
 

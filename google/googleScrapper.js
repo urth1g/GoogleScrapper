@@ -264,7 +264,7 @@ function filterResults(object){
       })
 }
 
-function generateGoogleConditions(productName, partNumber){
+async function generateGoogleConditions(productName, partNumber){
   let arr = productName.split(" ");
   let model = arr[arr.length - 1];
   let brand = arr[0];
@@ -295,14 +295,11 @@ function generateGoogleConditions(productName, partNumber){
 
   return [ term, model ]
 }
-async function searchGoogle(productName, partNumber){
+async function searchGoogle(term, productName, partNumber, model){
 
 	let hl = "en";
 	let gl = "us";
 	let tbm = "shop";
-
-
-  let [term, model] = generateGoogleConditions(productName, partNumber)
 
 	return new Promise( async (resolve, reject) => {
 

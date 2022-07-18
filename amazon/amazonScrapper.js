@@ -30,7 +30,7 @@ async function searchAmazon(productName, partNumber, matnr){
 		console.log(model)
 
 		let term = brand + " " + model;
-		
+
 		try{
 			res = await axios.get('https://www.amazon.com/s?k=' + term, {
 				headers:{
@@ -162,7 +162,7 @@ async function searchAmazon(productName, partNumber, matnr){
 		}catch(e){
 
 		}
-		await freeServer()
+		//await freeServer()
 		resolve(_prices)
 	})
 }

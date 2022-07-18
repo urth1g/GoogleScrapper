@@ -22,7 +22,6 @@ async function run(){
 	let printers = res;
 
     console.log(printers)
-    process.exit(1)
     let ignoredMatnrs = await Database.makeQuery2("SELECT Matnr FROM products_locktable");
 
     for(let object of ignoredMatnrs){

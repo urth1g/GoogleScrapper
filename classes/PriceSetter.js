@@ -47,12 +47,15 @@ class PriceSetter{
             console.log(er)
         }
 
+        console.log(Techdata)
+
         if(Amazon) sources.push(...Amazon.map(x => x));
         if(Ebay) sources.push(...Ebay.map(x => x));
-        if(Techdata) sources.push(...Techdata.map(x => {x => x} ));
+        if(Techdata) sources.push(...Techdata.map(x => x ));
 
         sources.sort((a,b) => a.price - b.price);
 
+        console.log(sources)
         sources = await Promise.all(sources.map(async x => {
 			let taxed = Math.ceil(x.price * 1.07)
 			let afterCreditCardFees = Math.ceil(taxed * 1.045)

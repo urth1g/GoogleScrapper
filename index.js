@@ -581,19 +581,18 @@ app.post("/crawl_for_printer", async (req, resp) => {
 		await searchGoogle(Name, printer[0].mpn, printer[0].ShortName, model).then(async (url, skipPage4) => {
 			if(url === 'Nothing found.') {
 				try{
-					console.log('Nothing found!!')
-					await Database.makeQuery2("INSERT INTO inventory_log(Matnr, Name, Inventory, Link) VALUES(?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url])
-					console.log('here')
-				}catch(err){
-					if(err.errno === 1062){
-						await Database.makeQuery2("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
-							'[]',
-							url,
-							Matnr
-						])
-
-						console.log('updated')
+					let respdb = await Database.makeQuery2("INSERT INTO inventory_log(Matnr, Name, Inventory, Link) VALUES(?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url])
+					if(respdb){
+						if(respdb.errno === 1062){
+							await Database.makeQuery2("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
+								'[]',
+								url,
+								Matnr
+							])
+						}
 					}
+				}catch(err){
+					console.log(err)
 				}
 			
 				let priceSetter = new PriceSetter([], Matnr)
@@ -669,17 +668,19 @@ app.post("/crawl_for_printer", async (req, resp) => {
 
 					if(!matches) {
 						try{
-							await Database.makeQuery2("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url, null])
-						}catch(err){
-							if(err.errno === 1062){
-								await Database.makeQuery2("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
-									'[]',
-									url,
-									Matnr
-								])
-		
-								console.log('updated')
+							let res = await Database.makeQuery2("INSERT INTO inventory_log(Matnr, Name, Inventory, Link) VALUES(?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url])
+
+							if(res) {
+								if(res.errno === 1062){
+									await Database.makeQuery2("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
+										'[]',
+										url,
+										Matnr
+									])
+								}
 							}
+						}catch(err){
+							console.log(err)
 						}
 						
 						resp.send({error: 'No price found.'})

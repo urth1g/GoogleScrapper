@@ -31,6 +31,8 @@ async function searchAmazon(productName, partNumber, matnr){
 
 		let term = brand + " " + model;
 
+		let res = null;
+		
 		try{
 			res = await axios.get('https://www.amazon.com/s?k=' + term, {
 				headers:{
@@ -154,8 +156,8 @@ async function searchAmazon(productName, partNumber, matnr){
 
 		try{
 			let resp = await Database.makeQuery2("INSERT INTO inventory (Matnr, Amazon) VALUES (?,?)", [matnr, JSON.stringify(_prices)])
-			if(res) {
-				if(res.errno === 1062){
+			if(resp) {
+				if(resp.errno === 1062){
 					Database.makeQuery2("UPDATE inventory SET Amazon = ? WHERE Matnr = ?", [JSON.stringify(_prices), matnr])
 				}
 			}		

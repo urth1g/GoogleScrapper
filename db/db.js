@@ -75,12 +75,12 @@ class Database {
 
 	static async getMargins(){
 		let res = await Database.makeQuery2("SELECT * FROM margins");
-		return res[0]
+		return res
 	}
 
 	static async getIgnoredShops(){
 		let res = await Database.makeQuery2("SELECT * FROM inventory_ignore")
-		return res[0]
+		return res
 	}
 
 	static async setProductPrice(Matnr, newPrice){

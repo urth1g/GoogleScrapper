@@ -308,7 +308,8 @@ async function setTechdataPrice(matnr){
 
 	let res = await Database.makeQuery2("SELECT ShortName FROM products WHERE Matnr = ?", [matnr])
 
-	name = res[0].ShortName
+	console.log(res)
+	name = res.ShortName
 	if(price == 0) {
 		await Database.makeQuery2("UPDATE inventory SET Techdata = ? WHERE Matnr = ?", ['[]', matnr])
 		return []

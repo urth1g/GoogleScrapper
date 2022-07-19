@@ -213,20 +213,20 @@ app.get('/crawl_google_printers', async (req, resp) => {
 			searchGoogle(Name, arr[i].mpn).then(async (url, skipPage4) => {
 
 				if(url === 'Nothing found.') {
-					await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, '[]', url, null])
+					await Database.makeQuery2("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, '[]', url, null])
 					return;
 				}
 				if(url.price){
-						await Database.getInstance().promise().query("UPDATE inventory_log SET Inventory = '[]' WHERE Matnr = ?", [Matnr]);
-						let inventory = await Database.getInstance().promise().query("SELECT * FROM inventory WHERE Matnr = ?", [Matnr]);
+						await Database.makeQuery2("UPDATE inventory_log SET Inventory = '[]' WHERE Matnr = ?", [Matnr]);
+						let inventory = await Database.makeQuery2("SELECT * FROM inventory WHERE Matnr = ?", [Matnr]);
 
 						let newPrice = changePrice(parseFloat(url.price))
 						let sources = [];
 
 						try{
-							Amazon = JSON.parse(inventory[0][0].Amazon);
-							Ebay = JSON.parse(inventory[0][0].Ebay);
-							Techdata = JSON.parse(inventory[0][0].Techdata);
+							Amazon = JSON.parse(inventory[0].Amazon);
+							Ebay = JSON.parse(inventory[0].Ebay);
+							Techdata = JSON.parse(inventory[0].Techdata);
 						}catch(er){
 							console.log(er)
 						}
@@ -241,18 +241,8 @@ app.get('/crawl_google_printers', async (req, resp) => {
 							newPrice = Math.round(parseFloat( ((sources[0] + 50) + ((sources[0]+50) * 0.045)) * 100)) / 100;
 						}
 
-						Database.getInstance().query("UPDATE products SET price = ? WHERE Matnr = ?", [newPrice, Matnr], (err, result) => {
-							if(err) console.log(err)
-
-					let content = `Set price of ${Name} to (${newPrice}) - 'First Page Google'\n
-Amazon: ${JSON.stringify(Amazon)}\n
-Ebay: ${JSON.stringify(Ebay)}\n
-Techdata: ${JSON.stringify(Techdata)}\n\n
-`;
-						fs.writeFile('./writeToTxt.txt', content, { flag: 'a+' }, err => {})
-
-						})
-					return;
+						Database.makeQuery2("UPDATE products SET price = ? WHERE Matnr = ?", [newPrice, Matnr])
+						return;
 				}else if(skipPage4 && !url){
 					return;
 				}
@@ -360,14 +350,14 @@ Techdata: ${JSON.stringify(Techdata)}\n\n
 							newPrice = Math.round(parseFloat(newPrice * 100)) / 100
 
 
-							let inventory = await Database.getInstance().promise().query("SELECT * FROM inventory WHERE Matnr = ?", [arr[i].Matnr]);
+							let inventory = await Database.makeQuery2("SELECT * FROM inventory WHERE Matnr = ?", [arr[i].Matnr]);
 
 							let sources = [];
 
 							try{
-								Amazon = JSON.parse(inventory[0][0].Amazon);
-								Ebay = JSON.parse(inventory[0][0].Ebay);
-								Techdata = JSON.parse(inventory[0][0].Techdata);
+								Amazon = JSON.parse(inventory[0].Amazon);
+								Ebay = JSON.parse(inventory[0].Ebay);
+								Techdata = JSON.parse(inventory[0].Techdata);
 							}catch(e){
 								console.log(e)
 							}
@@ -388,11 +378,8 @@ Techdata: ${JSON.stringify(Techdata)}\n\n
 						if(Number.isNaN(newPrice)) return;
 
 
-						Database.getInstance().query("UPDATE products SET price = ? WHERE Matnr = ?", [newPrice, Matnr], (err, result) => {
-							if(err) console.log(err)
-
-							console.log(result)
-						})
+						let r = await Database.makeQuery2("UPDATE products SET price = ? WHERE Matnr = ?", [newPrice, Matnr])
+						console.log(r)
 
 					let content = `Set price of ${arr[i].ShortName} to (${newPrice}) - ${url}\n
 List of prices ${JSON.stringify(totalPriceNew)}\n\n
@@ -563,6 +550,7 @@ app.post('/crawl_amazon_printer', async (req,res) => {
 app.post("/crawl_for_printer", async (req, resp) => {
 	let matnr = req.body.matnr;
 
+	console.log(matnr)
 	let printer = await Database.makeQuery2("SELECT * FROM products WHERE Matnr = ?", [matnr])
 
 	if(printer.length === 0) {
@@ -579,18 +567,23 @@ app.post("/crawl_for_printer", async (req, resp) => {
 	let brand = splitted[0];
 	let model = null;
 
+	console.log('here!')
 	let m = await Database.makeQuery2("SELECT * FROM models_information WHERE Matnr = ?", [matnr])
 
+	console.log('here2')
 	model = m[0].Model
 
 	Name = `${brand} ${model}`
 
 	console.log(Name)
 	try{
+
 		await searchGoogle(Name, printer[0].mpn, printer[0].ShortName, model).then(async (url, skipPage4) => {
 			if(url === 'Nothing found.') {
 				try{
-					await Database.makeQuery2("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url, null])
+					console.log('Nothing found!!')
+					await Database.makeQuery2("INSERT INTO inventory_log(Matnr, Name, Inventory, Link) VALUES(?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url])
+					console.log('here')
 				}catch(err){
 					if(err.errno === 1062){
 						await Database.makeQuery2("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
@@ -625,16 +618,16 @@ app.post("/crawl_for_printer", async (req, resp) => {
 			}
 			if(url.price){
 				(async function(){
-					await Database.getInstance().promise().query("UPDATE inventory_log SET Inventory = '[]' WHERE Matnr = ?", [Matnr]);
-					let inventory = await Database.getInstance().promise().query("SELECT * FROM inventory WHERE Matnr = ?", [Matnr]);
+					await Database.makeQuery2("UPDATE inventory_log SET Inventory = '[]' WHERE Matnr = ?", [Matnr]);
+					let inventory = await Database.makeQuery2("SELECT * FROM inventory WHERE Matnr = ?", [Matnr]);
 
 					let newPrice = changePrice(parseFloat(url.price))
 					let sources = [];
 
 					try{
-						Amazon = JSON.parse(inventory[0][0].Amazon);
-						Ebay = JSON.parse(inventory[0][0].Ebay);
-						Techdata = JSON.parse(inventory[0][0].Techdata);
+						Amazon = JSON.parse(inventory[0].Amazon);
+						Ebay = JSON.parse(inventory[0].Ebay);
+						Techdata = JSON.parse(inventory[0].Techdata);
 					}catch(er){
 						console.log(er)
 					}
@@ -649,11 +642,7 @@ app.post("/crawl_for_printer", async (req, resp) => {
 						//newPrice = Math.round(parseFloat( ((sources[0] + 50) + ((sources[0]+50) * 0.045)) * 100)) / 100;
 					}
 
-					Database.getInstance().query("UPDATE products SET price = ? WHERE Matnr = ?", [newPrice, Matnr], (err, result) => {
-						if(err) console.log(err)
-
-						console.log(result)
-					})
+					await Database.makeQuery2("UPDATE products SET price = ? WHERE Matnr = ?", [newPrice, Matnr])
 				})();
 				resp.send([])
 				return;
@@ -680,10 +669,10 @@ app.post("/crawl_for_printer", async (req, resp) => {
 
 					if(!matches) {
 						try{
-							await Database.getInstance().promise().query("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url, null])
+							await Database.makeQuery2("INSERT INTO inventory_log VALUES(?,?,?,?,?)", [Matnr, Name, JSON.stringify('[]'), url, null])
 						}catch(err){
 							if(err.errno === 1062){
-								await Database.getInstance().promise().query("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
+								await Database.makeQuery2("UPDATE inventory_log SET Inventory = ?, Link = ? WHERE Matnr = ?", [
 									'[]',
 									url,
 									Matnr

@@ -824,6 +824,7 @@ app.post('/crawl_ebay_printer', async (req, res) => {
 
 	let printer = await Database.makeQuery2("SELECT * FROM products WHERE Matnr = ?", [matnr])
 
+	console.log(printer)
 	if(printer.length === 0) {
 		res.send('err')
 		return

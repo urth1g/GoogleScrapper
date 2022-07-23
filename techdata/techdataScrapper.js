@@ -39,7 +39,7 @@ let techDataUrlConfig = async () => {
 function grabLinks(){
 	//let baseUrl = "https://shop.techdata.com/products/category/category?cs=500001003&refinements=500100301&market=USA&psz=100"
 	//let baseUrl = 'https://shop.techdata.com/products/category/category?cs=500100104&refinements=500100104&market=USA&psz=100'
-	let baseUrl = 'https://shop.techdata.com/products/category/category?cs=500100104&refinements=500001004&market=USA&psz=100'
+	let baseUrl = 'https://shop.techdata.com/products/category/category?cs=500001004&refinements=500001004&market=USA&psz=100'
     //let baseUrl = 'https://shop.techdata.com/products/category/category?cs=500100104&refinements=510010403&enav=500000000&market=USA&psz=100'
 
 	return new Promise( async (resolve, reject) => {
@@ -84,6 +84,9 @@ async function searchTechdata(){
 		console.log(urlObjects.length)
 		console.log('length is')
 		for(let i = 0; i < urlObjects.length; i++){
+			console.log(urlObjects[i].title)
+
+			if(urlObjects[i].title !== 'Network Storage') continue;
 			await timer(5000)
 			let pages = await getPages(urlObjects[i].url)
 
@@ -350,4 +353,6 @@ async function run(){
 	console.log(items)
 }
 
+
+run()
 module.exports = { searchTechdata, setTechdataPrice }

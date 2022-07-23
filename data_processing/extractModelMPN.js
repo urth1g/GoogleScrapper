@@ -27,6 +27,7 @@ if(process.argv.length !== 2){
     }
 
     if(process.argv.includes("--with-class")){
+        console.log(process.argv)
         run(process.argv[3], process.argv[4])
     }
 }

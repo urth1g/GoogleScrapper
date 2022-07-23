@@ -354,5 +354,4 @@ async function run(){
 }
 
 
-run()
 module.exports = { searchTechdata, setTechdataPrice }

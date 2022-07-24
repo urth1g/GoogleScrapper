@@ -32,11 +32,11 @@ async function searchAmazon(productName, partNumber, matnr){
 		let term = brand + " " + model;
 
 		let res = null;
-		
+
 		try{
 			res = await axios.get('https://www.amazon.com/s?k=' + term, {
 				headers:{
-				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(23,65)}_${randomIntFromInterval(25,65)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
+				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(23,99)}_${randomIntFromInterval(25,99)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
 				}
 			});
 		}catch(e){

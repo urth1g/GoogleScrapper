@@ -18,10 +18,12 @@ async function run(){
 
 	//let res = await Database.makeQuery("SELECT * FROM products LEFT JOIN inventory_log ON products.Matnr = inventory_log.Matnr LEFT JOIN models_information ON models_information.Matnr = products.Matnr WHERE inventory_log.updated_at NOT LIKE '%" + notLikeThisDate + "%' GROUP BY products.Matnr ORDER BY products.Price");
 
-    let res = await Database.makeQuery2("SELECT *, COALESCE(products.Matnr, models_information.Matnr) as Matnr FROM models_information LEFT JOIN products on models_information.Matnr = products.Matnr LEFT JOIN inventory_log ON products.Matnr = inventory_log.Matnr WHERE inventory_log.updated_at NOT LIKE '%" + notLikeThisDate + "%' OR updated_at IS NULL ORDER BY RAND() LIMIT 1")
+    let sql = "SELECT * FROM inventory_log WHERE (inventory_log.updated_at < '" + notLikeThisDate + "' OR inventory_log.updated_at IS NULL) AND Link != 'Nothing found.' ORDER BY RAND()";
+
+    let res = await Database.makeQuery2(sql)
 	let printers = res;
 
-    console.log(printers[0].length)
+    console.log(printers.length)
     for(let i = 0; i < 1; i++){
         let matnr = printers[i].Matnr;
 
@@ -35,9 +37,9 @@ async function run(){
             console.log('Step 4 ---- Setting the price based on feed initiated')
             await axios.post('http://localhost:3030/crawl_for_printer', {matnr} )
             console.log('Step 5 ---- Checking for any ULTRA GOOD deals')
-            //await axios.post('http://localhost:3030/check_for_good_deals', {matnr} )
-            //console.log('Step 6 ---- Updating the price in google feed initiated')
-            //await axios.post('http://localhost:3030/update_spreadsheet_price', {matnr} )
+            await axios.post('http://localhost:3030/check_for_good_deals', {matnr} )
+            console.log('Step 6 ---- Updating the price in google feed initiated')
+            await axios.post('http://localhost:3030/update_spreadsheet_price', {matnr} )
             console.log('updated_123')
             //await timer(2000)
         }catch(e){

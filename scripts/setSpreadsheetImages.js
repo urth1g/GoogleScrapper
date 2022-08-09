@@ -6,19 +6,22 @@ async function run(){
     const sheet = await getFeedSheet()
 
     let row = await sheet.loadCells(); // loads a range of cells
-    const rows = await sheet.getRows({limit: 16, offset: 8995}); // can pass in { limit, offset }
+    const rows = await sheet.getRows({limit: 8002, offset: 1064}); // can pass in { limit, offset }
 
     for(let row of rows){
         let links = row["link"].split("/");
         let matnr= links[links.length - 1];
 
-        let img = await Database.makeQuery2("SELECT * FROM images WHERE Matnr = ?", [matnr])
+        console.log(matnr)
+        let img = await Database.makeQuery2("SELECT * FROM inventory_log INNER JOIN products ON inventory_log.Matnr = products.Matnr WHERE products.Matnr = ?", [matnr])
 
-        row.image_link = img[0].url
+        console.log(img)
+        console.log(img[0])
+        row.price = img[0].Price + ' USD'
         console.log('saving...')
         await row.save()
-        await timer(2900)
+        await timer(1500)
     }
 }
 
-run()
+//run()

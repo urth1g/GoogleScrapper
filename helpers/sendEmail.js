@@ -1,34 +1,36 @@
 const nodemailer = require('nodemailer');
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
-require('dotenv').config({path: __dirname + '../.env'});
+// const { google } = require("googleapis");
+// const OAuth2 = google.auth.OAuth2;
+// require('dotenv').config({path: __dirname + '../.env'});
 
-const CLIID = "241547988546-2egshkag58cocq3s427iotuifgqe36m9.apps.googleusercontent.com"
-const SECRET = "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"
+// const CLIID = "241547988546-2egshkag58cocq3s427iotuifgqe36m9.apps.googleusercontent.com"
+// const SECRET = "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"
 
-const myOAuth2Client = new OAuth2(
-  "241547988546-2egshkag58cocq3s427iotuifgqe36m9.apps.googleusercontent.com",
-  "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",
-  "https://developers.google.com/oauthplayground"
-)
+// const myOAuth2Client = new OAuth2(
+//   "241547988546-2egshkag58cocq3s427iotuifgqe36m9.apps.googleusercontent.com",
+//   "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",
+//   "https://developers.google.com/oauthplayground"
+// )
 
-myOAuth2Client.setCredentials({
-  refresh_token: '1//04ZbO0QrPX5yuCgYIARAAGAQSNwF-L9IrguXxrh4ylxoDmdSX8NrzOcrgJHABOZl1HZ25AOrSXCHGyuNzaOuPo8jo1sq1Uervaz8'
-});
+// let rt = "1//04rxLJVBpxmRLCgYIARAAGAQSNwF-L9Irpg2EF4bECBRweRNbzghqaeYfnj3BDtcuwsM6aOJIcsEz4lAukhWorCnisq5N6F6bALY"
+// myOAuth2Client.setCredentials({
+//   refresh_token: rt
+// });
 
 
-const ACCESS_TOKEN = myOAuth2Client.getAccessToken()
+// const ACCESS_TOKEN = myOAuth2Client.getAccessToken()
 
 async function sendEmail(to, subject, message){
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: 'gmail',
     auth: {
-         type: "OAuth2",
+         //type: "OAuth2",
          user: "amofax.notifications@gmail.com", //your gmail account you used to set the project up in google cloud console"
-         clientId: CLIID,
-         clientSecret: SECRET,
-         refreshToken: '1//04ZbO0QrPX5yuCgYIARAAGAQSNwF-L9IrguXxrh4ylxoDmdSX8NrzOcrgJHABOZl1HZ25AOrSXCHGyuNzaOuPo8jo1sq1Uervaz8',
-         accessToken: ACCESS_TOKEN //access token variable we defined earlier
+         pass: 'cbdkdnmrvbcybkil'
+        //  clientId: CLIID,
+        //  clientSecret: SECRET,
+        //  refreshToken: rt,
+        //  accessToken: ACCESS_TOKEN
     }});
 
       var mailOptions = {

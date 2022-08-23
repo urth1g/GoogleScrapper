@@ -37,11 +37,10 @@ let techDataUrlConfig = async () => {
 }
 
 function grabLinks(){
-	//let baseUrl = "https://shop.techdata.com/products/category/category?cs=500001003&refinements=500100301&market=USA&psz=100"
-	//let baseUrl = 'https://shop.techdata.com/products/category/category?cs=500100104&refinements=500100104&market=USA&psz=100'
-	let baseUrl = 'https://shop.techdata.com/products/category/category?cs=500001004&refinements=500001004&market=USA&psz=100'
-    //let baseUrl = 'https://shop.techdata.com/products/category/category?cs=500100104&refinements=510010403&enav=500000000&market=USA&psz=100'
-
+	//let baseUrl = 'https://shop.techdata.com/products/category/category?cs=500100102&refinements=500100616&enav=500000000&searchType=products&market=USA&psz=100'
+	//baseUrl = 'https://shop.techdata.com/products/category/category?cs=500100102&market=USA&psz=100&refinements=500100615&enav=500000000&searchType=products'
+	baseUrl = 'https://shop.techdata.com/products/category/category?cs=500100102&market=USA&psz=100&refinements=500100609&enav=500000000&searchType=products'
+	
 	return new Promise( async (resolve, reject) => {
 		let headers = await techDataUrlConfig()
 		axios.get(baseUrl, headers).then( res => {
@@ -84,9 +83,7 @@ async function searchTechdata(){
 		console.log(urlObjects.length)
 		console.log('length is')
 		for(let i = 0; i < urlObjects.length; i++){
-			console.log(urlObjects[i].title)
 
-			if(urlObjects[i].title !== 'Network Storage') continue;
 			await timer(5000)
 			let pages = await getPages(urlObjects[i].url)
 
@@ -145,7 +142,7 @@ async function updateDatabase2(elements){
 			}
 
 			let r = await Database.makeQuery2("INSERT INTO products(Matnr, ShortName, LongName, Class, SubClass, Price, Thumbnail, gtin, mpn) VALUES (?,?,?,?,?,?,?,?,?)", [
-		        x.matnr, x.name, x.longName, 'Power Protection Devices', x.subclass, x.price[0], x.img, x.upc,x.mfr
+		        x.matnr, x.name, x.longName, 'Power Supplies', x.subclass, x.price[0], x.img, x.upc,x.mfr
 			])
 
 			console.log(x)
@@ -155,8 +152,6 @@ async function updateDatabase2(elements){
 }
 
 async function goThroughPage(url, pages, title){
-	console.log(title)
-	if(title != 'Network Storage') return;
 	console.log('going')
 	for(let i = 1; i <= pages; i++){
 		await timer(1000)
@@ -354,4 +349,5 @@ async function run(){
 }
 
 
+run()
 module.exports = { searchTechdata, setTechdataPrice }

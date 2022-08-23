@@ -3,9 +3,9 @@ const fs = require('fs')
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
-async function run(class1, subclass){
+async function run(class1){
 
-    let res = await Database.makeQuery2("SELECT ShortName, LongName, products.Matnr, products.mpn, models_information.Model FROM products LEFT JOIN models_information on products.Matnr = models_information.Matnr WHERE Class LIKE '%" + class1 + "%' AND SubClass LIKE '%" + subclass + "%' AND mpn != '' AND models_information.Model IS NULL ORDER BY RAND() LIMIT 1;")
+    let res = await Database.makeQuery2("SELECT ShortName, LongName, products.Matnr, products.mpn, models_information.Model FROM products LEFT JOIN models_information on products.Matnr = models_information.Matnr WHERE Class LIKE '%" + class1 + "%' AND mpn != '' AND models_information.Model IS NULL ORDER BY RAND() LIMIT 1;")
 
     console.log(res.length)
     for(let i = 0; i < 1; i++){
@@ -28,6 +28,6 @@ if(process.argv.length !== 2){
 
     if(process.argv.includes("--with-class")){
         console.log(process.argv)
-        run(process.argv[3], process.argv[4])
+        run(process.argv[3])
     }
 }

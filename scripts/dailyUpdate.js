@@ -18,8 +18,8 @@ async function run(){
 
 	//let res = await Database.makeQuery("SELECT * FROM products LEFT JOIN inventory_log ON products.Matnr = inventory_log.Matnr LEFT JOIN models_information ON models_information.Matnr = products.Matnr WHERE inventory_log.updated_at NOT LIKE '%" + notLikeThisDate + "%' GROUP BY products.Matnr ORDER BY products.Price");
 
-    //let sql = "SELECT * FROM inventory_log WHERE (inventory_log.updated_at < '" + notLikeThisDate + "' OR inventory_log.updated_at IS NULL) AND Link != 'Nothing found.' ORDER BY RAND()";
-    let sql = 'SELECT COALESCE(inventory_log.Matnr, models_information.Matnr) as Matnr FROM models_information LEFT JOIN inventory_log ON models_information.Matnr = inventory_log.Matnr WHERE inventory_log.Matnr IS NULL ORDER BY RAND() LIMIT 1';
+    let sql = "SELECT * FROM inventory_log WHERE (inventory_log.updated_at < '" + notLikeThisDate + "' OR inventory_log.updated_at IS NULL) AND Link != 'Nothing found.' ORDER BY RAND()";
+    //let sql = 'SELECT COALESCE(inventory_log.Matnr, models_information.Matnr) as Matnr FROM models_information LEFT JOIN inventory_log ON models_information.Matnr = inventory_log.Matnr WHERE inventory_log.Matnr IS NULL ORDER BY RAND() LIMIT 1';
     let res = await Database.makeQuery2(sql)
 	let printers = res;
 

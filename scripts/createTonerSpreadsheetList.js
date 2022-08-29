@@ -39,7 +39,7 @@ async function run(){
         //let google_product_category = 
         let product_type = item['SubClass']
         let shipping = 'US:::0 USD';
-        let image_link = item['url'];
+        let image_link = item['Thumbnail'];
 
         //await sheet.addRow({mpn, title, price, id, link, description, gtin, image_link, availability, excluded_destination, brand, condition, product_type, shipping})
         //await timer(4000)

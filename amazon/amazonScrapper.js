@@ -33,6 +33,7 @@ async function searchAmazon(productName, partNumber, matnr){
 
 		let res = null;
 
+		console.log('hit')
 		try{
 			res = await axios.get('https://www.amazon.com/s?k=' + term, {
 				headers:{
@@ -41,14 +42,18 @@ async function searchAmazon(productName, partNumber, matnr){
 			});
 		}catch(e){
 			console.log(e)
+			reject(e)
 		}
 
 
+		console.log('hit2')
 		if(!res){
 			console.log('error')
 			resolve([])
 			return;	
 		}
+
+		console.log('hit3')
 		const $ = cheerio.load(res.data);
 
 		let spans = $(".s-title-instructions-style").filter(function(){
@@ -119,12 +124,15 @@ async function searchAmazon(productName, partNumber, matnr){
 
 		let _spans = [];
 
+		console.log('hit4')
 		spans.each(function(){
 			let text = $(this).find(".a-text-normal span").text();
 			let href = 'https://amazon.com' + $(this).find(".a-text-normal").attr('href');
 
 			_spans.push({text,href});
 		})
+
+		console.log('hit5')
 
 		await _spans.forEach(async function(x, i){
 
@@ -151,6 +159,8 @@ async function searchAmazon(productName, partNumber, matnr){
 			}
 		})
 
+		console.log('hit6')
+
 		let _prices = await findTheBestPriceAmazon(objects)
 		_prices = _prices.filter(x => !Number.isNaN(x.price))
 
@@ -162,7 +172,7 @@ async function searchAmazon(productName, partNumber, matnr){
 				}
 			}		
 		}catch(e){
-
+			console.log(e)
 		}
 		//await freeServer()
 		resolve(_prices)

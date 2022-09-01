@@ -37,11 +37,11 @@ async function searchEbay(productName, partNumber, matnr){
 
 		let res;
 		try{
-			let rand = randomIntFromInterval(12,35);
+			let rand = randomIntFromInterval(300,400);
 			let url = `https://www.ebay.com/sch/i.html?_nkw=${term}+printer&_sop=15`;
 			res = await axios.get(url, {
 				headers:{
-				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(12,35)}_${rand}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
+				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(300,400)}_${rand}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
 				}
 			});
 		}catch(error){

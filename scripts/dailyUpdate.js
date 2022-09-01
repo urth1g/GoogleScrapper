@@ -45,7 +45,7 @@ async function run(){
             console.log(e)
         }
     }
-    
+
 }
 
 var arguments = process.argv ;

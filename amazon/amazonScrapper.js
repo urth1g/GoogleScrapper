@@ -37,7 +37,7 @@ async function searchAmazon(productName, partNumber, matnr){
 		try{
 			res = await axios.get('https://www.amazon.com/s?k=' + term, {
 				headers:{
-				    'User-Agent':`Mozilla/5.0 (Macintosh; Intel Mac OS X ${randomIntFromInterval(300,400)}_${randomIntFromInterval(300,400)}_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36`
+					'User-Agent': `Mozilla/5.0 (Linux; Android 10; SM-G980F Build/QP1A.${randomIntFromInterval(185000,190750)}.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.96 Mobile Safari/537.36`
 				}
 			});
 		}catch(e){
@@ -50,7 +50,6 @@ async function searchAmazon(productName, partNumber, matnr){
 		if(!res){
 			console.log('error')
 			resolve([])
-			return;	
 		}
 
 		console.log('hit3')

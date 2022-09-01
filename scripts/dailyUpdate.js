@@ -14,9 +14,8 @@ function getFormattedDate(){
 async function run(){
 
 
-    //let notLikeThisDate = getFormattedDate();
+    let notLikeThisDate = getFormattedDate();
 
-    let notLikeThisDate = '2022-08-29'
 	//let res = await Database.makeQuery("SELECT * FROM products LEFT JOIN inventory_log ON products.Matnr = inventory_log.Matnr LEFT JOIN models_information ON models_information.Matnr = products.Matnr WHERE inventory_log.updated_at NOT LIKE '%" + notLikeThisDate + "%' GROUP BY products.Matnr ORDER BY products.Price");
 
     setTimeout( () => process.exit(1), 40000)
@@ -46,6 +45,7 @@ async function run(){
             console.log(e)
         }
     }
+    
 }
 
 var arguments = process.argv ;

@@ -9,7 +9,7 @@ async function run(){
     const rows = await sheet.getRows(); // can pass in { limit, offset }
     let filtered = rows.map(x => Number(x.id))
 
-    const items = await Database.makeQuery2("SELECT * FROM products INNER JOIN inventory_log ON inventory_log.Matnr = products.Matnr WHERE inventory_log.Link != 'Nothing Found.'")
+    const items = await Database.makeQuery2("SELECT * FROM products INNER JOIN inventory_log ON inventory_log.Matnr = products.Matnr INNER JOIN images ON images.Matnr = products.Matnr WHERE inventory_log.Link != 'Nothing Found.'")
 
     let toPush = [];
 
@@ -39,7 +39,7 @@ async function run(){
         //let google_product_category = 
         let product_type = item['SubClass']
         let shipping = 'US:::0 USD';
-        let image_link = item['Thumbnail'];
+        let image_link = item['url'];
 
         //await sheet.addRow({mpn, title, price, id, link, description, gtin, image_link, availability, excluded_destination, brand, condition, product_type, shipping})
         //await timer(4000)
